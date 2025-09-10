@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MTCO — Turning Trig Utility</title>
+
+  <!-- Original styles (kept for structure) -->
+  <style>
+
+  :root { --bg:#0f1320; --card:#171b2a; --ink:#e7ecff; --ink-dim:#a8b2d1; --accent:#6ee7ff; --ok:#37d399; --warn:#ffcc66; --err:#ff6b6b; --muted:#23283e; --radius:16px; }
+  *{ box-sizing:border-box; }
+  html,body{ height:100%; }
+  body{ margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji"; background:radial-gradient(1200px 600px at 70% -10%, #1b2238 0%, var(--bg) 60%); color:var(--ink); }
+  header{ padding:20px 22px 0 22px; }
+  h1{ margin:0 0 8px; font-weight:700; letter-spacing:.2px; }
+  .sub{ color:var(--ink-dim); margin-bottom:14px; }
+  .toolbar{ display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin:8px 0 18px; }
+  .toggle{ display:flex; background:var(--muted); border:1px solid #2a3150; border-radius:999px; overflow:hidden; }
+  .toggle button{ background:none; border:0; color:var(--ink-dim); padding:8px 14px; cursor:pointer; font-weight:700; }
+  .toggle button.active{ background:#243055; color:#fff; }
+  .grid{ display:grid; grid-template-columns:repeat(12,1fr); gap:16px; padding:0 22px 26px; }
+  .card{ background:linear-gradient(180deg,#1a1f33,var(--card)); border:1px solid #2a3150; border-radius:var(--radius); padding:16px; box-shadow:0 10px 30px rgba(0,0,0,.25); }
+  .card h2{ margin:4px 0 10px; font-size: var(--fs-card); display:flex; align-items:center; gap:8px; }
+  .row{ display:grid; grid-template-columns:repeat(12,1fr); gap:10px; }
+  .span-6{ grid-column:span 6; } .span-12{ grid-column:span 12; } .span-8{ grid-column:span 8; } .span-4{ grid-column:span 4; } .span-3{ grid-column:span 3; } .span-2{ grid-column:span 2; }
+  label{ font-size:12px; color:var(--ink-dim); display:block; margin-bottom:6px; }
+  input[type="number"], input[type="text"], textarea, select{ width:100%; background:#0f1322; color:var(--ink); border:1px solid #30385c; border-radius:10px; padding:10px 12px; outline:none; }
+  input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0; }
+  textarea{ resize:vertical; min-height:78px; }
+  .actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
+  button{ background:linear-gradient(180deg,#1e2745,#19213b); color:var(--ink); border:1px solid #2c3560; padding:10px 14px; border-radius:10px; cursor:pointer; font-weight:600; }
+  button.primary{ background:linear-gradient(180deg,#2a335c,#232b4e); border-color:#3a4480; }
+  .hint{ color:var(--ink-dim); font-size:12px; margin-top:6px; }
+  .out{ margin-top:10px; padding:10px; background:#0e1426; border:1px dashed #33406e; border-radius:12px; font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; white-space:pre-wrap; }
+  .ok{ color:var(--ok); } .warnText{ color:var(--warn); } .errText{ color:var(--err); }
+  .footer{ color:var(--ink-dim); font-size:12px; text-align:center; padding:18px; }
+  .viz{ background:#0c1223; border:1px solid #2a3150; border-radius:12px; padding:8px; display:flex; align-items:center; justify-content:center; }
+  .viz svg{ width:100%; height:220px; }
+  .legend{ color:var(--ink-dim); font-size:11px; display:flex; gap:10px; flex-wrap:wrap; margin-top:6px; }
+  .key{ display:flex; gap:6px; align-items:center; }
+  .kbox{ width:12px; height:12px; border-radius:2px; }
+  .k-hyp{ background:#6ee7ff; } .k-opp{ background:#ff6b6b; } .k-adj{ background:#37d399; } .k-axis{ background:#9097b7; }
+  .k-chord{ background:#ffd166; } .k-arc{ background:#7aa2ff; } .k-sag{ background:#ff9fb1; }
+  .tip{ font-size:12px; color:var(--ink-dim); margin-top:6px; }
+  details{ border:1px dashed #2a3150; border-radius:10px; padding:8px 10px; margin-top:8px; background:#0c1223; }
+  summary{ cursor:pointer; color:#cdd6ff; font-weight:600; }
+  .step{ background:#0c1223; border:1px solid #2a3150; border-radius:10px; padding:10px; font-size:13px; color:var(--ink-dim); margin:6px 0 10px; }
+  .filled{ border-color:#37d399; box-shadow:0 0 0 2px rgba(55,211,153,0.25) inset; }
+  .status{ font-size:12px; color:var(--ink-dim); margin-top:6px; }
+  .example{ margin-left:auto; }
+  @media (max-width:980px){ .span-6{ grid-column:span 12; } }
+  .intro{ background:#0c1223; border:1px solid #2a3150; border-radius:16px; padding:14px; margin:0 22px 16px; }
+  .intro h3{ margin:0 0 6px; }
+  .bullets{ margin:6px 0 0 16px; color:var(--ink-dim); }
+
+  </style>
+
+  <!-- MTCO theme overrides -->
+  <style>
+    :root{
+      --accent:#ff7a1a; --accent-2:#ffa864;
+      --bg:#0f1215; --panel:#161a1f; --text:#e6e8eb; --muted:#8a9097;
+      --card:#171b21; --card-border:#2a3037; --radius:16px;
+      --ink: var(--text); --ink-dim:#aab0b7;
+    }
+    *{ box-sizing:border-box }
+    body{
+      margin:0; background:var(--bg) !important; color:var(--text);
+      font:14px/1.45 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    }
+    /* Hero masthead (shared) */
+    header.site.masthead{
+      position:sticky; top:0; z-index:10;
+      background:linear-gradient(180deg,#181d24,#14181d);
+      border-bottom:1px solid var(--card-border);
+      box-shadow:0 6px 24px rgba(0,0,0,.25);
+    }
+    header.site.masthead .wrap{
+      max-width:1220px; margin:0 auto; padding:18px 14px 10px;
+      display:grid; grid-template-columns:1fr auto; gap:12px; align-items:center;
+    }
+    .brandstack{ display:grid; justify-items:start; gap:6px }
+    .brandrow{ display:flex; align-items:center; gap:12px }
+    .logo{ width:40px; height:40px; border-radius:10px;
+            background:linear-gradient(135deg,var(--accent),var(--accent-2));
+            box-shadow:0 2px 14px rgba(255,122,26,.35) }
+    .brandtitle{ font-size: clamp(20px, 2.4vw, 28px); font-weight:800; letter-spacing:.4px }
+    .tagline{ color:#cfd3d8; font-size:12px }
+    .rule{ width:260px; height:3px; border-radius:3px;
+            background:linear-gradient(90deg,var(--accent),var(--accent-2)); opacity:.9 }
+    .toplinks{ display:flex; gap:10px; justify-self:end }
+    .toplinks a{ display:inline-block; padding:7px 12px; border:1px solid #2b3139; border-radius:999px; text-decoration:none; color:var(--text) }
+    .toplinks a:hover{ border-color:#3a414b }
+    .toplinks a.primary{ background:var(--accent); border-color:var(--accent); color:#101114 }
+
+    /* Container */
+    main{ max-width:1220px; margin:14px auto; padding:0 14px 20px }
+    .card{ background:var(--card) !important; border:1px solid var(--card-border) !important; border-radius:16px; }
+    /* Harmonize original UI to theme */
+    input[type="number"], input[type="text"], textarea, select{
+      background:#11161c !important; color:var(--text) !important; border:1px solid #2b3139 !important;
+    }
+    button{ background:#11161c !important; color:var(--text) !important; border:1px solid #2b3139 !important; }
+    button.primary{ background:var(--accent) !important; border-color:var(--accent) !important; color:#101114 !important; }
+    .toggle{ background:#171c23 !important; border:1px solid #2b3139 !important; }
+    .toggle button.active{ background:#10151b !important; color:#fff !important; border-color:#3a414b !important;
+                            box-shadow:0 0 0 1px rgba(255,122,26,.15) inset, 0 1px 6px rgba(0,0,0,.25) }
+    .intro{ background:#0e1318 !important; border:1px solid #2b3139 !important; }
+    .viz{ background:#0e1318 !important; border:1px solid #2b3139 !important; }
+    .out{ background:#0f141a !important; border-color:#2b3139 !important; color:#dfe3e7 !important; }
+    .footer{ color:#8a9097 !important }
+
+    /* Reduce page-edge padding from original to align to container */
+    header:first-of-type{ padding:10px 0 0 0 !important }
+    .grid{ padding:0 0 26px 0 !important }
+    .intro{ margin:0 0 16px 0 !important; }
+  </style>
+<style>
+/* === MTCO Typography Normalization (hardened) === */
+body { font-size: var(--fs-body) !important; line-height: var(--lh-body) !important; }
+label, .label, .hint, .help, .muted, small, .tiny, .badge { font-size: var(--fs-small) !important; }
+.inpage-title { font-size: var(--fs-title) !important; font-weight: 600 !important; }
+.card h1, .card h2, .card h3, .section-title, .panel h2, .panel h3 { font-size: var(--fs-card) !important; font-weight: 600 !important; }
+pre, code, .code, textarea, .output, .editor, textarea.code { font-size: var(--fs-body) !important; line-height: var(--lh-body) !important; }
+
+</style>
+</head>
+<body>
+<main>
+    <div class="card" style="padding:0 0 6px 0">
+      <!-- Original content starts -->
+<div class="intro">
+    <h3>What this is</h3>
+    <div>This page helps a turner do simple triangle jobs on the lathe: chamfers, tapers, thread lead angles, and arc math. It is fully offline (no internet) and one single file.</div>
+    <div class="bullets">
+      <div>1) Pick a tool below.</div>
+      <div>2) Type the numbers you already know (usually 2). Look for the green highlights.</div>
+      <div>3) Press Solve. Read the answers in plain English and match the colors on the picture.</div>
+    </div>
+  </div>
+
+  <section class="grid">
+    <!-- Right Triangle (TURNING CORE) -->
+    <div class="card span-6" id="triCard">
+      <h2>Right Triangle (start here)</h2>
+      <div class="step"><b>How to use:</b> type any TWO of: angle, opposite (vertical), adjacent (horizontal), hypotenuse (slanted). Then press Solve. <b>Angle theta is the LOWER-RIGHT corner (between Adj and Hyp), not the right-angle square.</b></div>
+      <div class="row">
+        <div class="span-3"><label>Angle theta (deg)</label><input type="number" step="any" id="tri_theta" placeholder="e.g. 30" title="Angle at lower-right, between Adj and Hyp"></div>
+        <div class="span-3"><label>Opposite (vertical, <span class="uLabel">mm</span>)</label><input type="number" step="any" id="tri_opp" title="Vertical side in the picture"></div>
+        <div class="span-3"><label>Adjacent (horizontal, <span class="uLabel">mm</span>)</label><input type="number" step="any" id="tri_adj" title="Horizontal side in the picture"></div>
+        <div class="span-3"><label>Hypotenuse (edge, <span class="uLabel">mm</span>)</label><input type="number" step="any" id="tri_hyp" title="Slanted side in the picture"></div>
+      </div>
+      <div class="actions">
+        <button class="primary" id="tri_solve">Solve (any two)</button>
+        <button id="tri_reset">Reset</button>
+        <button class="example" id="tri_example">Fill example</button>
+      </div>
+      <div class="status" id="tri_status">Enter 2 of 4. 0 filled so far.</div>
+      <div class="row" style="margin-top:10px; align-items:stretch;">
+        <div class="span-6 viz"><svg id="tri_viz" viewBox="0 0 360 220" aria-label="Right triangle visual"></svg></div>
+        <div class="span-6">
+          <div class="out" id="tri_out"></div>
+          <details><summary>Explain the steps</summary>
+            <div style="margin-top:6px; color:#a8b2d1; font-size:13px;" id="tri_steps"></div>
+            <div class="tip">Lathe mapping: Adjacent approx Z travel. Opposite approx radial infeed R. X shows diameter, so Delta D = 2*R.</div>
+          </details>
+          <div class="legend"><span class="key"><span class="kbox k-hyp"></span>Hyp (slanted)</span><span class="key"><span class="kbox k-opp"></span>Opp (vertical)</span><span class="key"><span class="kbox k-adj"></span>Adj (horizontal)</span><span class="key"><span class="kbox k-axis"></span>Axes/right-angle</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chamfer Helper (TURNING) -->
+    <div class="card span-6" id="chamferCard">
+      <h2>Lathe Chamfer</h2>
+      <div class="step"><b>How to use:</b> give the angle and ONE thing you know: Z distance along the face, radial depth R, or the edge length. <b>Angle is the LOWER-RIGHT corner between Z and the edge.</b></div>
+      <div class="row">
+        <div class="span-3"><label>Chamfer angle (deg)</label><input type="number" step="any" id="ch_angle" value="45" title="Common chamfers are 45 deg"></div>
+        <div class="span-3"><label>Z travel (face, <span class="uLabel">mm</span>)</label><input type="number" step="any" id="ch_z" placeholder="known?" title="Distance along the face"></div>
+        <div class="span-3"><label>Radial depth R (<span class="uLabel">mm</span>)</label><input type="number" step="any" id="ch_r" placeholder="known?" title="Radial infeed (half the diameter change)"></div>
+        <div class="span-3"><label>Edge length (hyp, <span class="uLabel">mm</span>)</label><input type="number" step="any" id="ch_h" placeholder="optional" title="Length of the chamfer edge"></div>
+      </div>
+      <div class="actions">
+        <button class="primary" id="ch_solve">Solve chamfer</button>
+        <button id="ch_reset">Reset</button>
+        <button class="example" id="ch_example">Fill example</button>
+      </div>
+      <div class="status" id="ch_status">Enter the angle and 1 of Z/R/edge.</div>
+      <div class="row" style="margin-top:10px; align-items:stretch;">
+        <div class="span-6 viz"><svg id="ch_viz" viewBox="0 0 360 220" aria-label="Chamfer visual"></svg></div>
+        <div class="span-6">
+          <div class="out" id="ch_out"></div>
+          <details><summary>Explain the steps</summary>
+            <div style="margin-top:6px; color:#a8b2d1; font-size:13px;" id="ch_steps"></div>
+            <div class="tip">X is diameter on most lathes. To hit the chamfer, dial X by Delta D = 2 * R.</div>
+          </details>
+          <div class="legend"><span class="key"><span class="kbox k-adj"></span>Z (face)</span><span class="key"><span class="kbox k-opp"></span>R (radial)</span><span class="key"><span class="kbox k-hyp"></span>Edge</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Taper Calculator (TURNING) -->
+    <div class="card span-6" id="taperCard">
+      <h2>Taper</h2>
+      <div class="step"><b>How to use:</b> type the two end diameters and the length. Press Solve. Half-angle is what you set on the compound.</div>
+      <div class="row">
+        <div class="span-4"><label>D1 (<span class="uLabel">mm</span>)</label><input type="number" step="any" id="tap_d1"></div>
+        <div class="span-4"><label>D2 (<span class="uLabel">mm</span>)</label><input type="number" step="any" id="tap_d2"></div>
+        <div class="span-4"><label>L (length, <span class="uLabel">mm</span>)</label><input type="number" step="any" id="tap_len"></div>
+      </div>
+      <div class="actions">
+        <button class="primary" id="tap_solve">Solve taper</button>
+        <button id="tap_reset">Reset</button>
+        <button class="example" id="tap_example">Fill example</button>
+      </div>
+      <div class="row" style="margin-top:10px; align-items:stretch;">
+        <div class="span-6 viz"><svg id="tap_viz" viewBox="0 0 360 220" aria-label="Taper visual"></svg></div>
+        <div class="span-6">
+          <div class="out" id="tap_out"></div>
+          <details><summary>Explain the steps</summary>
+            <div style="margin-top:6px; color:#a8b2d1; font-size:13px;" id="tap_steps"></div>
+          </details>
+        </div>
+      </div>
+    </div>
+
+    <!-- Helix / Lead Angle (THREADS) -->
+    <div class="card span-6" id="helixCard">
+      <h2>Thread Helix (Lead) Angle</h2>
+      <div class="step"><b>How to use:</b> enter pitch, number of starts, and the diameter where you care about the angle (OD or pitch diameter).</div>
+      <div class="row">
+        <div class="span-3"><label>Pitch (<span class="uLabel">mm</span>)</label><input type="number" step="any" id="hx_pitch"></div>
+        <div class="span-3"><label>Starts</label><input type="number" step="1" id="hx_starts" value="1"></div>
+        <div class="span-3"><label>Diameter D (<span class="uLabel">mm</span>)</label><input type="number" step="any" id="hx_diam"></div>
+        <div class="span-3"><label>At</label><select id="hx_at"><option value="OD">OD</option><option value="PD">Pitch D (approx)</option></select></div>
+      </div>
+      <div class="actions">
+        <button class="primary" id="hx_solve">Solve helix angle</button>
+        <button id="hx_reset">Reset</button>
+        <button class="example" id="hx_example">Fill example</button>
+      </div>
+      <div class="out" id="hx_out"></div>
+      <details><summary>Explain the steps</summary>
+        <div style="margin-top:6px; color:#a8b2d1; font-size:13px;" id="hx_steps"></div>
+      </details>
+    </div>
+
+    <!-- Circle / Arc Solver (reference) -->
+    <div class="card span-12" id="arcCard">
+      <h2>Circle / Arc (reference)</h2>
+      <div class="step"><b>How to use:</b> enter R or D, then exactly one of: theta, chord c, sagitta s, or arc length l.</div>
+      <div class="row">
+        <div class="span-2"><label>Given: <select id="arc_given"><option value="R">R</option><option value="D">D</option></select></label><input type="number" step="any" id="arc_radordiam" placeholder="e.g. 50"></div>
+        <div class="span-2"><label>theta (deg)</label><input type="number" step="any" id="arc_theta"></div>
+        <div class="span-2"><label>Chord c (<span class="uLabel">mm</span>)</label><input type="number" step="any" id="arc_chord"></div>
+        <div class="span-2"><label>Sagitta s (<span class="uLabel">mm</span>)</label><input type="number" step="any" id="arc_sagitta"></div>
+        <div class="span-2"><label>Arc length l (<span class="uLabel">mm</span>)</label><input type="number" step="any" id="arc_len"></div>
+        <div class="span-2" style="display:flex; align-items:flex-end;"><button class="primary" id="arc_solve" style="width:100%;">Solve</button></div>
+      </div>
+      <div class="row" style="margin-top:10px; align-items:stretch;">
+        <div class="span-6 viz"><svg id="arc_viz" viewBox="0 0 420 240" aria-label="Arc visual"></svg></div>
+        <div class="span-6">
+          <div class="out" id="arc_out"></div>
+          <details><summary>Explain the steps</summary>
+            <div style="margin-top:6px; color:#a8b2d1; font-size:13px;" id="arc_steps"></div>
+          </details>
+          <div class="legend"><span class="key"><span class="kbox k-arc"></span>Arc</span><span class="key"><span class="kbox k-chord"></span>Chord c</span><span class="key"><span class="kbox k-sag"></span>Sagitta s</span></div>
+        </div>
+      </div>
+      <div class="actions"><button id="arc_reset">Reset</button><button class="example" id="arc_example">Fill example</button></div>
+      <div class="hint">Formulas: c = 2R*sin(theta/2), s = R*(1 - cos(theta/2)), l = R*theta(rad).</div>
+    </div>
+  </section>
+
+  <div class="footer">Fully offline - No external libraries - Tooling Utils</div>
+      <!-- Original content ends -->
+    </div>
+  </main>
+
+  <script>
+(function(){
+  "use strict";
+  var state = { units:"mm", linDP:3, angDP:4 };
+  function byId(id){ return document.getElementById(id); }
+  function toNum(v){ if (v===null || v===undefined) return NaN; if (typeof v==="number") return v; var s=(""+v).trim(); return s?Number(s):NaN; }
+  function rad(d){ return d*Math.PI/180; }
+  function deg(r){ return r*180/Math.PI; }
+  function round(x,dp){ if (!isFinite(x)) return x; var p=Math.pow(10, dp||3); return Math.round((x+Number.EPSILON)*p)/p; }
+  function fmtL(x){ return isFinite(x)? round(x,state.linDP).toFixed(state.linDP):String(x); }
+  function fmtA(x){ return isFinite(x)? round(x,state.angDP).toFixed(state.angDP):String(x); }
+  function unitL(){ return state.units==="mm"?"mm":"in"; }
+  function updateUnitLabels(){ var u=unitL(); var a=document.querySelectorAll(".uLabel"); for(var i=0;i<a.length;i++){ a[i].textContent=u; } }
+  updateUnitLabels();
+
+  // Convert all numeric input boxes when unit switches
+  var linearIds=[
+    "tri_opp","tri_adj","tri_hyp",
+    "ch_z","ch_r","ch_h",
+    "tap_d1","tap_d2","tap_len",
+    "hx_pitch","hx_diam",
+    "arc_radordiam","arc_chord","arc_sagitta","arc_len"
+  ];
+  function convertAll(toUnits){
+    if (toUnits===state.units) return;
+    var factor = (toUnits==="inch" && state.units==="mm") ? (1/25.4) :
+                 (toUnits==="mm" && state.units==="inch") ? (25.4) : 1;
+    for (var i=0;i<linearIds.length;i++){
+      var el=byId(linearIds[i]); if(!el) continue;
+      var v=toNum(el.value); if(isNaN(v)) continue;
+      var nv = v*factor;
+      el.value = (Math.abs(nv) < 1e-12 ? "0" : (""+round(nv, state.linDP)));
+    }
+    state.units = toUnits;
+    // Update UI
+    updateUnitLabels();
+    // Recompute any sections that have enough to solve
+    try{ triCompute(); }catch(e){}
+    try{ chCompute(); }catch(e){}
+    try{ tapCompute(); }catch(e){}
+    try{ 
+      var filled=(byId("arc_radordiam").value.trim()!=="") + (byId("arc_theta").value.trim()!=="") + (byId("arc_chord").value.trim()!=="") + (byId("arc_sagitta").value.trim()!=="") + (byId("arc_len").value.trim()!=="");
+      if (filled>=2) byId("arc_solve").click();
+    }catch(e){}
+    try{ if(byId("hx_pitch").value && byId("hx_starts").value && byId("hx_diam").value) byId("hx_solve").click(); }catch(e){}
+  }
+  // header toggle buttons
+  function setActive(unit){
+    byId("u_mm").classList.toggle("active", unit==="mm");
+    byId("u_mm").setAttribute("aria-pressed", unit==="mm");
+    byId("u_in").classList.toggle("active", unit==="inch");
+    byId("u_in").setAttribute("aria-pressed", unit==="inch");
+  }
+  byId("u_mm").addEventListener("click", function(){ convertAll("mm"); setActive("mm"); });
+  byId("u_in").addEventListener("click", function(){ convertAll("inch"); setActive("inch"); });
+
+  function clearSVG(svg){ if(!svg) return; while(svg.firstChild) svg.removeChild(svg.firstChild); }
+  function S(svg,tag,attrs){ var el=document.createElementNS("http://www.w3.org/2000/svg",tag); for(var k in attrs){ if(k==="text"){ el.textContent=attrs[k]; } else { el.setAttribute(k, attrs[k]); } } svg.appendChild(el); return el; }
+
+  // ===== Right Triangle =====
+  function drawThetaWedge(svg, bx, by, theta, color){
+    var r=28;
+    S(svg,"line",{x1:bx,y1:by,x2:bx-r,y2:by,stroke:color,"stroke-width":"2"});
+    var vx=-Math.cos(rad(theta)), vy=-Math.sin(rad(theta));
+    S(svg,"line",{x1:bx,y1:by,x2:bx+vx*r,y2:by+vy*r,stroke:color,"stroke-width":"2"});
+    var mx=(-1 + vx), my=(0 + vy); var ml=Math.hypot(mx,my)||1; mx/=ml; my/=ml;
+    S(svg,"text",{x:bx+mx*(r*0.8),y:by+my*(r*0.8)-2,fill:color,"font-size":"12","text-anchor":"middle",text:"theta"});
+  }
+  function drawTriangleViz(svg,thetaDeg,opp,adj){
+    if(!svg) return; clearSVG(svg);
+    var pad=24,W=360,H=220,ox=pad,oy=H-pad;
+    var ax = isFinite(adj)?adj:100; var oyv = isFinite(opp)?opp:60;
+    var sx=280/Math.max(ax,1e-6), sy=160/Math.max(oyv,1e-6);
+    var X = (isFinite(adj)?adj:100)*sx; var Y = (isFinite(opp)?opp:60)*sy;
+    S(svg,"line",{x1:ox,y1:oy,x2:ox+300,y2:oy,stroke:"#9097b7","stroke-dasharray":"4 4"});
+    S(svg,"line",{x1:ox,y1:oy,x2:ox,y2:oy-180,stroke:"#9097b7","stroke-dasharray":"4 4"});
+    var s=14; S(svg,"rect",{x:ox,y:oy-s,width:s,height:s,fill:"none",stroke:"#9097b7"});
+    S(svg,"line",{x1:ox,y1:oy,x2:ox+X,y2:oy,stroke:"#37d399","stroke-width":"3"});
+    S(svg,"line",{x1:ox,y1:oy,x2:ox,y2:oy-Y,stroke:"#ff6b6b","stroke-width":"3"});
+    S(svg,"line",{x1:ox+X,y1:oy,x2:ox,y2:oy-Y,stroke:"#6ee7ff","stroke-width":"3"});
+    var bx=ox+X, by=oy;
+    var th = Math.max(0, Math.min(90, isFinite(thetaDeg)?thetaDeg:30));
+    drawThetaWedge(svg, bx, by, th, "#ffd166");
+    S(svg,"text",{x:ox+X/2,y:oy+14,fill:"#37d399","font-size":"12","text-anchor":"middle",text:"Adj (horizontal)"});
+    S(svg,"text",{x:ox-6,y:oy-Y/2,fill:"#ff6b6b","font-size":"12","text-anchor":"end",text:"Opp (vertical)"});
+    var hx=(ox+X+ox)/2, hy=(oy+oy-Y)/2; S(svg,"text",{x:hx,y:hy-6,fill:"#6ee7ff","font-size":"12","text-anchor":"middle",text:"Hyp (slanted)"});
+  }
+  function triCompute(){
+    var t=toNum(byId("tri_theta").value), o=toNum(byId("tri_opp").value), a=toNum(byId("tri_adj").value), h=toNum(byId("tri_hyp").value);
+    var out=byId("tri_out"), steps=byId("tri_steps");
+    var known=(isNaN(t)?0:1)+(isNaN(o)?0:1)+(isNaN(a)?0:1)+(isNaN(h)?0:1);
+    if(known!==2){ out.innerHTML="<span class=\"warnText\">Type any TWO boxes first (for example: angle and hypotenuse), then press Solve.</span>"; drawTriangleViz(byId("tri_viz")); return; }
+    var theta,opp,adj,hyp; try{
+      if(!isNaN(t) && !isNaN(h)){ theta=t; opp=h*Math.sin(rad(t)); adj=h*Math.cos(rad(t)); hyp=h; steps.textContent="Used: Opp = Hyp*sin(theta), Adj = Hyp*cos(theta)."; }
+      else if(!isNaN(t) && !isNaN(o)){ theta=t; adj=o/Math.tan(rad(t)); hyp=o/Math.sin(rad(t)); opp=o; steps.textContent="Used: Adj = Opp/tan(theta), Hyp = Opp/sin(theta)."; }
+      else if(!isNaN(t) && !isNaN(a)){ theta=t; opp=a*Math.tan(rad(t)); hyp=a/Math.cos(rad(t)); adj=a; steps.textContent="Used: Opp = Adj*tan(theta), Hyp = Adj/cos(theta)."; }
+      else if(!isNaN(o) && !isNaN(a)){ opp=o; adj=a; hyp=Math.hypot(o,a); theta=deg(Math.atan2(o,a)); steps.textContent="Used: Hyp = sqrt(Opp^2 + Adj^2), theta = atan2(Opp, Adj)."; }
+      else if(!isNaN(o) && !isNaN(h)){ if(o>h) throw new Error("Opposite cannot exceed hypotenuse."); opp=o; adj=Math.sqrt(Math.max(0,h*h-o*o)); hyp=h; theta=deg(Math.atan2(opp,adj)); steps.textContent="Used: Adj = sqrt(Hyp^2 - Opp^2), theta = atan2(Opp, Adj)."; }
+      else if(!isNaN(a) && !isNaN(h)){ if(a>h) throw new Error("Adjacent cannot exceed hypotenuse."); adj=a; opp=Math.sqrt(Math.max(0,h*h-a*a)); hyp=h; theta=deg(Math.atan2(opp,adj)); steps.textContent="Used: Opp = sqrt(Hyp^2 - Adj^2), theta = atan2(Opp, Adj)."; }
+      else { throw new Error("Unsupported combination."); }
+      if(hyp<=0 || opp<0 || adj<0) throw new Error("Lengths must be positive.");
+      if(theta<0 || theta>90){ if(theta<-1e-8 || theta>90+1e-8) throw new Error("theta must be 0..90 deg."); theta=Math.min(90, Math.max(0, theta)); }
+      var u = unitL();
+      out.innerHTML = "Angle at lower-right (theta): <b>"+fmtA(theta)+" deg</b>\n"+
+                      "Opposite (vertical): <b>"+fmtL(opp)+" "+u+"</b>\n"+
+                      "Adjacent (horizontal): <b>"+fmtL(adj)+" "+u+"</b>\n"+
+                      "Hypotenuse (slanted): <b>"+fmtL(hyp)+" "+u+"</b>";
+      drawTriangleViz(byId("tri_viz"),theta,opp,adj);
+    } catch(err){ out.innerHTML="<span class=\"errText\">"+err.message+"</span>"; steps.textContent=""; drawTriangleViz(byId("tri_viz")); }
+  }
+  function triMark(){ var ids=["tri_theta","tri_opp","tri_adj","tri_hyp"]; var count=0; for(var i=0;i<ids.length;i++){ var el=byId(ids[i]); var has=(el.value.trim()!==""); el.classList.remove("filled"); if(has){ el.classList.add("filled"); count++; } } byId("tri_status").textContent="Enter 2 of 4. "+count+" filled so far"+(count>=2?" - good, press Solve":""); }
+  ["tri_theta","tri_opp","tri_adj","tri_hyp"].forEach(function(id){ byId(id).addEventListener("input", triMark); });
+  byId("tri_solve").addEventListener("click", triCompute);
+  byId("tri_reset").addEventListener("click", function(){ ["tri_theta","tri_opp","tri_adj","tri_hyp"].forEach(function(id){ byId(id).value=""; byId(id).classList.remove("filled"); }); byId("tri_out").textContent=""; byId("tri_steps").textContent=""; triMark(); drawTriangleViz(byId("tri_viz")); });
+  byId("tri_example").addEventListener("click", function(){ byId("tri_theta").value="30"; byId("tri_hyp").value="100"; byId("tri_opp").value=""; byId("tri_adj").value=""; triMark(); triCompute(); });
+
+  // ===== Chamfer =====
+  function drawChamferViz(svg,angle,R,Z){
+    if(!svg) return; clearSVG(svg);
+    var pad=24,W=360,H=220,ox=pad,oy=H-pad;
+    var sx=280/Math.max(Z||1,1e-6), sy=160/Math.max(R||1,1e-6);
+    var X=(Z||60)*sx, Y=(R||30)*sy;
+    S(svg,"line",{x1:ox,y1:oy,x2:ox+300,y2:oy,stroke:"#9097b7","stroke-dasharray":"4 4"});
+    S(svg,"line",{x1:ox,y1:oy,x2:ox,y2:oy-180,stroke:"#9097b7","stroke-dasharray":"4 4"});
+    S(svg,"line",{x1:ox,y1:oy,x2:ox+X,y2:oy,stroke:"#37d399","stroke-width":"3"});
+    S(svg,"line",{x1:ox,y1:oy,x2:ox,y2:oy-Y,stroke:"#ff6b6b","stroke-width":"3"});
+    S(svg,"line",{x1:ox+X,y1:oy,x2:ox,y2:oy-Y,stroke:"#6ee7ff","stroke-width":"3"});
+    var bx=ox+X, by=oy;
+    var th=Math.max(0, Math.min(90, isFinite(angle)?angle:45));
+    var vx=-Math.cos(rad(th)), vy=-Math.sin(rad(th));
+    S(svg,"line",{x1:bx,y1:by,x2:bx-28,y2:by,stroke:"#ffd166","stroke-width":"2"});
+    S(svg,"line",{x1:bx,y1:by,x2:bx+vx*28,y2:by+vy*28,stroke:"#ffd166","stroke-width":"2"});
+    var mx=(-1 + vx), my=(0 + vy); var ml=Math.hypot(mx,my)||1; mx/=ml; my/=ml;
+    S(svg,"text",{x:bx+mx*(28*0.8),y:by+my*(28*0.8)-2,fill:"#ffd166","font-size":"12","text-anchor":"middle",text:"theta"});
+    S(svg,"text",{x:ox+X/2,y:oy+14,fill:"#37d399","font-size":"12","text-anchor":"middle",text:"Z (face)"});
+    S(svg,"text",{x:ox-6,y:oy-Y/2,fill:"#ff6b6b","font-size":"12","text-anchor":"end",text:"R (radial)"});
+    S(svg,"text",{x:(ox+X+ox)/2,y:(oy+oy-Y)/2-6,fill:"#6ee7ff","font-size":"12","text-anchor":"middle",text:"Edge"});
+  }
+  function chCompute(){
+    var ang=toNum(byId("ch_angle").value), z=toNum(byId("ch_z").value), r=toNum(byId("ch_r").value), h=toNum(byId("ch_h").value);
+    var out=byId("ch_out"), steps=byId("ch_steps");
+    var filled=(isNaN(z)?0:1)+(isNaN(r)?0:1)+(isNaN(h)?0:1);
+    if(isNaN(ang)||ang<=0||ang>=90){ out.innerHTML="<span class=\"warnText\">Enter angle between 0 and 90 (e.g. 45).</span>"; drawChamferViz(byId("ch_viz")); return; }
+    if(filled!==1){ out.innerHTML="<span class=\"warnText\">Give the angle and ONE of: Z, R, or edge length.</span>"; drawChamferViz(byId("ch_viz")); return; }
+    var A=rad(ang), Z,R,H,DD;
+    try{
+      if(!isNaN(z)){ Z=z; R=Z*Math.tan(A); H=Z/Math.cos(A); steps.textContent="Used: R = Z*tan(theta), edge = Z/cos(theta)."; }
+      else if(!isNaN(r)){ R=r; Z=R/Math.tan(A); H=R/Math.sin(A); steps.textContent="Used: Z = R/tan(theta), edge = R/sin(theta)."; }
+      else { H=h; Z=H*Math.cos(A); R=H*Math.sin(A); steps.textContent="Used: Z = edge*cos(theta), R = edge*sin(theta)."; }
+      DD=2*R;
+      var u=unitL();
+      out.innerHTML="Z (along face): <b>"+fmtL(Z)+" "+u+"</b>\nR (radial): <b>"+fmtL(R)+" "+u+"</b>\nDial X by (Delta D): <b>"+fmtL(DD)+" "+u+"</b>\nEdge length: <b>"+fmtL(H)+" "+u+"</b>";
+      drawChamferViz(byId("ch_viz"),ang,R,Z);
+    } catch(err){ out.innerHTML="<span class=\"errText\">"+err.message+"</span>"; steps.textContent=""; drawChamferViz(byId("ch_viz")); }
+  }
+  function chMark(){ var ids=["ch_z","ch_r","ch_h"]; var count=0; for(var i=0;i<ids.length;i++){ var el=byId(ids[i]); var has=(el.value.trim()!==""); el.classList.remove("filled"); if(has){ el.classList.add("filled"); count++; } } byId("ch_status").textContent="Angle + 1 of Z/R/edge. "+count+" provided"; }
+  ["ch_z","ch_r","ch_h","ch_angle"].forEach(function(id){ byId(id).addEventListener("input", chMark); });
+  byId("ch_solve").addEventListener("click", chCompute);
+  byId("ch_reset").addEventListener("click", function(){ ["ch_z","ch_r","ch_h"].forEach(function(id){ byId(id).value=""; byId(id).classList.remove("filled"); }); byId("ch_angle").value="45"; byId("ch_out").textContent=""; byId("ch_steps").textContent=""; chMark(); drawChamferViz(byId("ch_viz")); });
+  byId("ch_example").addEventListener("click", function(){ byId("ch_angle").value="45"; byId("ch_z").value="1"; byId("ch_r").value=""; byId("ch_h").value=""; chMark(); chCompute(); });
+
+  // ===== Taper =====
+  function drawTaperViz(svg,D1,D2,L){
+    if(!svg) return; clearSVG(svg);
+    var pad=20,W=360,H=220,left=pad,right=W-pad,mid=H/2;
+    var maxD=Math.max(D1||0,D2||0,1);
+    var sL=300/Math.max(L||1,1e-6), sD=160/maxD;
+    var x1=left, x2=left+(L||120)*sL;
+    var h1=(D1||60)*sD/2, h2=(D2||30)*sD/2;
+    S(svg,"line",{x1:left-6,y1:mid,x2:right,y2:mid,stroke:"#9097b7","stroke-dasharray":"4 4"});
+    S(svg,"line",{x1:x1,y1:mid-h1,x2:x1,y2:mid+h1,stroke:"#a8b2d1"});
+    S(svg,"line",{x1:x2,y1:mid-h2,x2:x2,y2:mid+h2,stroke:"#a8b2d1"});
+    S(svg,"line",{x1:x1,y1:mid-h1,x2:x2,y2:mid-h2,stroke:"#6ee7ff","stroke-width":"3"});
+    S(svg,"line",{x1:x1,y1:mid+h1,x2:x2,y2:mid+h2,stroke:"#6ee7ff","stroke-width":"3"});
+    S(svg,"text",{x:(x1+x2)/2,y:mid-h1-8,fill:"#6ee7ff","font-size":"12","text-anchor":"middle",text:"Taper flank"});
+  }
+  function tapCompute(){
+    var d1=toNum(byId("tap_d1").value), d2=toNum(byId("tap_d2").value), L=toNum(byId("tap_len").value);
+    var out=byId("tap_out"), steps=byId("tap_steps");
+    if(isNaN(d1)||isNaN(d2)||isNaN(L)){ out.innerHTML="<span class=\"warnText\">Type D1, D2 and L, then Solve.</span>"; drawTaperViz(byId("tap_viz")); return; }
+    if(L<=0||d1<=0||d2<=0){ out.innerHTML="<span class=\"errText\">All inputs must be positive.</span>"; drawTaperViz(byId("tap_viz")); return; }
+    var dDelta=Math.abs(d1-d2), rDelta=dDelta/2, half=deg(Math.atan((dDelta/2)/L)), incl=2*half;
+    var taperPer= state.units==="mm" ? (dDelta/L*100) : (dDelta/L*12);
+    var u=unitL();
+    out.innerHTML="Delta D (diameter change): <b>"+fmtL(dDelta)+" "+u+"</b>\nHalf-angle (set compound to this): <b>"+fmtA(half)+" deg</b>\nIncluded angle: <b>"+fmtA(incl)+" deg</b>\nSet-over per side (Delta R): <b>"+fmtL(rDelta)+" "+u+"</b>\nTaper rate: <b>"+fmtL(taperPer)+"</b> "+(state.units==="mm"?"per 100 mm":"per ft");
+    steps.textContent="Used: Delta D = |D1 - D2|, half-angle = atan( (Delta D / 2) / L ).";
+    drawTaperViz(byId("tap_viz"), d1, d2, L);
+  }
+  byId("tap_solve").addEventListener("click", tapCompute);
+  byId("tap_reset").addEventListener("click", function(){ ["tap_d1","tap_d2","tap_len"].forEach(function(id){ byId(id).value=""; }); byId("tap_out").textContent=""; byId("tap_steps").textContent=""; drawTaperViz(byId("tap_viz")); });
+  byId("tap_example").addEventListener("click", function(){ byId("tap_d1").value="50"; byId("tap_d2").value="30"; byId("tap_len").value="100"; tapCompute(); });
+
+  // ===== Helix / Lead Angle =====
+  byId("hx_solve").addEventListener("click", function(){
+    var pitch=toNum(byId("hx_pitch").value), starts=toNum(byId("hx_starts").value), dIn=toNum(byId("hx_diam").value);
+    var out=byId("hx_out"), steps=byId("hx_steps");
+    if(isNaN(pitch)||isNaN(starts)||isNaN(dIn)||pitch<=0||starts<=0||dIn<=0){ out.innerHTML="<span class=\"warnText\">Enter pitch (>0), starts (>=1), and diameter (>0).</span>"; return; }
+    var lead=pitch*starts;
+    var alpha=deg(Math.atan(lead/(Math.PI*dIn)));
+    out.innerHTML="Lead: <b>"+fmtL(lead)+" "+unitL()+"</b>\nHelix angle alpha: <b>"+fmtA(alpha)+" deg</b> ("+byId("hx_at").value+")";
+    steps.textContent="Used: Lead = Pitch * Starts, alpha = atan(Lead / (pi * D)).";
+  });
+  byId("hx_reset").addEventListener("click", function(){ ["hx_pitch","hx_starts","hx_diam"].forEach(function(id){ byId(id).value=""; }); byId("hx_starts").value="1"; byId("hx_out").textContent=""; byId("hx_steps").textContent=""; });
+  byId("hx_example").addEventListener("click", function(){ byId("hx_pitch").value="2"; byId("hx_starts").value="1"; byId("hx_diam").value="20"; byId("hx_solve").click(); });
+
+  // ===== Circle / Arc =====
+  function drawArcViz(svg,R,thetaDeg){
+    if(!svg) return; clearSVG(svg);
+    var pad=16,W=420,H=240,cx=W/2,cy=H/2+10;
+    var sR=110/Math.max(R||1,1e-6);
+    var r=(R||50)*sR;
+    S(svg,"circle",{cx:cx,cy:cy,r:r,stroke:"#2c3560","stroke-dasharray":"4 4",fill:"none"});
+    var th=(thetaDeg||60)*Math.PI/180; var a0=-th/2,a1=th/2;
+    var x0=cx+r*Math.cos(a0), y0=cy+r*Math.sin(a0), x1=cx+r*Math.cos(a1), y1=cy+r*Math.sin(a1);
+    S(svg,"path",{d:"M "+x0+","+y0+" A "+r+","+r+" 0 0 1 "+x1+","+y1, stroke:"#7aa2ff","stroke-width":"3", fill:"none"});
+    S(svg,"line",{x1:x0,y1:y0,x2:x1,y2:y1,stroke:"#ffd166","stroke-width":"2"});
+    var xm=(x0+x1)/2, ym=(y0+y1)/2;
+    S(svg,"line",{x1:cx,y1:cy,x2:xm,y2:ym,stroke:"#ff9fb1"});
+    S(svg,"text",{x:(x0+x1)/2,y:Math.min(y0,y1)-6,fill:"#ffd166","font-size":"12","text-anchor":"middle",text:"c (chord)"});
+    S(svg,"text",{x:(cx+xm)/2+6,y:(cy+ym)/2,fill:"#ff9fb1","font-size":"12",text:"s (sagitta)"});
+  }
+  byId("arc_solve").addEventListener("click", function(){
+    var given=byId("arc_given").value, gval=toNum(byId("arc_radordiam").value);
+    var t=byId("arc_theta").value.trim(), c=byId("arc_chord").value.trim(), s=byId("arc_sagitta").value.trim(), l=byId("arc_len").value.trim();
+    var out=byId("arc_out"), steps=byId("arc_steps");
+    if(isNaN(gval)||gval<=0){ out.innerHTML="<span class=\"warnText\">Enter "+(given==="R"?"R":"D")+" > 0.</span>"; drawArcViz(byId("arc_viz")); return; }
+    var R = (given==="R") ? gval : (gval/2);
+    var filled=(t!==""?1:0)+(c!==""?1:0)+(s!==""?1:0)+(l!==""?1:0);
+    if(filled!==1){ out.innerHTML="<span class=\"warnText\">Enter exactly one of theta, c, s, or l.</span>"; drawArcViz(byId("arc_viz")); return; }
+    var thetaRad,thetaDeg,chord,sag,arcLen;
+    try{
+      if(t!==""){ thetaDeg=toNum(t); thetaRad=rad(thetaDeg); chord=2*R*Math.sin(thetaRad/2); sag=R*(1-Math.cos(thetaRad/2)); arcLen=R*thetaRad; steps.textContent="Used angle to get c, s, l."; }
+      else if(c!==""){ chord=toNum(c); if(chord<=0||chord>2*R) throw new Error("Chord must be within (0, 2R]."); thetaRad=2*Math.asin(chord/(2*R)); thetaDeg=deg(thetaRad); sag=R*(1-Math.cos(thetaRad/2)); arcLen=R*thetaRad; steps.textContent="Used chord to get theta, then s and l."; }
+      else if(s!==""){ sag=toNum(s); if(sag<=0||sag>=2*R) throw new Error("Sagitta must be within (0, 2R)."); var cth=1-(sag/R); if(cth<-1||cth>1) throw new Error("Inconsistent sagitta for given R."); thetaRad=2*Math.acos(cth); thetaDeg=deg(thetaRad); chord=2*R*Math.sin(thetaRad/2); arcLen=R*thetaRad; steps.textContent="Used sagitta to get theta, then c and l."; }
+      else { arcLen=toNum(l); if(arcLen<=0) throw new Error("Arc length must be > 0."); thetaRad=arcLen/R; thetaDeg=deg(thetaRad); chord=2*R*Math.sin(thetaRad/2); sag=R*(1-Math.cos(thetaRad/2)); steps.textContent="Used arc length to get theta, then c and s."; }
+      out.innerHTML="R: <b>"+fmtL(R)+" "+unitL()+"</b>\ntheta (central): <b>"+fmtA(thetaDeg)+" deg</b>\nChord c: <b>"+fmtL(chord)+" "+unitL()+"</b>\nSagitta s: <b>"+fmtL(sag)+" "+unitL()+"</b>\nArc length l: <b>"+fmtL(arcLen)+" "+unitL()+"</b>";
+      drawArcViz(byId("arc_viz"), R, thetaDeg);
+    } catch(err){ out.innerHTML="<span class=\"errText\">"+err.message+"</span>"; steps.textContent=""; drawArcViz(byId("arc_viz")); }
+  });
+  byId("arc_reset").addEventListener("click", function(){ ["arc_radordiam","arc_theta","arc_chord","arc_sagitta","arc_len"].forEach(function(id){ byId(id).value=""; }); byId("arc_out").textContent=""; byId("arc_steps").textContent=""; drawArcViz(byId("arc_viz")); });
+  byId("arc_example").addEventListener("click", function(){ byId("arc_given").value="R"; byId("arc_radordiam").value="50"; byId("arc_theta").value="60"; byId("arc_chord").value=""; byId("arc_sagitta").value=""; byId("arc_len").value=""; byId("arc_solve").click(); });
+
+  // Initial drawings
+  drawTriangleViz(byId("tri_viz")); drawChamferViz(byId("ch_viz")); drawTaperViz(byId("tap_viz")); drawArcViz(byId("arc_viz"));
+})();
+</script>
+</body>
+</html>

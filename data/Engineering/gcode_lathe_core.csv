@@ -1,0 +1,51 @@
+prompt,answer,topic,family,difficulty
+G00,Rapid positioning move,Motion,G,easy
+G01,Linear interpolation (feed move),Motion,G,easy
+G02,CW circular interpolation,Motion,G,easy
+G03,CCW circular interpolation,Motion,G,easy
+G04,Dwell (pause),Misc,G,easy
+G18,Select X–Z plane,Units/Plane,G,easy
+G20,Units in inches,Units/Plane,G,easy
+G21,Units in millimeters,Units/Plane,G,easy
+G28,Return to machine reference (home),Misc,G,easy
+G30,Return to secondary reference position,Misc,G,easy
+G32,Threading (single lead) at feed per rev,Threading,G,medium
+G40,Cancel nose radius compensation,Motion,G,medium
+G41,"Nose radius comp, left",Motion,G,medium
+G42,"Nose radius comp, right",Motion,G,medium
+G50,Set max spindle speed (lathe),Misc,G,medium
+G53,Move in machine coordinates (non‑modal),Macros/Coord,G,medium
+G54,Work offset 1,Offsets,G,medium
+G55,Work offset 2,Offsets,G,medium
+G56,Work offset 3,Offsets,G,medium
+G57,Work offset 4,Offsets,G,medium
+G58,Work offset 5,Offsets,G,medium
+G59,Work offset 6,Offsets,G,medium
+G70,Finishing cycle (lathe),Cycles,G,medium
+G71,Rough turning cycle (lathe),Cycles,G,medium
+G72,Facing cycle (lathe),Cycles,G,medium
+G75,Peck grooving cycle (lathe),Cycles,G,medium
+G76,"Threading cycle (two‑line, multi‑pass)",Threading,G,medium
+G80,Cancel canned cycle,Cycles,G,medium
+G94,Feed per minute,Motion,G,medium
+G95,Feed per revolution,Motion,G,medium
+G96,Constant surface speed (CSS) on,Motion,G,medium
+G97,Cancel CSS (RPM mode),Motion,G,medium
+G09,Exact stop check,Motion,G,hard
+G65,Macro call (non‑modal),Macros/Coord,G,hard
+G66,Macro call (modal),Macros/Coord,G,hard
+G67,Cancel modal macro (G66),Macros/Coord,G,hard
+G68,Coordinate rotation on (2D),Macros/Coord,G,hard
+G69,Cancel coordinate rotation,Macros/Coord,G,hard
+M00,Program stop,Misc,M,easy
+M01,Optional stop,Misc,M,easy
+M02,End of program,Misc,M,easy
+M03,Spindle on clockwise,Spindle/Coolant,M,easy
+M04,Spindle on counter‑clockwise,Spindle/Coolant,M,easy
+M05,Spindle stop,Spindle/Coolant,M,easy
+M08,Coolant on,Spindle/Coolant,M,easy
+M09,Coolant off,Spindle/Coolant,M,easy
+M19,Spindle orient,Spindle/Coolant,M,medium
+M30,End of program & rewind,Misc,M,easy
+M98,Subprogram call,Misc,M,medium
+M99,Return from subprogram,Misc,M,medium
