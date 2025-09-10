@@ -131,8 +131,11 @@ const viewCap = document.getElementById('viewCap');
 let items = [];     // {id, dataURL, cap}
 let activeIndex = -1;
 
-// ---- Load from localStorage
-(function(){
+// ---------------- Gallery state + load/save ----------------
+let items = [];     // {id, dataURL, cap, file?}
+let activeIndex = -1;
+
+(function loadFromLocal(){
   try{
     const raw = localStorage.getItem('mtco_gallery_v1');
     if(raw){
@@ -147,14 +150,44 @@ function autosave(){
   catch(e){ console.warn('Autosave failed (likely storage size). Use Export HTML/JSON instead.'); }
 }
 
-// ---- Render
+// ---------------- Search (live filter) ----------------
+const searchEl = document.getElementById('gallerySearch');
+
 function renderAll(){
   grid.innerHTML = '';
-  for(const it of items){
+  const q = (searchEl?.value || '').trim().toLowerCase();
+
+  // If there’s a query, filter by caption or filename
+  const list = !q ? items : items.filter(it => {
+    const cap = (it.cap || '').toLowerCase();
+    // try to use stored filename; otherwise extract best-guess from dataURL
+    const file = (it.file || guessFilename(it.dataURL)).toLowerCase();
+    return cap.includes(q) || file.includes(q);
+  });
+
+  for(const it of list){
     grid.appendChild(renderTile(it));
   }
 }
 
+searchEl?.addEventListener('input', renderAll);
+
+// Helper: best-effort filename from a repo URL or DataURL
+function guessFilename(dataURL){
+  if(!dataURL) return '';
+  // If it looks like a normal URL (e.g., images/part1.jpg), take the tail
+  if(/^https?:|^\/|^[^.\/]+\//i.test(dataURL)){
+    try{ return dataURL.split('?')[0].split('#')[0].split('/').pop() || ''; } catch(e){ return ''; }
+  }
+  // DataURL fallback: derive a short label by mime
+  if(/^data:image\/(\w+)/i.test(dataURL)){
+    const ext = RegExp.$1;
+    return `inline.${ext}`;
+  }
+  return '';
+}
+
+// ---------------- Render tiles ----------------
 function renderTile(it){
   const tile = document.createElement('div');
   tile.className = 'tile';
@@ -179,7 +212,7 @@ function renderTile(it){
 function toggleEdit(tile, on){
   const cap = tile.querySelector('.cap');
   cap.setAttribute('contenteditable', on ? 'true' : 'false');
-  if(on){ cap.focus(); selectAll(cap); cap.addEventListener('blur', ()=> saveTileCap(tile)); }
+  if(on){ cap.focus(); selectAll(cap); cap.addEventListener('blur', ()=> saveTileCap(tile), { once:true }); }
   else { saveTileCap(tile); }
 }
 function selectAll(el){
@@ -194,7 +227,7 @@ function saveTileCap(tile){
   tile.querySelector('.cap').setAttribute('contenteditable','false');
 }
 
-// ---- Add photos
+// ---------------- Add photos (file input & drag-drop) ----------------
 fileInput.addEventListener('change', handleFiles);
 ;['dragenter','dragover'].forEach(ev=> drop.addEventListener(ev, (e)=>{ e.preventDefault(); drop.classList.add('drag'); }));
 ;['dragleave','drop'].forEach(ev=> drop.addEventListener(ev, (e)=>{ e.preventDefault(); drop.classList.remove('drag'); }));
@@ -212,13 +245,15 @@ function handleFiles(e){
 function readFiles(files){
   // Read sequentially to avoid memory spikes
   (function next(i){
-    if(i>=files.length){ autosave(); return; }
+    if(i>=files.length){ autosave(); renderAll(); return; }
     const f = files[i];
     const rdr = new FileReader();
     rdr.onload = (ev)=>{
       const id = Date.now().toString(36) + Math.random().toString(36).slice(2,7);
-      const it = { id, dataURL: ev.target.result, cap: f.name.replace(/\.[^.]+$/,'') };
+      const baseName = (f.name || '').replace(/\.[^.]+$/,'');
+      const it = { id, dataURL: ev.target.result, cap: baseName, file: f.name };
       items.push(it);
+      // append immediately for responsiveness
       grid.appendChild(renderTile(it));
       autosave();
       next(i+1);
@@ -226,6 +261,7 @@ function readFiles(files){
     rdr.readAsDataURL(f);
   })(0);
 }
+
 
 // ---- Remove
 function removeItem(id){
