@@ -128,21 +128,50 @@ const lightbox = document.getElementById('lightbox');
 const viewImg = document.getElementById('viewImg');
 const viewCap = document.getElementById('viewCap');
 
-let items = [];     // {id, dataURL, cap}
+// ---------------- Quick static list (edit these lines) ----------------
+// One line per image: "path/to/image.jpg | Optional caption"
+// If you omit a caption, it falls back to the filename (without extension).
+const SEED_LIST = [
+  "images/part1.jpg | 4140 steel spacer",
+  "images/lathe_chuck.png | 3-jaw chuck setup",
+  "images/turned_spigot.jpg" // caption becomes "turned_spigot"
+];
+
+// ---------------- State + seed + load/save ----------------
+let items = [];     // { id, dataURL, cap, file? }
 let activeIndex = -1;
 
-// ---------------- Gallery state + load/save ----------------
-let items = [];     // {id, dataURL, cap, file?}
-let activeIndex = -1;
+// Seed helper: build items from the static list
+function buildSeedItems(list){
+  return list.map(line => {
+    const [path, capRaw] = String(line).split("|");
+    const src = (path || "").trim();
+    const cap = (capRaw || "").trim() || src.split("/").pop().replace(/\.[^.]+$/,'');
+    const id  = (crypto.randomUUID?.() || (Date.now()+Math.random()).toString(36));
+    return { id, dataURL: src, cap, file: src.split("/").pop() };
+  });
+}
 
-(function loadFromLocal(){
+activeIndex = -1;
+
+// ---- Initialize gallery (load from localStorage or seed from SEED_LIST)
+(function initGallery(){
   try{
     const raw = localStorage.getItem('mtco_gallery_v1');
     if(raw){
       const data = JSON.parse(raw);
-      if(Array.isArray(data)) { items = data; renderAll(); }
+      if(Array.isArray(data) && data.length){
+        items = data;
+        renderAll();
+        return;
+      }
     }
-  }catch(e){ console.warn('No local gallery or failed to parse.'); }
+  }catch(e){ console.warn('No local gallery or failed to parse. Seeding from list…'); }
+
+  // Nothing saved? Seed from static list and persist
+  items = buildSeedItems(SEED_LIST);
+  renderAll();
+  autosave();
 })();
 
 function autosave(){
@@ -150,44 +179,14 @@ function autosave(){
   catch(e){ console.warn('Autosave failed (likely storage size). Use Export HTML/JSON instead.'); }
 }
 
-// ---------------- Search (live filter) ----------------
-const searchEl = document.getElementById('gallerySearch');
-
+// ---- Render
 function renderAll(){
   grid.innerHTML = '';
-  const q = (searchEl?.value || '').trim().toLowerCase();
-
-  // If there’s a query, filter by caption or filename
-  const list = !q ? items : items.filter(it => {
-    const cap = (it.cap || '').toLowerCase();
-    // try to use stored filename; otherwise extract best-guess from dataURL
-    const file = (it.file || guessFilename(it.dataURL)).toLowerCase();
-    return cap.includes(q) || file.includes(q);
-  });
-
-  for(const it of list){
+  for(const it of items){
     grid.appendChild(renderTile(it));
   }
 }
 
-searchEl?.addEventListener('input', renderAll);
-
-// Helper: best-effort filename from a repo URL or DataURL
-function guessFilename(dataURL){
-  if(!dataURL) return '';
-  // If it looks like a normal URL (e.g., images/part1.jpg), take the tail
-  if(/^https?:|^\/|^[^.\/]+\//i.test(dataURL)){
-    try{ return dataURL.split('?')[0].split('#')[0].split('/').pop() || ''; } catch(e){ return ''; }
-  }
-  // DataURL fallback: derive a short label by mime
-  if(/^data:image\/(\w+)/i.test(dataURL)){
-    const ext = RegExp.$1;
-    return `inline.${ext}`;
-  }
-  return '';
-}
-
-// ---------------- Render tiles ----------------
 function renderTile(it){
   const tile = document.createElement('div');
   tile.className = 'tile';
@@ -212,7 +211,7 @@ function renderTile(it){
 function toggleEdit(tile, on){
   const cap = tile.querySelector('.cap');
   cap.setAttribute('contenteditable', on ? 'true' : 'false');
-  if(on){ cap.focus(); selectAll(cap); cap.addEventListener('blur', ()=> saveTileCap(tile), { once:true }); }
+  if(on){ cap.focus(); selectAll(cap); cap.addEventListener('blur', ()=> saveTileCap(tile)); }
   else { saveTileCap(tile); }
 }
 function selectAll(el){
@@ -227,7 +226,7 @@ function saveTileCap(tile){
   tile.querySelector('.cap').setAttribute('contenteditable','false');
 }
 
-// ---------------- Add photos (file input & drag-drop) ----------------
+// ---- Add photos
 fileInput.addEventListener('change', handleFiles);
 ;['dragenter','dragover'].forEach(ev=> drop.addEventListener(ev, (e)=>{ e.preventDefault(); drop.classList.add('drag'); }));
 ;['dragleave','drop'].forEach(ev=> drop.addEventListener(ev, (e)=>{ e.preventDefault(); drop.classList.remove('drag'); }));
@@ -244,16 +243,13 @@ function handleFiles(e){
 
 function readFiles(files){
   // Read sequentially to avoid memory spikes
-  (function next(i){
-    if(i>=files.length){ autosave(); renderAll(); return; }
+  (function next(i){ if(i>=files.length){ autosave(); renderAll(); return; }
     const f = files[i];
     const rdr = new FileReader();
     rdr.onload = (ev)=>{
       const id = Date.now().toString(36) + Math.random().toString(36).slice(2,7);
-      const baseName = (f.name || '').replace(/\.[^.]+$/,'');
-      const it = { id, dataURL: ev.target.result, cap: baseName, file: f.name };
+      const it = { id, dataURL: ev.target.result, cap: f.name.replace(/\.[^.]+$/,'') };
       items.push(it);
-      // append immediately for responsiveness
       grid.appendChild(renderTile(it));
       autosave();
       next(i+1);
@@ -261,7 +257,6 @@ function readFiles(files){
     rdr.readAsDataURL(f);
   })(0);
 }
-
 
 // ---- Remove
 function removeItem(id){
@@ -379,3 +374,4 @@ function clearGallery(){
 </script>
 </body>
 </html>
+
