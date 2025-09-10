@@ -1,0 +1,143 @@
+=== EXISTING CONTENT IN music_80s_female_icons_100.csv ===
+
+Total: 100 questions
+
+CURRENT QUESTIONS (DO NOT REPEAT):
+1. Which artist recorded the 1980s hit 'Vacation'? → The Go-Go's
+2. Which artist recorded the 1980s hit 'Nothing's Gonna Stop Me Now'? → Samantha Fox
+3. Which artist recorded the 1980s hit 'Walk Like an Egyptian'? → The Bangles
+4. Which artist recorded the 1980s hit 'Like a Virgin'? → Madonna
+5. Which artist recorded the 1980s hit 'Love Is a Battlefield'? → Pat Benatar
+6. Which artist recorded the 1980s hit 'Eternal Flame'? → The Bangles
+7. Which artist recorded the 1980s hit 'Could've Been'? → Tiffany
+8. Which artist recorded the 1980s hit 'This Time I Know It's for Real'? → Donna Summer
+9. Which artist recorded the 1980s hit 'How Will I Know'? → Whitney Houston
+10. Which artist recorded the 1980s hit 'Manchild'? → Neneh Cherry
+11. Which artist recorded the 1980s hit 'Material Girl'? → Madonna
+12. Which artist recorded the 1980s hit 'Toy Soldiers'? → Martika
+13. Which artist recorded the 1980s hit 'Kids in America'? → Kim Wilde
+14. Which artist recorded the 1980s hit 'Like a Prayer'? → Madonna
+15. Which artist recorded the 1980s hit '99 Red Balloons'? → Nena
+16. Which artist recorded the 1980s hit 'The Look'? → Roxette
+17. Which artist recorded the 1980s hit 'Gloria'? → Laura Branigan
+18. Which artist recorded the 1980s hit 'You Keep Me Hangin' On'? → Kim Wilde
+19. Which artist recorded the 1980s hit 'What's Love Got to Do with It'? → Tina Turner
+20. Which artist recorded the 1980s hit 'Self Control'? → Laura Branigan
+21. Which artist recorded the 1980s hit 'Foolish Beat'? → Debbie Gibson
+22. Which artist recorded the 1980s hit 'Running Up That Hill (A Deal with God)'? → Kate Bush
+23. Which artist recorded the 1980s hit 'We Belong'? → Pat Benatar
+24. Which artist recorded the 1980s hit 'Love Resurrection'? → Alison Moyet
+25. Which artist recorded the 1980s hit 'Gloria'? → Laura Branigan
+26. Which artist recorded the 1980s hit 'Straight Up'? → Paula Abdul
+27. Which artist recorded the 1980s hit 'China in Your Hand'? → T'Pau
+28. Which artist recorded the 1980s hit 'She Works Hard for the Money'? → Donna Summer
+29. Which artist recorded the 1980s hit 'Kids in America'? → Kim Wilde
+30. Which artist recorded the 1980s hit 'So Emotional'? → Whitney Houston
+31. Which artist recorded the 1980s hit 'Touch Me (I Want Your Body)'? → Samantha Fox
+32. Which artist recorded the 1980s hit 'Circle in the Sand'? → Belinda Carlisle
+33. Which artist recorded the 1980s hit 'Joe le taxi'? → Vanessa Paradis
+34. Which artist recorded the 1980s hit 'I Should Be So Lucky'? → Kylie Minogue
+35. Which artist recorded the 1980s hit 'If I Could Turn Back Time'? → Cher
+36. Which artist recorded the 1980s hit 'Control'? → Janet Jackson
+37. Which artist recorded the 1980s hit 'Tramp'? → Salt-N-Pepa
+38. Which artist recorded the 1980s hit '99 Red Balloons'? → Nena
+39. Which artist recorded the 1980s hit 'Is This Love?'? → Alison Moyet
+40. Which artist recorded the 1980s hit 'If I Could Turn Back Time'? → Cher
+41. Which artist recorded the 1980s hit 'Forever Your Girl'? → Paula Abdul
+42. Which artist recorded the 1980s hit 'For Your Eyes Only'? → Sheena Easton
+43. Which artist recorded the 1980s hit 'I Wanna Dance with Somebody'? → Whitney Houston
+44. Which artist recorded the 1980s hit 'True Colors'? → Cyndi Lauper
+45. Which artist recorded the 1980s hit 'Hounds of Love'? → Kate Bush
+46. Which artist recorded the 1980s hit 'I Love Rock 'n Roll'? → Joan Jett & the Blackhearts
+47. Which artist recorded the 1980s hit 'Prove Your Love'? → Taylor Dayne
+48. Which artist recorded the 1980s hit 'Buffalo Stance'? → Neneh Cherry
+49. Which artist recorded the 1980s hit 'Eternal Flame'? → The Bangles
+50. Which artist recorded the 1980s hit 'Tell It to My Heart'? → Taylor Dayne
+51. Which artist recorded the 1980s hit 'Morning Train (9 to 5)'? → Sheena Easton
+52. Which artist recorded the 1980s hit 'We Belong'? → Pat Benatar
+53. Which artist recorded the 1980s hit 'Only in My Dreams'? → Debbie Gibson
+54. Which artist recorded the 1980s hit 'Into the Groove'? → Madonna
+55. Which artist recorded the 1980s hit 'The Only Way Is Up'? → Yazz
+56. Which artist recorded the 1980s hit 'Nothing's Gonna Stop Me Now'? → Samantha Fox
+57. Which artist recorded the 1980s hit 'We Got the Beat'? → The Go-Go's
+58. Which artist recorded the 1980s hit 'The Only Way Is Up'? → Yazz
+59. Which artist recorded the 1980s hit 'The Best'? → Tina Turner
+60. Which artist recorded the 1980s hit 'You Keep Me Hangin' On'? → Kim Wilde
+61. Which artist recorded the 1980s hit 'Love Is a Battlefield'? → Pat Benatar
+62. Which artist recorded the 1980s hit 'Don't Go'? → Yazoo
+63. Which artist recorded the 1980s hit 'I Found Someone'? → Cher
+64. Which artist recorded the 1980s hit 'Venus'? → Bananarama
+65. Which artist recorded the 1980s hit 'Listen to Your Heart'? → Roxette
+66. Which artist recorded the 1980s hit 'Smooth Operator'? → Sade
+67. Which artist recorded the 1980s hit 'Locomotion'? → Kylie Minogue
+68. Which artist recorded the 1980s hit 'I Found Someone'? → Cher
+69. Which artist recorded the 1980s hit 'All Cried Out'? → Alison Moyet
+70. Which artist recorded the 1980s hit 'Babooshka'? → Kate Bush
+71. Which artist recorded the 1980s hit 'Je Ne Sais Pas Pourquoi'? → Kylie Minogue
+72. Which artist recorded the 1980s hit 'Buffalo Stance'? → Neneh Cherry
+73. Which artist recorded the 1980s hit 'Only You'? → Yazoo
+74. Which artist recorded the 1980s hit 'Cruel Summer'? → Bananarama
+75. Which artist recorded the 1980s hit 'Manchild'? → Neneh Cherry
+76. Which artist recorded the 1980s hit 'Robert De Niro's Waiting'? → Bananarama
+77. Which artist recorded the 1980s hit 'What's Love Got to Do with It'? → Tina Turner
+78. Which artist recorded the 1980s hit 'Girls Just Want to Have Fun'? → Cyndi Lauper
+79. Which artist recorded the 1980s hit 'When I Think of You'? → Janet Jackson
+80. Which artist recorded the 1980s hit 'I Love Rock 'n Roll'? → Joan Jett & the Blackhearts
+81. Which artist recorded the 1980s hit 'Nasty'? → Janet Jackson
+82. Which artist recorded the 1980s hit 'Tramp'? → Salt-N-Pepa
+83. Which artist recorded the 1980s hit 'Vacation'? → The Go-Go's
+84. Which artist recorded the 1980s hit 'Heaven Is a Place on Earth'? → Belinda Carlisle
+85. Which artist recorded the 1980s hit 'I Think We're Alone Now'? → Tiffany
+86. Which artist recorded the 1980s hit 'Tell It to My Heart'? → Taylor Dayne
+87. Which artist recorded the 1980s hit 'Push It'? → Salt-N-Pepa
+88. Which artist recorded the 1980s hit 'We Got the Beat'? → The Go-Go's
+89. Which artist recorded the 1980s hit 'Time After Time'? → Cyndi Lauper
+90. Which artist recorded the 1980s hit 'Toy Soldiers'? → Martika
+91. Which artist recorded the 1980s hit 'Wind Beneath My Wings'? → Bette Midler
+92. Which artist recorded the 1980s hit 'Prove Your Love'? → Taylor Dayne
+93. Which artist recorded the 1980s hit 'Touch Me (I Want Your Body)'? → Samantha Fox
+94. Which artist recorded the 1980s hit 'Wind Beneath My Wings'? → Bette Midler
+95. Which artist recorded the 1980s hit 'Electric Youth'? → Debbie Gibson
+96. Which artist recorded the 1980s hit 'Walk Like an Egyptian'? → The Bangles
+97. Which artist recorded the 1980s hit 'Self Control'? → Laura Branigan
+98. Which artist recorded the 1980s hit 'Joe le taxi'? → Vanessa Paradis
+99. Which artist recorded the 1980s hit 'The Sweetest Taboo'? → Sade
+100. Which artist recorded the 1980s hit 'Push It'? → Salt-N-Pepa
+
+
+ANSWER FREQUENCY:
+The Go-Go's: 4 times
+Samantha Fox: 4 times
+The Bangles: 4 times
+Madonna: 4 times
+Pat Benatar: 4 times
+Neneh Cherry: 4 times
+Kim Wilde: 4 times
+Laura Branigan: 4 times
+Cher: 4 times
+Salt-N-Pepa: 4 times
+Taylor Dayne: 4 times
+Whitney Houston: 3 times
+Tina Turner: 3 times
+Debbie Gibson: 3 times
+Kate Bush: 3 times
+Alison Moyet: 3 times
+Kylie Minogue: 3 times
+Janet Jackson: 3 times
+Cyndi Lauper: 3 times
+Bananarama: 3 times
+Tiffany: 2 times
+Donna Summer: 2 times
+Martika: 2 times
+Nena: 2 times
+Roxette: 2 times
+Paula Abdul: 2 times
+Belinda Carlisle: 2 times
+Vanessa Paradis: 2 times
+Sheena Easton: 2 times
+Joan Jett & the Blackhearts: 2 times
+Yazz: 2 times
+Yazoo: 2 times
+Sade: 2 times
+Bette Midler: 2 times
+T'Pau: 1 time

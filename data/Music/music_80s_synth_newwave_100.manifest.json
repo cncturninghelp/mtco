@@ -1,0 +1,30 @@
+{
+  "id": "music_80s_synth_newwave_100",
+  "title": "1980s — Synth‑Pop & New Wave (Song → Artist)",
+  "schema": "classic",
+  "manifestVersion": 1,
+  "source": {
+    "type": "csv",
+    "href": "data/Music/music_80s_synth_newwave_100.csv"
+  },
+  "columns": {
+    "prompt": "prompt",
+    "answer": "answer",
+    "choices": "choices",
+    "topic": "topic",
+    "family": "family",
+    "difficulty": "difficulty",
+    "explain": "explain"
+  },
+  "defaults": {
+    "roundLen": 12,
+    "timerSec": 6.0
+  },
+  "policy": {
+    "distractors": "topicThenFamily"
+  },
+  "notes": {
+    "market": "UK",
+    "datePolicy": "Use UK release dates and Official UK chart references"
+  }
+}

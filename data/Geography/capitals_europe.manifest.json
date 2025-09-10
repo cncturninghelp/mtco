@@ -1,0 +1,28 @@
+{
+  "id": "capitals_europe",
+  "title": "Countries & Capitals — Europe",
+  "schema": "classic",
+  "manifestVersion": 1,
+  "source": {
+    "type": "csv",
+    "href": "data/Geography/capitals_europe.csv"
+  },
+  "columns": {
+    "prompt": "prompt",
+    "answer": "answer",
+    "topic": "topic",
+    "family": "family",
+    "difficulty": "difficulty",
+    "explain": "explain",
+    "choices": "choices"
+  },
+  "defaults": {
+    "roundLen": 12,
+    "timerSec": 6.0
+  },
+  "policy": {
+    "distractors": "topicThenFamily"
+  },
+  "version": "1.0",
+  "description": "Match European countries to capitals. Topic=continent; family=EU subregion code where useful."
+}

@@ -1,0 +1,196 @@
+country,capital,continent,region,difficulty
+Algeria,Algiers,Africa,AF,medium
+Angola,Luanda,Africa,AF,medium
+Benin,Porto-Novo,Africa,AF,medium
+Botswana,Gaborone,Africa,AF,medium
+Burkina Faso,Ouagadougou,Africa,AF,medium
+Burundi,Gitega,Africa,AF,hard
+Cabo Verde,Praia,Africa,AF,medium
+Cameroon,Yaoundé,Africa,AF,medium
+Central African Republic,Bangui,Africa,AF,medium
+Chad,N'Djamena,Africa,AF,medium
+Comoros,Moroni,Africa,AF,medium
+Democratic Republic of the Congo,Kinshasa,Africa,AF,medium
+Republic of the Congo,Brazzaville,Africa,AF,medium
+Côte d’Ivoire,Yamoussoukro,Africa,AF,hard
+Djibouti,Djibouti,Africa,AF,medium
+Egypt,Cairo,Africa,AF,medium
+Equatorial Guinea,Malabo,Africa,AF,hard
+Eritrea,Asmara,Africa,AF,medium
+Eswatini,Mbabane|Lobamba,Africa,AF,hard
+Ethiopia,Addis Ababa,Africa,AF,medium
+Gabon,Libreville,Africa,AF,medium
+Gambia,Banjul,Africa,AF,medium
+Ghana,Accra,Africa,AF,medium
+Guinea,Conakry,Africa,AF,medium
+Guinea-Bissau,Bissau,Africa,AF,medium
+Kenya,Nairobi,Africa,AF,medium
+Lesotho,Maseru,Africa,AF,medium
+Liberia,Monrovia,Africa,AF,medium
+Libya,Tripoli,Africa,AF,medium
+Madagascar,Antananarivo,Africa,AF,medium
+Malawi,Lilongwe,Africa,AF,medium
+Mali,Bamako,Africa,AF,medium
+Mauritania,Nouakchott,Africa,AF,medium
+Mauritius,Port Louis,Africa,AF,medium
+Morocco,Rabat,Africa,AF,medium
+Mozambique,Maputo,Africa,AF,medium
+Namibia,Windhoek,Africa,AF,medium
+Niger,Niamey,Africa,AF,medium
+Nigeria,Abuja,Africa,AF,medium
+Rwanda,Kigali,Africa,AF,medium
+São Tomé and Príncipe,São Tomé,Africa,AF,medium
+Senegal,Dakar,Africa,AF,medium
+Seychelles,Victoria,Africa,AF,medium
+Sierra Leone,Freetown,Africa,AF,medium
+Somalia,Mogadishu,Africa,AF,medium
+South Africa,Pretoria|Cape Town|Bloemfontein,Africa,AF,hard
+South Sudan,Juba,Africa,AF,medium
+Sudan,Khartoum,Africa,AF,medium
+Tanzania,Dodoma,Africa,AF,medium
+Togo,Lomé,Africa,AF,medium
+Tunisia,Tunis,Africa,AF,medium
+Uganda,Kampala,Africa,AF,medium
+Zambia,Lusaka,Africa,AF,medium
+Zimbabwe,Harare,Africa,AF,medium
+Antigua and Barbuda,St. John's,Americas,NA,medium
+Bahamas,Nassau,Americas,NA,medium
+Barbados,Bridgetown,Americas,NA,medium
+Belize,Belmopan,Americas,NA,medium
+Canada,Ottawa,Americas,NA,medium
+Costa Rica,San José,Americas,NA,medium
+Cuba,Havana,Americas,NA,medium
+Dominica,Roseau,Americas,NA,medium
+Dominican Republic,Santo Domingo,Americas,NA,medium
+El Salvador,San Salvador,Americas,NA,medium
+Grenada,St. George's,Americas,NA,medium
+Guatemala,Guatemala City,Americas,NA,medium
+Haiti,Port-au-Prince,Americas,NA,medium
+Honduras,Tegucigalpa,Americas,NA,medium
+Jamaica,Kingston,Americas,NA,medium
+Mexico,Mexico City,Americas,NA,medium
+Nicaragua,Managua,Americas,NA,medium
+Panama,Panama City,Americas,NA,medium
+Saint Kitts and Nevis,Basseterre,Americas,NA,medium
+Saint Lucia,Castries,Americas,NA,medium
+Saint Vincent and the Grenadines,Kingstown,Americas,NA,medium
+Trinidad and Tobago,Port of Spain,Americas,NA,medium
+United States,"Washington, D.C.",Americas,NA,medium
+Argentina,Buenos Aires,Americas,SA,medium
+Bolivia,Sucre|La Paz,Americas,SA,hard
+Brazil,Brasília,Americas,SA,medium
+Chile,Santiago,Americas,SA,medium
+Colombia,Bogotá,Americas,SA,medium
+Ecuador,Quito,Americas,SA,medium
+Guyana,Georgetown,Americas,SA,medium
+Paraguay,Asunción,Americas,SA,medium
+Peru,Lima,Americas,SA,medium
+Suriname,Paramaribo,Americas,SA,medium
+Uruguay,Montevideo,Americas,SA,medium
+Venezuela,Caracas,Americas,SA,medium
+Afghanistan,Kabul,Asia,AS,medium
+Armenia,Yerevan,Asia,AS,medium
+Azerbaijan,Baku,Asia,AS,medium
+Bahrain,Manama,Asia,AS,medium
+Bangladesh,Dhaka,Asia,AS,medium
+Bhutan,Thimphu,Asia,AS,medium
+Brunei,Bandar Seri Begawan,Asia,AS,medium
+Cambodia,Phnom Penh,Asia,AS,medium
+China,Beijing,Asia,AS,medium
+Georgia,Tbilisi,Asia,AS,medium
+India,New Delhi,Asia,AS,medium
+Indonesia,Jakarta,Asia,AS,medium
+Iran,Tehran,Asia,AS,medium
+Iraq,Baghdad,Asia,AS,medium
+Israel,Jerusalem,Asia,AS,hard
+Japan,Tokyo,Asia,AS,medium
+Jordan,Amman,Asia,AS,medium
+Kazakhstan,Astana,Asia,AS,medium
+Kuwait,Kuwait City,Asia,AS,medium
+Kyrgyzstan,Bishkek,Asia,AS,medium
+Laos,Vientiane,Asia,AS,medium
+Lebanon,Beirut,Asia,AS,medium
+Malaysia,Kuala Lumpur,Asia,AS,medium
+Maldives,Malé,Asia,AS,medium
+Mongolia,Ulaanbaatar,Asia,AS,medium
+Myanmar,Naypyidaw,Asia,AS,medium
+Nepal,Kathmandu,Asia,AS,medium
+North Korea,Pyongyang,Asia,AS,medium
+Oman,Muscat,Asia,AS,medium
+Pakistan,Islamabad,Asia,AS,medium
+State of Palestine,Ramallah|East Jerusalem,Asia,AS,hard
+Philippines,Manila,Asia,AS,medium
+Qatar,Doha,Asia,AS,medium
+Saudi Arabia,Riyadh,Asia,AS,medium
+Singapore,Singapore,Asia,AS,medium
+South Korea,Seoul,Asia,AS,medium
+Sri Lanka,Sri Jayawardenepura Kotte|Colombo,Asia,AS,medium
+Syria,Damascus,Asia,AS,medium
+Tajikistan,Dushanbe,Asia,AS,medium
+Thailand,Bangkok,Asia,AS,medium
+Türkiye,Ankara,Asia,AS,medium
+Turkmenistan,Ashgabat,Asia,AS,medium
+United Arab Emirates,Abu Dhabi,Asia,AS,medium
+Uzbekistan,Tashkent,Asia,AS,medium
+Vietnam,Hanoi,Asia,AS,medium
+Yemen,Sana'a,Asia,AS,medium
+Albania,Tirana,Europe,EU,medium
+Andorra,Andorra la Vella,Europe,EU,medium
+Austria,Vienna,Europe,EU,medium
+Belarus,Minsk,Europe,EU,medium
+Belgium,Brussels,Europe,EU,medium
+Bosnia and Herzegovina,Sarajevo,Europe,EU,medium
+Bulgaria,Sofia,Europe,EU,medium
+Croatia,Zagreb,Europe,EU,medium
+Cyprus,Nicosia,Europe,EU,medium
+Czechia,Prague,Europe,EU,medium
+Denmark,Copenhagen,Europe,EU,medium
+Estonia,Tallinn,Europe,EU,medium
+Finland,Helsinki,Europe,EU,medium
+France,Paris,Europe,EU,medium
+Germany,Berlin,Europe,EU,medium
+Greece,Athens,Europe,EU,medium
+Hungary,Budapest,Europe,EU,medium
+Iceland,Reykjavík,Europe,EU,medium
+Ireland,Dublin,Europe,EU,medium
+Italy,Rome,Europe,EU,medium
+Latvia,Riga,Europe,EU,medium
+Liechtenstein,Vaduz,Europe,EU,medium
+Lithuania,Vilnius,Europe,EU,medium
+Luxembourg,Luxembourg,Europe,EU,medium
+Malta,Valletta,Europe,EU,medium
+Moldova,Chișinău,Europe,EU,medium
+Monaco,Monaco,Europe,EU,medium
+Montenegro,Podgorica,Europe,EU,medium
+Netherlands,Amsterdam|The Hague,Europe,EU,hard
+North Macedonia,Skopje,Europe,EU,medium
+Norway,Oslo,Europe,EU,medium
+Poland,Warsaw,Europe,EU,medium
+Portugal,Lisbon,Europe,EU,medium
+Romania,Bucharest,Europe,EU,medium
+Russia,Moscow,Europe,EU,medium
+San Marino,San Marino,Europe,EU,medium
+Serbia,Belgrade,Europe,EU,medium
+Slovakia,Bratislava,Europe,EU,medium
+Slovenia,Ljubljana,Europe,EU,medium
+Spain,Madrid,Europe,EU,medium
+Sweden,Stockholm,Europe,EU,medium
+Switzerland,Bern,Europe,EU,medium
+Ukraine,Kyiv,Europe,EU,medium
+United Kingdom,London,Europe,EU,medium
+Vatican City,Vatican City,Europe,EU,medium
+Australia,Canberra,Oceania,OC,medium
+New Zealand,Wellington,Oceania,OC,medium
+Fiji,Suva,Oceania,OC,medium
+Kiribati,South Tarawa,Oceania,OC,medium
+Marshall Islands,Majuro,Oceania,OC,medium
+Micronesia,Palikir,Oceania,OC,medium
+Nauru,Yaren,Oceania,OC,hard
+Palau,Ngerulmud,Oceania,OC,medium
+Papua New Guinea,Port Moresby,Oceania,OC,medium
+Samoa,Apia,Oceania,OC,medium
+Solomon Islands,Honiara,Oceania,OC,medium
+Tonga,Nukuʻalofa,Oceania,OC,medium
+Tuvalu,Funafuti,Oceania,OC,medium
+Vanuatu,Port Vila,Oceania,OC,medium
+Holy See,Vatican City,Europe,EU,medium

@@ -1,0 +1,23 @@
+{
+  "id": "cold_war_starter",
+  "title": "Cold War \u2014 Starter (MC only)",
+  "schema": "classic",
+  "manifestVersion": 1,
+  "source": {
+    "type": "csv",
+    "href": "data/History/cold_war_starter.csv"
+  },
+  "columns": {
+    "prompt": "prompt",
+    "answer": "answer",
+    "topic": "topic",
+    "family": "family",
+    "difficulty": "difficulty",
+    "explain": "explain",
+    "choices": "choices"
+  },
+  "defaults": {
+    "roundLen": 12,
+    "timerSec": 6.0
+  }
+}

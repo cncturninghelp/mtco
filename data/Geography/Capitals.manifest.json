@@ -1,0 +1,25 @@
+{
+  "id": "capitals_world",
+  "title": "World Capitals — All Countries",
+  "schema": "classic",
+  "manifestVersion": 1,
+  "source": {
+    "type": "csv",
+    "href": "data/Geography/capitals_world.csv"
+  },
+  "columns": {
+    "prompt": "country",
+    "answer": "capital",
+    "topic": "continent",
+    "family": "region",
+    "difficulty": "difficulty",
+    "explain": "explain"
+  },
+  "defaults": {
+    "roundLen": 12,
+    "timerSec": 6.0
+  },
+  "policy": {
+    "distractors": "topicThenFamily"
+  }
+}

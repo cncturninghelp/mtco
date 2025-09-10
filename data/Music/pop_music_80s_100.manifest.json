@@ -1,0 +1,26 @@
+{
+  "id": "pop_music_80s_100",
+  "title": "1980s Pop Music — Who Sang It?",
+  "schema": "classic",
+  "manifestVersion": 1,
+  "source": {
+    "type": "csv",
+    "href": "data/Music/pop_music_80s_100.csv"
+  },
+  "columns": {
+    "prompt": "prompt",
+    "answer": "answer",
+    "choices": "choices",
+    "topic": "topic",
+    "family": "family",
+    "difficulty": "difficulty",
+    "explain": "explain"
+  },
+  "defaults": {
+    "roundLen": 12,
+    "timerSec": 6.0
+  },
+  "policy": {
+    "distractors": "topicThenFamily"
+  }
+}

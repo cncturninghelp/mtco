@@ -1,0 +1,24 @@
+{
+  "id": "spelling_en_gb",
+  "title": "Spelling (en\u2011GB) \u2014 Auto (MC + Missing Letters)",
+  "schema": "classic",
+  "manifestVersion": 1,
+  "source": {
+    "type": "csv",
+    "href": "data/Spelling/spelling_en_gb.csv"
+  },
+  "columns": {
+    "prompt": "prompt",
+    "answer": "answer",
+    "topic": "topic",
+    "family": "family",
+    "difficulty": "difficulty",
+    "explain": "explain",
+    "choices": "choices"
+  },
+  "defaults": {
+    "roundLen": 12,
+    "timerSec": 6.0
+  },
+  "description": "Zero-typing generator backed by wordfreq (optional PyEnchant)."
+}

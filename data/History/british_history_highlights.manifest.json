@@ -1,0 +1,23 @@
+{
+  "id": "british_history_highlights",
+  "title": "British History Highlights \u2014 Tudors to 20th c. (MC only)",
+  "schema": "classic",
+  "manifestVersion": 1,
+  "source": {
+    "type": "csv",
+    "href": "data/History/british_history_highlights.csv"
+  },
+  "columns": {
+    "prompt": "prompt",
+    "answer": "answer",
+    "topic": "topic",
+    "family": "family",
+    "difficulty": "difficulty",
+    "explain": "explain",
+    "choices": "choices"
+  },
+  "defaults": {
+    "roundLen": 12,
+    "timerSec": 6.0
+  }
+}

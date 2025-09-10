@@ -1,0 +1,28 @@
+{
+  "id": "elements_symbols",
+  "title": "Periodic Table — Element Symbols",
+  "schema": "classic",
+  "manifestVersion": 1,
+  "source": {
+    "type": "csv",
+    "href": "data/Science/elements_symbols.csv"
+  },
+  "columns": {
+    "prompt": "prompt",
+    "answer": "answer",
+    "topic": "topic",
+    "family": "family",
+    "difficulty": "difficulty",
+    "explain": "explain",
+    "choices": "choices"
+  },
+  "defaults": {
+    "roundLen": 12,
+    "timerSec": 6.0
+  },
+  "policy": {
+    "distractors": "topicThenFamily"
+  },
+  "version": "1.0",
+  "description": "Match element name to chemical symbol. Prompt = element, Answer = symbol. 118 items."
+}

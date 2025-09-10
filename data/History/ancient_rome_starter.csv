@@ -1,0 +1,444 @@
+prompt,answer,topic,family,difficulty
+Which emperor legalised Christianity across the empire?,Constantine the Great,History,Ancient Rome,mid
+Which emperor founded the Flavian dynasty?,Vespasian,History,Ancient Rome,starter
+Which Roman emperor was known for the 'pax Romana' reforms?,Augustus,History,Ancient Rome,mid
+Which emperor completed Hadrian's Wall?,Hadrian,History,Ancient Rome,mid
+In which battle did Hannibal defeated Rome?,Battle of Cannae,History,Ancient Rome,mid
+In which battle did Scipio defeated Hannibal?,Battle of Zama,History,Ancient Rome,hard
+In which battle did Octavian beat Antony & Cleopatra?,Battle of Actium,History,Ancient Rome,mid
+In which battle did Caesar beat Pompey?,Battle of Pharsalus,History,Ancient Rome,starter
+In which battle did Varus lost three legions?,Battle of Teutoburg Forest,History,Ancient Rome,hard
+In which battle did Constantine defeated Maxentius?,Battle of Milvian Bridge,History,Ancient Rome,starter
+In which battle did Valens killed by Goths?,Battle of Adrianople,History,Ancient Rome,mid
+In which battle did Caesar beat Vercingetorix?,Battle of Alesia,History,Ancient Rome,starter
+In which battle did Crassus defeated by Parthia?,Battle of Carrhae,History,Ancient Rome,hard
+In which battle did Suetonius Paulinus defeated Boudica?,Battle of Watling Street,History,Ancient Rome,starter
+Which famous Roman road linked Rome to Capua and southern Italy?,Via Appia,History,Ancient Rome,mid
+Which Roman aqueduct supplied water from the Anio valley to Rome in the 1st century AD?,Aqua Anio Novus,History,Ancient Rome,hard
+Which Roman amphitheatre was originally called the Flavian Amphitheatre?,Colosseum,History,Ancient Rome,starter
+Which Roman temple is famed for its unreinforced concrete dome and oculus?,Pantheon,History,Ancient Rome,starter
+What was the primary venue for chariot racing in ancient Rome?,Circus Maximus,History,Ancient Rome,mid
+Which extraordinary office granted a single magistrate supreme power for a limited time?,dictator,History,Ancient Rome,mid
+Which Roman magistrate maintained the census and oversaw public morals?,censor,History,Ancient Rome,starter
+Which Republican office could veto the actions of magistrates to protect plebeians?,tribune of the plebs,History,Ancient Rome,mid
+"In Roman religion, who/what was the pontifex maximus?",pontifex maximus,History,Ancient Rome,starter
+"In Roman religion, who/what was the Vestal Virgins?",Vestal Virgins,History,Ancient Rome,starter
+"In Roman religion, who/what was the augur?",augur,History,Ancient Rome,starter
+"In Roman religion, who/what was the haruspex?",haruspex,History,Ancient Rome,mid
+"In Roman history, what does the term 'SPQR' refer to?",SPQR,History,Ancient Rome,starter
+"In Roman history, what does the term 'cursus honorum' refer to?",cursus honorum,History,Ancient Rome,mid
+"In Roman history, what does the term 'latifundia' refer to?",latifundia,History,Ancient Rome,starter
+"In Roman history, what does the term 'limes' refer to?",limes,History,Ancient Rome,hard
+"In Roman history, what does the term 'legion' refer to?",legion,History,Ancient Rome,starter
+"In Roman history, what was a 'century' in the army?",a unit of roughly 80 men led by a centurion,History,Ancient Rome,starter
+"In Roman history, what were the 'auxilia'?",non-citizen troops supporting the Roman legions,History,Ancient Rome,starter
+"In Roman society, who were the patricians?",members of aristocratic families,History,Ancient Rome,starter
+"In Roman society, who were the plebeians?",common citizens of Rome,History,Ancient Rome,mid
+"In Roman society, what was 'clientela'?",the patron-client relationship system,History,Ancient Rome,mid
+"In Roman politics, what was 'imperium'?",the legal authority to command and govern,History,Ancient Rome,starter
+What does the term 'Pax Romana' describe?,a long period of relative peace and stability (27 BC–AD 180),History,Ancient Rome,starter
+"In Roman society, what was a 'domus'?",a townhouse or residence of a wealthy Roman,History,Ancient Rome,starter
+"In Roman society, what was an 'insula'?",an apartment block for the urban poor,History,Ancient Rome,mid
+"In ancient Rome, what were the 'thermae'?",public baths,History,Ancient Rome,starter
+Who wrote the epic poem the 'Aeneid'?,Virgil,History,Ancient Rome,hard
+Which historian wrote the 'Annals' and the 'Histories' about the early empire?,Tacitus,History,Ancient Rome,starter
+"Which province, annexed after Actium, was ruled directly by a prefect under the emperor?",Aegyptus,History,Ancient Rome,starter
+Which Roman law or edict earliest codification of Roman law?,Twelve Tables,History,Ancient Rome,mid
+Which Roman law or edict made plebiscites binding on all citizens?,Lex Hortensia,History,Ancient Rome,starter
+Which Roman law or edict legalised Christianity?,Edict of Milan,History,Ancient Rome,mid
+Which Roman law or edict granted citizenship to most free inhabitants?,Constitutio Antoniniana,History,Ancient Rome,starter
+Which Roman law or edict allowed intermarriage between patricians and plebeians?,Lex Canuleia,History,Ancient Rome,hard
+Which Roman law or edict restricted senators from owning large ships?,Lex Claudia,History,Ancient Rome,mid
+"Who crossed the Rubicon in 49 BC, sparking civil war?",Julius Caesar,History,Ancient Rome,mid
+Who led the Carthaginians across the Alps with war elephants?,Hannibal,History,Ancient Rome,starter
+Which emperor built a defensive wall across northern Britannia?,Hadrian,History,Ancient Rome,starter
+Who was the first Christian emperor of Rome?,Constantine the Great,History,Ancient Rome,mid
+Which slave led a major revolt against Rome in 73–71 BC?,Spartacus,History,Ancient Rome,mid
+Which general defeated Hannibal at the Battle of Zama?,Scipio Africanus,History,Ancient Rome,mid
+Which emperor is counted among the 'Five Good Emperors'?,Nerva,History,Ancient Rome,mid
+Which emperor belonged to the Julio‑Claudian dynasty?,Augustus,History,Ancient Rome,mid
+Which emperor was a member of the Flavian dynasty?,Vespasian,History,Ancient Rome,starter
+Which emperor ruled during the Severan dynasty?,Septimius Severus,History,Ancient Rome,mid
+Which ruler was part of Diocletian's Tetrarchy?,Diocletian,History,Ancient Rome,hard
+Who wrote 'Aeneid'?,Virgil,History,Ancient Rome,starter
+Who wrote 'Metamorphoses'?,Ovid,History,Ancient Rome,mid
+Who wrote 'Ab Urbe Condita'?,Livy,History,Ancient Rome,starter
+Who wrote 'Germania'?,Tacitus,History,Ancient Rome,hard
+Who wrote 'Annals'?,Tacitus,History,Ancient Rome,mid
+Who wrote 'Histories'?,Tacitus,History,Ancient Rome,hard
+Who wrote 'Parallel Lives'?,Plutarch,History,Ancient Rome,starter
+Who wrote 'The Twelve Caesars'?,Suetonius,History,Ancient Rome,starter
+Who wrote 'De Bello Gallico'?,Julius Caesar,History,Ancient Rome,mid
+Who wrote 'Letters'?,Pliny the Younger,History,Ancient Rome,mid
+Who wrote 'Natural History'?,Pliny the Elder,History,Ancient Rome,mid
+Who wrote 'Catiline Conspiracy'?,Sallust,History,Ancient Rome,hard
+Who wrote 'Meditations'?,Marcus Aurelius,History,Ancient Rome,starter
+Who wrote 'On the Nature of Things'?,Lucretius,History,Ancient Rome,starter
+Which emperor commissioned the Pantheon's rebuilding in brick and concrete?,Hadrian,History,Ancient Rome,hard
+Which emperor opened the Colosseum with games lasting 100 days?,Titus,History,Ancient Rome,starter
+Which structure marked Rome's northern frontier in Britannia?,Hadrian's Wall,History,Ancient Rome,starter
+Which monumental column in Rome commemorates Dacian campaigns?,Trajan's Column,History,Ancient Rome,starter
+What was the large public bath complex called in Rome?,thermae,History,Ancient Rome,mid
+What do we call a wealthy Roman townhouse?,domus,History,Ancient Rome,hard
+What was the relationship system between patrons and dependants?,clientela,History,Ancient Rome,mid
+Which Roman structure is described as giant public baths built in early 3rd century?,Baths of Caracalla,History,Ancient Rome,starter
+Which Roman law or edict legalised Christianity (AD 313)?,Edict of Milan,History,Ancient Rome,hard
+"Which Roman emperor Stoic philosopher, wrote 'Meditations'?",Marcus Aurelius,History,Ancient Rome,starter
+Which Roman structure is described as monument celebrating Dacian campaigns?,Trajan's Column,History,Ancient Rome,hard
+"In ancient Rome, who or what were the senate?",political institution of aristocrats,History,Ancient Rome,starter
+In which battle Scipio Africanus defeated Hannibal in 202 BC?,Battle of Zama,History,Ancient Rome,mid
+"In Roman history, what was 'clientela'?",patron‑client relationship system,History,Ancient Rome,starter
+"In Roman history, what was 'cursus honorum'?",sequence of public offices,History,Ancient Rome,starter
+In which battle three Roman legions lost under Varus in AD 9?,Battle of Teutoburg Forest,History,Ancient Rome,hard
+"Which Roman structure is described as largest amphitheatre, used for gladiatorial games?",Colosseum,History,Ancient Rome,hard
+Which Roman emperor conquered Britannia in AD 43?,Claudius,History,Ancient Rome,starter
+"In Roman history, what was 'century'?",unit of ~80 men led by a centurion,History,Ancient Rome,starter
+"In ancient Rome, who or what were the domus?",townhouse of wealthy Romans,History,Ancient Rome,starter
+"In ancient Rome, who or what were the gladiators?",fighters who entertained crowds in arenas,History,Ancient Rome,hard
+Which Roman law or edict earliest codification of Roman law (c. 450 BC)?,Twelve Tables,History,Ancient Rome,starter
+"In ancient Rome, who or what were the insula?",apartment blocks for the poor,History,Ancient Rome,mid
+"In Roman history, what was 'pax Romana'?",period of peace from Augustus to Marcus Aurelius,History,Ancient Rome,mid
+In which battle Valens was killed by the Goths in AD 378?,Battle of Adrianople,History,Ancient Rome,mid
+Who wrote the 'Annals' and 'Histories'?,Tacitus,History,Ancient Rome,hard
+In which battle Constantine defeated Maxentius in AD 312?,Battle of Milvian Bridge,History,Ancient Rome,mid
+In which battle Hannibal inflicted a massive defeat on Rome in 216 BC?,Battle of Cannae,History,Ancient Rome,hard
+Which Roman structure is described as temple with massive dome and oculus?,Pantheon,History,Ancient Rome,starter
+"In ancient Rome, who or what were the Vestal Virgins?",priestesses who kept the sacred fire of Vesta,History,Ancient Rome,mid
+"In Roman history, what was 'latifundia'?",large agricultural estates,History,Ancient Rome,mid
+"In Roman history, what was 'legion'?",main heavy infantry unit of Rome,History,Ancient Rome,starter
+"Which Roman emperor notorious for cruelty, assassinated by Praetorians?",Caligula,History,Ancient Rome,starter
+Which Roman emperor introduced the Tetrarchy and price edict?,Diocletian,History,Ancient Rome,mid
+Who famous for letters on eruption of Vesuvius?,Pliny the Younger,History,Ancient Rome,mid
+"In Roman history, what was 'auxilia'?",non‑citizen troops supporting the legions,History,Ancient Rome,starter
+Which Roman emperor led Rome to its greatest territorial extent?,Trajan,History,Ancient Rome,starter
+"In Roman history, what was 'imperium'?",legal authority to command,History,Ancient Rome,starter
+Who historian of the Catiline Conspiracy?,Sallust,History,Ancient Rome,hard
+Which Roman emperor assassinated on the Ides of March 44 BC?,Julius Caesar,History,Ancient Rome,mid
+Which Roman structure is described as fortification across northern Britain?,Hadrian's Wall,History,Ancient Rome,starter
+Which Roman structure is described as huge chariot‑racing stadium in Rome?,Circus Maximus,History,Ancient Rome,hard
+Which Roman emperor emperor during the Great Fire of Rome?,Nero,History,Ancient Rome,starter
+Which Roman law or edict granted citizenship to nearly all free inhabitants (AD 212)?,Constitutio Antoniniana,History,Ancient Rome,starter
+In which battle Octavian defeated Antony and Cleopatra in 31 BC?,Battle of Actium,History,Ancient Rome,starter
+"In ancient Rome, who or what were the forum?",public square and marketplace,History,Ancient Rome,hard
+Who wrote the 'Aeneid'?,Virgil,History,Ancient Rome,mid
+Which Roman emperor legalised Christianity with the Edict of Milan?,Constantine the Great,History,Ancient Rome,mid
+"In ancient Rome, who or what were the thermae?",public bath complexes,History,Ancient Rome,hard
+"Which Roman emperor first emperor of Rome, established the principate?",Augustus,History,Ancient Rome,starter
+Which Roman law or edict made plebiscites binding on all Romans (287 BC)?,Lex Hortensia,History,Ancient Rome,starter
+Which Roman emperor built a defensive wall in northern Britain?,Hadrian,History,Ancient Rome,starter
+"In Roman literature, who was Seneca?",Stoic philosopher and tutor of Nero,History,Ancient Rome,starter
+"In Roman government, what was the role of a praetor?",magistrate overseeing law courts,History,Ancient Rome,starter
+"In Roman religion, who was Venus?",goddess of love and beauty,History,Ancient Rome,hard
+"In Roman government, what was the role of a dictator?",emergency magistrate with absolute authority for six months,History,Ancient Rome,mid
+"In the Roman army, what was a centurion?",commander of a century (~80 men),History,Ancient Rome,starter
+What was the Roman festival of Lupercalia?,festival of purification and fertility held in February,History,Ancient Rome,mid
+"In Roman government, what was the role of a tribune of the plebs?",official who could veto measures to protect plebeians,History,Ancient Rome,starter
+"In Roman literature, who was Cicero?","famous orator and statesman, author of speeches and philosophical works",History,Ancient Rome,starter
+"In Roman diet, what was garum?",fermented fish sauce widely used in Roman cooking,History,Ancient Rome,mid
+"In Roman engineering, what were Via Appia?","the Appian Way, a major Roman road",History,Ancient Rome,starter
+"In Roman literature, who was Horace?",poet known for odes and satires,History,Ancient Rome,mid
+What was the Roman festival of Consualia?,"festival celebrating Consus, linked to horses and chariot races",History,Ancient Rome,starter
+What was the Roman festival of Parentalia?,festival to honour ancestors and the dead,History,Ancient Rome,mid
+"In Roman economy, what was the sestertius?",bronze coin of lower value,History,Ancient Rome,mid
+"In Roman engineering, what were Cloaca Maxima?",Rome's great sewer system,History,Ancient Rome,starter
+"In Roman economy, what was the aureus?",gold coin used in the empire,History,Ancient Rome,mid
+"In the Roman army, what was a eagle standard?",symbol of a Roman legion,History,Ancient Rome,hard
+"In Roman engineering, what were concrete?",building material perfected by Romans,History,Ancient Rome,starter
+"In Roman economy, what was the denarius?",standard Roman silver coin,History,Ancient Rome,starter
+"In Roman diet, what was bread?","daily staple of most Romans, provided in state dole",History,Ancient Rome,hard
+"In Roman government, what was the role of a censor?",official responsible for census and public morals,History,Ancient Rome,mid
+"In Roman engineering, what were arch?",architectural feature enabling large durable structures,History,Ancient Rome,starter
+"In the Roman army, what was a testudo?",tortoise shield formation,History,Ancient Rome,starter
+"In Roman religion, who was Janus?",god of beginnings and doorways,History,Ancient Rome,mid
+What was the Roman festival of Saturnalia?,festival in December honouring Saturn with gift‑giving and role reversals,History,Ancient Rome,hard
+What was the Roman festival of Floralia?,festival for the goddess Flora with theatrical performances,History,Ancient Rome,starter
+"In Roman diet, what was wine?","most common drink, consumed diluted",History,Ancient Rome,starter
+"In Roman religion, who was Vesta?",goddess of the hearth,History,Ancient Rome,hard
+"In Roman economy, what was the annona?",grain supply system for the city of Rome,History,Ancient Rome,mid
+"In Roman literature, who was Juvenal?",satirist criticising Roman society,History,Ancient Rome,starter
+"In Roman economy, what was the portorium?",customs duty on goods,History,Ancient Rome,mid
+"In Roman diet, what was olive oil?",essential for cooking and lamps,History,Ancient Rome,mid
+"In Roman religion, who was Jupiter?","chief Roman god, king of the gods",History,Ancient Rome,hard
+"In Roman literature, who was Catullus?",poet of love lyrics,History,Ancient Rome,hard
+"In the Roman army, what was a pilum?",heavy javelin carried by legionaries,History,Ancient Rome,starter
+"In Roman religion, who was Mars?",god of war,History,Ancient Rome,hard
+"In Roman government, what was the role of a senate?",council of aristocrats guiding policy,History,Ancient Rome,mid
+"In the Roman army, what was a gladius?",short sword of Roman infantry,History,Ancient Rome,mid
+"In Roman government, what was the role of a consul?",highest annual magistrate office,History,Ancient Rome,mid
+"In Roman engineering, what were aqueducts?",structures carrying water into cities,History,Ancient Rome,mid
+When did the Sack of Rome by the Gauls occur?,390 BC,History,Ancient Rome,mid
+"In Roman society, what were insula?",apartment blocks for poor Romans,History,Ancient Rome,mid
+Which battle saw Crassus defeated by Parthians in 53 BC?,Battle of Carrhae,History,Ancient Rome,mid
+Which Roman emperor was known as step‑son and successor of Augustus?,Tiberius,History,Ancient Rome,starter
+Which Roman emperor was known as dictator assassinated in 44 BC?,Julius Caesar,History,Ancient Rome,starter
+Which Roman law or reform was earliest codification of Roman law (c. 450 BC)?,Twelve Tables,History,Ancient Rome,mid
+When did the Year of the Four Emperors occur?,AD 69,History,Ancient Rome,mid
+"In Roman religion, who or what was Mithras?",deity worshipped in a mystery cult,History,Ancient Rome,starter
+"In Roman literature, who was Suetonius?",biographer who wrote 'The Twelve Caesars',History,Ancient Rome,starter
+"In the Roman army, what was a aquila?",eagle standard of a legion,History,Ancient Rome,starter
+"In Roman literature, who was Pliny the Elder?",author of 'Natural History',History,Ancient Rome,starter
+Which Roman emperor was known as emperor during the Great Fire of Rome?,Nero,History,Ancient Rome,hard
+"In Roman economy, what was the coloni?",tenant farmers tied to the land,History,Ancient Rome,hard
+"In the Roman Empire, what was Aegyptus?",province directly controlled by the emperor after 30 BC,History,Ancient Rome,hard
+"In Roman society, what were collegia?",associations or guilds of craftsmen,History,Ancient Rome,starter
+Which battle saw Hannibal's victory over Rome in 216 BC?,Battle of Cannae,History,Ancient Rome,starter
+"In the Roman army, what was a cohort?",tactical subdivision of a legion,History,Ancient Rome,mid
+"In Roman religion, who or what was Isis?",Egyptian goddess with a cult in Rome,History,Ancient Rome,hard
+When did the Fall of Western Roman Empire occur?,AD 476,History,Ancient Rome,hard
+Which Roman law or reform was restricted senators from owning large ships (218 BC)?,Lex Claudia,History,Ancient Rome,starter
+"In the Roman army, what was a century?",unit of ~80 men led by a centurion,History,Ancient Rome,starter
+"In Roman society, what were latifundia?",large agricultural estates,History,Ancient Rome,starter
+Which Roman emperor was known as assassinated by the Praetorian Guard?,Caligula,History,Ancient Rome,mid
+"In Roman religion, who or what was Lupercalia?",festival of purification and fertility,History,Ancient Rome,mid
+Which battle saw Caesar defeated Pompey in 48 BC?,Battle of Pharsalus,History,Ancient Rome,mid
+When did the Division of the Empire occur?,AD 285,History,Ancient Rome,starter
+"In Roman society, what were slavery?",system providing much of the Roman labour force,History,Ancient Rome,mid
+Which battle saw Scipio Africanus defeated Hannibal in 202 BC?,Battle of Zama,History,Ancient Rome,mid
+"In Roman engineering, what was the Hadrian's Wall?",frontier defence in northern Britain,History,Ancient Rome,starter
+"Which Roman emperor was known as Stoic philosopher, author of 'Meditations'?",Marcus Aurelius,History,Ancient Rome,starter
+"In Roman engineering, what was the Cloaca Maxima?",Rome's great sewer system,History,Ancient Rome,mid
+Which Roman emperor was known as founded the Severan dynasty?,Septimius Severus,History,Ancient Rome,hard
+"In Roman engineering, what was the Via Appia?",major Roman road linking Rome to the south,History,Ancient Rome,mid
+"In Roman religion, who or what was Saturnalia?",festival of Saturn with gift‑giving and role reversals,History,Ancient Rome,hard
+"In Roman engineering, what was the Pantheon?",temple with a vast concrete dome,History,Ancient Rome,starter
+"In Roman literature, who was Livy?",historian who wrote 'Ab Urbe Condita',History,Ancient Rome,starter
+Which Roman emperor was known as last emperor of the Flavian dynasty?,Domitian,History,Ancient Rome,mid
+Which Roman emperor was known as legalised Christianity with the Edict of Milan?,Constantine the Great,History,Ancient Rome,mid
+Which battle saw Constantine defeated Maxentius in AD 312?,Battle of Milvian Bridge,History,Ancient Rome,mid
+"In Roman society, what were Vestal Virgins?",priestesses who maintained the sacred fire of Vesta,History,Ancient Rome,starter
+"In the Roman army, what was a auxilia?",non‑citizen troops supporting the legions,History,Ancient Rome,starter
+"In Roman society, what were gladiators?",fighters in public spectacles,History,Ancient Rome,mid
+"In Roman religion, who or what was Mars?",god of war,History,Ancient Rome,starter
+Which battle saw Goths killed Emperor Valens in AD 378?,Battle of Adrianople,History,Ancient Rome,starter
+"In the Roman Empire, what was Africa Proconsularis?",province providing much of Rome's grain supply,History,Ancient Rome,starter
+Which Roman emperor was known as emperor who fought in gladiatorial games?,Commodus,History,Ancient Rome,mid
+Which battle saw Caesar defeated Vercingetorix in 52 BC?,Battle of Alesia,History,Ancient Rome,starter
+"In the Roman Empire, what was Britannia?",province conquered under Claudius in AD 43,History,Ancient Rome,starter
+Which Roman emperor was known as first emperor of Rome?,Augustus,History,Ancient Rome,mid
+"In Roman engineering, what was the Trajan's Market?",large complex of shops and offices,History,Ancient Rome,hard
+Which Roman emperor was known as issued the Constitutio Antoniniana in AD 212?,Caracalla,History,Ancient Rome,hard
+When did the Sack of Rome by Visigoths occur?,AD 410,History,Ancient Rome,starter
+"In Roman society, what were clientela?",patron‑client relationship system,History,Ancient Rome,mid
+"In Roman engineering, what was the aqueducts?",structures carrying water to cities,History,Ancient Rome,starter
+When did the Eruption of Vesuvius occur?,AD 79,History,Ancient Rome,hard
+Which Roman emperor was known as expanded Rome to its largest size?,Trajan,History,Ancient Rome,hard
+Which Roman law or reform was calendar reform introduced by Julius Caesar (45 BC)?,Julian Calendar,History,Ancient Rome,mid
+Which Roman emperor was known as conquered Britannia in AD 43?,Claudius,History,Ancient Rome,starter
+"In Roman engineering, what was the Colosseum?",huge amphitheatre for games,History,Ancient Rome,hard
+"In the Roman Empire, what was Gallia Narbonensis?",province in southern Gaul,History,Ancient Rome,starter
+"In Roman engineering, what was the Arch of Titus?",monument celebrating the conquest of Jerusalem,History,Ancient Rome,mid
+"In Roman religion, who or what was Janus?",god of beginnings,History,Ancient Rome,starter
+"In Roman society, what were thermae?",public bath complexes,History,Ancient Rome,mid
+"In Roman religion, who or what was Pontifex Maximus?",chief priest of Rome,History,Ancient Rome,mid
+"In Roman literature, who was Virgil?",poet who wrote the 'Aeneid',History,Ancient Rome,mid
+"In Roman society, what were domus?",townhouses of wealthy Romans,History,Ancient Rome,starter
+Which Roman law or reform was made plebiscites binding on all Romans (287 BC)?,Lex Hortensia,History,Ancient Rome,mid
+"In the Roman army, what was a praetorian guard?",elite bodyguard of the emperor,History,Ancient Rome,starter
+Which Roman law or reform was legalised Christianity (AD 313)?,Edict of Milan,History,Ancient Rome,hard
+"In Roman literature, who was Tacitus?",historian who wrote the 'Annals',History,Ancient Rome,hard
+"In the Roman Empire, what was Hispania?",Iberian provinces producing silver and olive oil,History,Ancient Rome,starter
+Which Roman law or reform was allowed patrician‑plebeian intermarriage (445 BC)?,Lex Canuleia,History,Ancient Rome,mid
+"In the Roman Empire, what was Judea?",province where Jewish revolts occurred,History,Ancient Rome,mid
+When did the Assassination of Julius Caesar occur?,44 BC,History,Ancient Rome,mid
+"In the Roman Empire, what was Dacia?",province conquered by Trajan in AD 106,History,Ancient Rome,hard
+"In Roman society, what were forum?",central marketplace and political space,History,Ancient Rome,starter
+Which battle saw three Roman legions destroyed in AD 9?,Battle of Teutoburg Forest,History,Ancient Rome,hard
+"In the Roman army, what was a legion?",main Roman army unit of heavy infantry,History,Ancient Rome,mid
+"In Roman religion, who or what was Jupiter?",king of the gods,History,Ancient Rome,mid
+Which Roman law or reform was granted citizenship to nearly all free inhabitants (AD 212)?,Constitutio Antoniniana,History,Ancient Rome,mid
+"In Roman literature, who was Ovid?",poet who wrote 'Metamorphoses',History,Ancient Rome,hard
+"In Roman religion, who or what was Venus?",goddess of love,History,Ancient Rome,mid
+Which Roman emperor was known as built a defensive wall in northern Britain?,Hadrian,History,Ancient Rome,starter
+Which battle saw Octavian defeated Antony and Cleopatra in 31 BC?,Battle of Actium,History,Ancient Rome,starter
+Which Roman emperor was known as created the Tetrarchy system?,Diocletian,History,Ancient Rome,mid
+"In the Roman Empire, what was Germania?",frontier region across the Rhine,History,Ancient Rome,starter
+"In Roman society, what were toga?",garment worn by Roman male citizens,History,Ancient Rome,starter
+Which battle saw Romans defeated Boudica in AD 61?,Battle of Watling Street,History,Ancient Rome,hard
+"In Roman economy, what was the amphorae?",ceramic vessels used to transport goods like wine and oil,History,Ancient Rome,mid
+"In the Roman army, what was a triarii?",veteran soldiers in the Roman Republic's legions,History,Ancient Rome,hard
+Which Roman law or reform was restored consulship to plebeians (367 BC)?,Lex Licinia Sextia,History,Ancient Rome,starter
+Which Roman emperor was known as last emperor of the Western Roman Empire?,Romulus Augustulus,History,Ancient Rome,mid
+When did the Crisis of the Third Century occur?,AD 235–284,History,Ancient Rome,mid
+"In Roman religion, who or what was augurs?",priests who interpreted the will of the gods through birds,History,Ancient Rome,starter
+"In Roman engineering, what was the hypocaust?",underfloor heating system,History,Ancient Rome,mid
+"In Roman society, what were stola?",traditional garment of Roman women,History,Ancient Rome,mid
+"In the Roman Empire, what was Asia Minor?",region with wealthy provinces like Asia and Bithynia,History,Ancient Rome,starter
+"In Roman religion, who or what was haruspices?",priests who read omens from animal entrails,History,Ancient Rome,hard
+Which Roman emperor was known as last emperor of the Western Roman Empire?,Romulus Augustulus,History,Ancient Rome,starter
+Which Roman emperor was known as consolidated borders and built a wall in Britain?,Hadrian,History,Ancient Rome,starter
+"In the Roman Empire, what was Pannonia?",Danubian province with many legions,History,Ancient Rome,starter
+"In the Roman Empire, what was Gallia Belgica?",northern Gallic province bordering the Rhine,History,Ancient Rome,starter
+Which Roman emperor was known as opened the Colosseum and dealt with Vesuvius eruption?,Titus,History,Ancient Rome,starter
+Which battle saw Crassus was defeated by the Parthians in 53 BC?,Battle of Carrhae,History,Ancient Rome,mid
+Which Roman emperor was known as co-Augustus with Diocletian?,Maximian,History,Ancient Rome,starter
+Which Roman emperor was known as strengthened the western frontiers?,Valentinian I,History,Ancient Rome,starter
+"In the Roman Empire, what was Aegyptus?",imperial province supplying grain to Rome,History,Ancient Rome,starter
+"In late antiquity and after, what was Sack of Rome by Vandals?",AD 455 under Genseric,History,Ancient Rome,hard
+Which Roman emperor was known as issued the Constitutio Antoniniana in AD 212?,Caracalla,History,Ancient Rome,starter
+"In the Roman economy, what was the solidus?",late Roman gold coin introduced by Constantine,History,Ancient Rome,mid
+"In the Roman economy, what was the villa rustica?",country estate focused on agriculture,History,Ancient Rome,mid
+Which Roman emperor was known as created the Tetrarchy and issued a Price Edict?,Diocletian,History,Ancient Rome,starter
+Which battle saw Scipio Africanus defeated Hannibal in 202 BC?,Battle of Zama,History,Ancient Rome,mid
+"In the Roman Empire, what was Moesia?",province along the lower Danube,History,Ancient Rome,starter
+"In the Roman military, what was the ballista?",bolt‑throwing torsion artillery,History,Ancient Rome,starter
+"In the Roman military, what was the decimation?",punishment of executing one in ten soldiers for mutiny,History,Ancient Rome,mid
+"In the Roman Empire, what was Judea?",province of repeated Jewish revolts,History,Ancient Rome,starter
+"In the Roman Empire, what was Dacia?",province annexed by Trajan in AD 106,History,Ancient Rome,starter
+"In the Roman military, what was the tribune?",staff officer in a legion,History,Ancient Rome,mid
+"In Roman religion, who was Sol Invictus?","the Unconquered Sun, associated with late imperial cult",History,Ancient Rome,starter
+"In the Roman military, what was the legate?",senatorial commander of a legion,History,Ancient Rome,mid
+Which Roman emperor was known as successor and stepson of Augustus?,Tiberius,History,Ancient Rome,starter
+"In the Roman military, what was the lorica segmentata?",segmented plate armour,History,Ancient Rome,starter
+"In the Roman economy, what was the publicani?",tax farmers of the Republic,History,Ancient Rome,mid
+"Which Roman law or reform was criminal law concerning treason (Sulla, 81 BC)?",Lex Cornelia de maiestate,History,Ancient Rome,mid
+"In Roman society, what was paterfamilias?",male head of a Roman household,History,Ancient Rome,starter
+What was Saturnalia in Roman religion?,December festival with gift‑giving and role reversals,History,Ancient Rome,starter
+Which Roman emperor was known as made Nicene Christianity the state religion?,Theodosius I,History,Ancient Rome,starter
+"In Roman religion, what was the role of the Pontifex Maximus?",chief priestly office at Rome,History,Ancient Rome,mid
+"In Roman literature and thought, who was Catullus?",poet noted for love lyrics,History,Ancient Rome,mid
+Which Roman emperor was known as killed at the Battle of Adrianople?,Valens,History,Ancient Rome,starter
+Which Roman emperor was known as assassinated by the Praetorian Guard?,Caligula,History,Ancient Rome,starter
+Which Roman emperor was known as first of the Year of the Four Emperors (AD 69)?,Galba,History,Ancient Rome,starter
+"In the Roman economy, what was the aureus?",high‑value gold coin of the empire,History,Ancient Rome,mid
+"In Roman religion, what was the role of the haruspices?",diviners who inspected sacrificial entrails,History,Ancient Rome,mid
+Which Roman law or reform was restored the consulship to plebeians (367 BC)?,Lex Licinia Sextia,History,Ancient Rome,mid
+Which Roman emperor was known as son of Constantine who fought Shapur II?,Constantius II,History,Ancient Rome,starter
+Which Roman emperor was known as founded the Severan dynasty?,Septimius Severus,History,Ancient Rome,starter
+"In Roman society, what was garum?",fermented fish sauce used widely in cooking,History,Ancient Rome,starter
+Which battle saw Rome killed Hasdrubal Barca in 207 BC?,Battle of the Metaurus,History,Ancient Rome,mid
+Which Roman emperor was known as began the adoptive succession of the Five Good Emperors?,Nerva,History,Ancient Rome,starter
+"In the Roman economy, what was the denarius?",standard silver coin for centuries,History,Ancient Rome,mid
+"In the Roman military, what was the pilum?",heavy throwing spear,History,Ancient Rome,starter
+Which battle saw Caesar defeated Pompey in 48 BC?,Battle of Pharsalus,History,Ancient Rome,mid
+"In the Roman military, what was the auxilia?",non‑citizen troops supporting legions,History,Ancient Rome,starter
+"In Roman society, what was stola?",long garment traditionally worn by Roman women,History,Ancient Rome,starter
+"In the Roman military, what was the maniple?",tactical unit of the mid‑Republic,History,Ancient Rome,starter
+Which battle saw Hannibal inflicted a massive defeat on Rome in 216 BC?,Battle of Cannae,History,Ancient Rome,mid
+"In the Roman Empire, what was Baetica?",southern Hispania famous for olive oil,History,Ancient Rome,starter
+"In the Roman Empire, what was Gallia Narbonensis?",older Roman province in southern Gaul,History,Ancient Rome,starter
+"In the Roman military, what was the praetorian prefect?",commander of the Praetorian Guard,History,Ancient Rome,mid
+Which Roman emperor was known as Syrian-born emperor noted for religious changes?,Elagabalus,History,Ancient Rome,starter
+"In Roman literature and thought, who was Juvenal?",satirist who critiqued Roman society,History,Ancient Rome,mid
+"In the Roman military, what was the century?",unit of roughly 80 men led by a centurion,History,Ancient Rome,starter
+"In Roman literature and thought, who was Horace?",poet famed for his Odes and Satires,History,Ancient Rome,mid
+"In the Roman Empire, what was Asia?",wealthy province in western Asia Minor,History,Ancient Rome,starter
+Which Roman emperor was known as ruled during a period of peace and prosperity?,Antoninus Pius,History,Ancient Rome,starter
+"In the Roman Empire, what was Thracia?",Balkan province near the Hellespont,History,Ancient Rome,starter
+"In Roman society, what was circus?",arena used chiefly for chariot racing,History,Ancient Rome,starter
+"In the Roman military, what was the testudo?",protective 'tortoise' shield formation,History,Ancient Rome,starter
+"In Roman literature and thought, who was Cicero?",orator and author of speeches and philosophical works,History,Ancient Rome,mid
+Which Roman emperor was known as western emperor during the sack of Rome in AD 410?,Honorius,History,Ancient Rome,starter
+"In Roman society, what was bulla?",protective amulet worn by children,History,Ancient Rome,starter
+"In Roman engineering and architecture, what was the Pont du Gard?",aqueduct bridge in Roman Gaul,History,Ancient Rome,mid
+"In the Roman Empire, what was Tarraconensis?",large northern Iberian province,History,Ancient Rome,starter
+Which Roman law or reform was barred senators from owning large sea‑going ships (218 BC)?,Lex Claudia,History,Ancient Rome,mid
+"In Roman literature and thought, who was Tacitus?",historian who wrote the 'Annals' and 'Histories',History,Ancient Rome,mid
+"In late antiquity and after, what was Plague of Cyprian?",pandemic that struck the empire in the 3rd century AD,History,Ancient Rome,hard
+"In Roman literature and thought, who was Plutarch?",biographer who wrote 'Parallel Lives',History,Ancient Rome,mid
+"In the Roman military, what was the gladius?",short sword of infantry,History,Ancient Rome,starter
+Which Roman emperor was known as last of the Severan rulers?,Severus Alexander,History,Ancient Rome,starter
+"In Roman religion, what was the role of the augurs?",priests who interpreted omens from birds,History,Ancient Rome,mid
+"In Roman society, what was domus?",townhouse residence of the wealthy,History,Ancient Rome,starter
+Which Roman emperor was known as military emperor who restored order in the 270s?,Probus,History,Ancient Rome,starter
+"In Roman society, what was collegia?",associations or guilds of craftsmen,History,Ancient Rome,starter
+"In Roman engineering and architecture, what was the Trajan's Column?",monument commemorating Dacian campaigns,History,Ancient Rome,mid
+Which battle saw three Roman legions were destroyed in AD 9?,Battle of Teutoburg Forest,History,Ancient Rome,mid
+Which Roman law or reform was earliest codification of Roman law (c. 451–450 BC)?,Twelve Tables,History,Ancient Rome,mid
+Which Roman emperor was known as defeated Queen Zenobia and reunified the empire?,Aurelian,History,Ancient Rome,starter
+Which Roman emperor was known as attempted to reform and defend the Western empire?,Majorian,History,Ancient Rome,starter
+"In Roman literature and thought, who was Plotinus?",philosopher who founded Neoplatonism,History,Ancient Rome,mid
+"In the Roman military, what was the legion?",primary heavy infantry unit of Rome,History,Ancient Rome,starter
+Which Roman emperor was known as fought as a gladiator emperor?,Commodus,History,Ancient Rome,starter
+"In Roman literature and thought, who was Quintilian?",rhetorician who wrote 'Institutio Oratoria',History,Ancient Rome,mid
+"In the Roman Empire, what was Arabia Petraea?",province carved from Nabataean territory,History,Ancient Rome,starter
+"In Roman society, what was thermae?",public bath complexes for hygiene and leisure,History,Ancient Rome,starter
+"In Roman society, what was aquila?",eagle standard symbolising a legion (military symbol seen in civic life),History,Ancient Rome,starter
+"In Roman society, what was toga?",formal garment worn by male citizens,History,Ancient Rome,starter
+"In the Roman Empire, what was Dalmatia?",Adriatic coastal province,History,Ancient Rome,starter
+"In the Roman military, what was the scutum?",large rectangular shield of legionaries,History,Ancient Rome,starter
+Which battle saw Caesar defeated Vercingetorix in 52 BC?,Battle of Alesia,History,Ancient Rome,mid
+"In Roman engineering and architecture, what was the Baths of Caracalla?",large imperial bath complex,History,Ancient Rome,mid
+"In late antiquity and after, what was Fall of Western Roman Empire?",AD 476 deposition of Romulus Augustulus,History,Ancient Rome,hard
+"In Roman society, what was insulae?",multi‑storey apartment blocks for the urban poor,History,Ancient Rome,starter
+"In the Roman economy, what was the latifundia?",large estates using slave labour,History,Ancient Rome,mid
+Which battle saw Valerian was captured by Shapur I in AD 260?,Battle of Edessa,History,Ancient Rome,mid
+Which battle saw Octavian defeated Antony and Cleopatra in 31 BC?,Battle of Actium,History,Ancient Rome,mid
+"Which Roman emperor was known as Stoic philosopher, author of 'Meditations'?",Marcus Aurelius,History,Ancient Rome,starter
+"In late antiquity and after, what was Justinian's Code?",6th‑century codification of Roman law in the East,History,Ancient Rome,hard
+"In the Roman Empire, what was Syria?",eastern province guarding routes to Persia,History,Ancient Rome,starter
+"In the Roman economy, what was the Via Egnatia?",major road across the Balkans aiding trade,History,Ancient Rome,mid
+Which Roman law or reform was granted citizenship to most free inhabitants (AD 212)?,Constitutio Antoniniana,History,Ancient Rome,mid
+"In Roman religion, who was Mithras?",deity central to a popular mystery cult,History,Ancient Rome,starter
+"In the Roman Empire, what was Mauretania Caesariensis?",North African province west of Africa Proconsularis,History,Ancient Rome,starter
+"In the Roman Empire, what was Armenia?",buffer kingdom between Rome and Persia,History,Ancient Rome,starter
+"In the Roman Empire, what was Bithynia et Pontus?",province in northern Asia Minor,History,Ancient Rome,starter
+"In Roman society, what was cena?",the main evening meal in Rome,History,Ancient Rome,starter
+Which battle saw Romans defeated Boudica in AD 61?,Battle of Watling Street,History,Ancient Rome,mid
+"In the Roman Empire, what was Numidia?",North African province known for cavalry,History,Ancient Rome,starter
+"In Roman religion, who was Isis?",Egyptian goddess worshipped in Rome,History,Ancient Rome,starter
+Which Roman law or reform was Diocletian’s price controls (AD 301)?,Edict on Maximum Prices,History,Ancient Rome,mid
+"In Roman engineering and architecture, what was the Ostia?",port city of Rome at the Tiber’s mouth,History,Ancient Rome,mid
+Which Roman law or reform was Augustan marriage law encouraging childbirth (18 BC)?,Lex Julia de maritandis ordinibus,History,Ancient Rome,mid
+"In Roman engineering and architecture, what was the Aqua Marcia?",Republican aqueduct noted for clear water,History,Ancient Rome,mid
+"In the Roman Empire, what was Lusitania?",western Iberian province with gold resources,History,Ancient Rome,starter
+Which Roman law or reform was established liability for wrongful damage (3rd century BC)?,Lex Aquilia,History,Ancient Rome,mid
+"In Roman literature and thought, who was Martial?",epigrammatist known for witty epigrams,History,Ancient Rome,mid
+"In Roman religion, who was Juno?","queen of the gods, protector of marriage",History,Ancient Rome,starter
+"In late antiquity and after, what was Crisis of the Third Century?","period of usurpations, invasions and economic turmoil AD 235–284",History,Ancient Rome,hard
+Which Roman law or reform was restricted luxury and display by women (215 BC)?,Lex Oppia,History,Ancient Rome,mid
+"In late antiquity and after, what was Sack of Rome by Visigoths?",AD 410 under Alaric,History,Ancient Rome,hard
+"In the Roman military, what was the optio?",deputy to a centurion,History,Ancient Rome,mid
+Which Roman law or reform was legalised Christianity (AD 313)?,Edict of Milan,History,Ancient Rome,mid
+"In the Roman economy, what was the portorium?",customs duty on goods,History,Ancient Rome,mid
+"In Roman engineering and architecture, what was the hypocaust?",underfloor heating system in baths and villas,History,Ancient Rome,mid
+Which Roman emperor was known as founded the Flavian dynasty?,Vespasian,History,Ancient Rome,starter
+"In Roman engineering and architecture, what was the Via Appia?",major road linking Rome to southern Italy,History,Ancient Rome,mid
+"In the Roman Empire, what was Cappadocia?",eastern Anatolian province facing Armenia,History,Ancient Rome,starter
+Which Roman law or reform was permitted marriage between patricians and plebeians (445 BC)?,Lex Canuleia,History,Ancient Rome,mid
+"In Roman engineering and architecture, what was the Cloaca Maxima?",great sewer of Rome,History,Ancient Rome,mid
+"In Roman engineering and architecture, what was the Hadrian's Wall?",northern frontier in Britannia,History,Ancient Rome,mid
+"In Roman engineering and architecture, what was the aqueduct?",structure that carried water over distance to cities,History,Ancient Rome,mid
+"In late antiquity and after, what was Greek to Latin West?",Latin became dominant in the western empire,History,Ancient Rome,hard
+"In Roman literature and thought, who was Lucretius?",poet who wrote 'On the Nature of Things',History,Ancient Rome,mid
+"In Roman engineering and architecture, what was the Pantheon?",temple famed for its concrete dome and oculus,History,Ancient Rome,mid
+"In Roman engineering and architecture, what was the Aqua Claudia?",1st‑century aqueduct supplying Rome,History,Ancient Rome,mid
+Which Roman emperor was known as emperor during the Great Fire of Rome?,Nero,History,Ancient Rome,starter
+"In Roman engineering and architecture, what was the Portus?",harbour complex near the mouth of the Tiber,History,Ancient Rome,mid
+"In Roman society, what was latifundia?",large agricultural estates worked by slaves,History,Ancient Rome,starter
+"In the Roman military, what was the cohort?",tactical subdivision of a legion,History,Ancient Rome,starter
+"In the Roman military, what was the onager?",torsion artillery used to hurl stones,History,Ancient Rome,starter
+What was Lupercalia in Roman religion?,February festival of purification and fertility,History,Ancient Rome,starter
+"In Roman engineering and architecture, what was the Colosseum?",Flavian amphitheatre used for spectacles,History,Ancient Rome,mid
+"In Roman engineering and architecture, what was the Forum Romanum?",central public space in Rome,History,Ancient Rome,mid
+"In Roman literature and thought, who was Epictetus?",Stoic philosopher of the Imperial era,History,Ancient Rome,mid
+"In the Roman Empire, what was Illyricum?",Balkan region and military recruiting ground,History,Ancient Rome,starter
+"In the Roman economy, what was the sestertius?",large bronze/brass coin,History,Ancient Rome,mid
+Which Roman emperor was known as last of the Flavians?,Domitian,History,Ancient Rome,starter
+"In Roman literature and thought, who was Seneca?",Stoic philosopher and statesman,History,Ancient Rome,mid
+"Which Roman emperor was known as last pagan emperor, campaigned in Persia?",Julian,History,Ancient Rome,starter
+"In Roman literature and thought, who was Virgil?",poet who wrote the 'Aeneid',History,Ancient Rome,mid
+"In Roman literature and thought, who was Livy?",historian who wrote 'Ab Urbe Condita',History,Ancient Rome,mid
+"In Roman society, what was Vestal Virgins?",priestesses who kept the sacred fire of Vesta,History,Ancient Rome,starter
+"In the Roman Empire, what was Germania Inferior?",frontier province along the lower Rhine,History,Ancient Rome,starter
+Which battle saw Claudius Gothicus defeated the Goths in AD 268?,Battle of Naissus,History,Ancient Rome,mid
+"In Roman literature and thought, who was Apuleius?",novelist who wrote 'The Golden Ass',History,Ancient Rome,mid
+Which Roman emperor was known as ordered the invasion of Britannia in AD 43?,Claudius,History,Ancient Rome,starter
+Which Roman law or reform was made plebiscites binding on all Romans (287 BC)?,Lex Hortensia,History,Ancient Rome,mid
+"In the Roman military, what was the primus pilus?",senior centurion of a legion,History,Ancient Rome,mid
+Which Roman emperor was known as expanded the empire to its greatest extent?,Trajan,History,Ancient Rome,starter
+Which battle saw Constantine defeated Maxentius in AD 312?,Battle of Milvian Bridge,History,Ancient Rome,mid
+Which Roman emperor was known as legalised Christianity via the Edict of Milan?,Constantine the Great,History,Ancient Rome,starter
+"In the Roman economy, what was the amphorae?",ceramic containers for wine and oil transport,History,Ancient Rome,mid
+"In the Roman Empire, what was Britannia?",province conquered under Claudius in AD 43,History,Ancient Rome,starter
+Which Roman emperor was known as brief emperor during AD 69?,Otho,History,Ancient Rome,starter
+"In the Roman economy, what was the annona?",grain supply and distribution system,History,Ancient Rome,mid
+"In Roman engineering and architecture, what was the Ara Pacis?",Augustan altar celebrating peace,History,Ancient Rome,mid
+"In the Roman Empire, what was Raetia?",Alpine province guarding passes to Italy,History,Ancient Rome,starter
+"In Roman society, what was ludi?",public games and festivals sponsored by magistrates,History,Ancient Rome,starter
+"In Roman literature and thought, who was Suetonius?",biographer who wrote 'The Twelve Caesars',History,Ancient Rome,mid
+Which battle saw Emperor Valens was killed by the Goths in AD 378?,Battle of Adrianople,History,Ancient Rome,mid
+"In late antiquity and after, what was Byzantine Empire?",eastern continuation preserving Roman institutions,History,Ancient Rome,hard
+Which Roman emperor was known as defeated by Vespasian in AD 69?,Vitellius,History,Ancient Rome,starter
+"In Roman literature and thought, who was Ovid?",poet who wrote 'Metamorphoses',History,Ancient Rome,mid
+"In Roman religion, who was Minerva?",goddess of wisdom and crafts,History,Ancient Rome,starter
+Which Roman emperor was known as first emperor of Rome and initiator of the Principate?,Augustus,History,Ancient Rome,starter
