@@ -1,0 +1,1873 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>First Cut — Fanuc Builder Trial v1.6 (Standalone)</title>
+  <meta name="description" content="Standalone trial: build Fanuc-style NC lines exactly like a lathe terminal." />
+  <style>
+
+    .pagepane{display:none}
+    .pagepane.active{display:block}
+    .brand-tabs .tab{cursor:pointer}
+    .brand-tabs .tab[disabled]{opacity:.5; cursor:not-allowed}
+
+
+    .brand-tabs{gap:12px; flex-wrap:wrap}
+    .brand-tabs .tab{background:transparent; border:1px solid #2b3139; color:#e6e8eb; padding:6px 10px; border-radius:999px; cursor:default}
+    .brand-tabs .tab.active{background:#10151b; border-color:#3a414b; cursor:pointer}
+    .brand-tabs .tab[disabled]{opacity:.5; cursor:not-allowed}
+    .brand .inline-note{margin-left:auto}
+
+    :root{
+  /* MTCO global type tokens */
+  --fs-body: 14px;
+  --lh-body: 1.45;
+  --fs-small: 12px;
+  --fs-title: 16px; /* small in-page title */
+  --fs-card: 14px;  /* card/section headers */
+
+      --bg:#0f1215; --panel:#161a1f; --muted:#8a9097; --text:#e6e8eb;
+      --accent:#ff7a1a; --card:#171b21; --card-border:#2a3037;
+      --ok:#48c78e; --warn:#ffb02e; --danger:#ff6464; --radius:16px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; background:var(--bg); color:var(--text);
+      font:14px/1.45 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+    }
+    header{padding:16px 20px; border-bottom:1px solid var(--card-border); background:linear-gradient(180deg,#171b21, #14181d); position:sticky; top:0; z-index:3}
+    .brand{display:flex; gap:12px; align-items:center}
+    .logo{
+      width:28px; height:28px; border-radius:6px; background:linear-gradient(135deg,var(--accent),#ffa86a);
+      box-shadow:0 2px 10px rgba(255,122,26,.25);
+    }
+    .title{font-size:16px; letter-spacing:.4px}
+    main{max-width:1220px; margin:18px auto; padding:0 14px}
+    .grid{display:grid; grid-template-columns: 440px 1fr; gap:16px}
+    .card{background:var(--card); border:1px solid var(--card-border); border-radius:var(--radius); padding:14px}
+    .card h2{margin:0 0 10px 0; font-size: var(--fs-card); color:#cfd3d8; font-weight:600; letter-spacing:.3px}
+    .row{display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin:8px 0}
+    .row label{font-size:12px; color:#c7cbd1; min-width:fit-content}
+    input[type="number"], input[type="text"], select, textarea{
+      background:#0f1318; border:1px solid #2b3139; color:var(--text); border-radius:10px; padding:8px 10px; outline:none; width:100%;
+    }
+    input[type="checkbox"]{transform:translateY(1px)}
+    .addr-grid{display:grid; grid-template-columns: repeat(2, 1fr); gap:8px}
+    .addr{display:flex; gap:8px; align-items:center}
+    .addr b{min-width:18px; text-align:center; color:#cfd3d8}
+    .btn{
+      background:#10151b; border:1px solid #2b3139; color:#e6e8eb; padding:8px 10px; border-radius:10px; cursor:pointer;
+    }
+    .btn:hover{border-color:#3a414b}
+    .btn.primary{background:var(--accent); color:#111; border-color:#000; font-weight:700}
+    .btn.ghost{background:transparent}
+    .toolbar{display:flex; gap:8px; flex-wrap:wrap; align-items:center}
+    textarea.output{
+      width:100%; min-height:320px; resize:vertical; background:#0b0f13; color:#e8eaed;
+      border:1px solid #2b3139; border-radius:12px; padding:12px; line-height:1.45; font-size:14px;
+      white-space:pre;
+    }
+    .monoline{background:#0b0f13; border:1px dashed #2b3139; border-radius:10px; padding:10px; font-size:14px; color:#cfd3d8}
+    .muted{color:var(--muted)}
+    .help{font-size:12px; color:#aab0b7}
+    .pill{padding:6px 8px; border:1px solid #2b3139; border-radius:999px}
+    .flex{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+    .spacer{height:8px}
+    .inline-note{font-size:12px; color:#aab0b7; margin-left:auto}
+    .split{display:grid; grid-template-columns: 1fr 1fr; gap:10px}
+    .hr{height:1px; background:#222831; margin:10px 0}
+    .right{display:flex; justify-content:flex-end; gap:8px}
+    .kbd{font-size:11px; border:1px solid #2b3139; border-radius:6px; padding:2px 6px; color:#cfd3d8}
+    .section{margin-top:12px}
+    .tabs{display:flex; gap:6px; margin:10px 0}
+    .tab{padding:6px 10px; border:1px solid #2b3139; border-radius:999px; cursor:pointer; user-select:none}
+    .tab.active{background:#10151b; border-color:#3a414b}
+    .tabpanes > div{display:none}
+    .tabpanes > div.active{display:block}
+    .modal{position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:rgba(0,0,0,.4); z-index:10}
+    .modal.show{display:flex}
+    .modal .sheet{width:min(780px, 96vw); background:var(--card); border:1px solid #2b3037; border-radius:16px; padding:16px}
+    .modal h3{margin:0 0 8px 0; font-size:14px; color:#d7dbe0}
+    .two{display:grid; grid-template-columns: 1fr 1fr; gap:10px}
+    .status{display:flex; gap:6px; flex-wrap:wrap; align-items:center; padding:8px; background:#0b0f13; border:1px solid #2b3139; border-radius:12px}
+    .badge{padding:4px 8px; border:1px solid #2b3139; border-radius:999px; font-size:12px}
+    .badge.ok{border-color:#365642; color:#98e2b3; background:#0d1712}
+    .badge.warn{border-color:#5a4a22; color:#ffd27a; background:#17140d}
+    .badge.muted{color:#aab0b7}
+    .badge b{color:#cfd3d8; margin-right:4px}
+    .viewer{margin-top:12px}
+    .dz{display:flex; align-items:center; justify-content:center; padding:10px; border:1px dashed #2b3139; border-radius:12px; background:#0b0f13; color:#cfd3d8}
+    .dz.hover{background:#0e1217; border-color:#3a414b}
+    .viewer-toolbar{display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin:8px 0}
+    .viewer-ctl{display:flex; align-items:center; gap:6px}
+    .viewport{position:relative; height:420px; background:#0b0f13; border:1px solid #2b3139; border-radius:12px; overflow:hidden; cursor:grab}
+    .viewport.dragging{cursor:grabbing}
+    .viewport img{position:absolute; top:0; left:0; transform-origin:0 0; image-rendering:auto; user-select:none; -webkit-user-drag:none; max-width:none; max-height:none; pointer-events:none}
+    .overlay{position:absolute; inset:0; pointer-events:none}
+    .measure-on{cursor:crosshair !important}
+    .badge.note{border-color:#2b3139; color:#cfd3d8; background:#10151b}
+  </style>
+
+<style>
+/* First Cut – Builder Orange Theme (inline) */
+:root{
+  --accent:#ff7a1a;
+  --accent-2:#ffa864;
+  --bg:#0f1215;
+  --panel:#161a1f;
+  --card:#171b21;
+  --border:#2b3139;
+  --text:#e6e8eb;
+  --muted:#aab0b7;
+  --radius:16px;
+}
+/* Primary actions */
+.btn.primary, .btn-accent, .pill.active{background:var(--accent) !important; border-color:var(--accent) !important; color:#101114 !important}
+.btn:hover{filter:brightness(1.03)}
+/* Card header strip */
+.card .strip, .card header, .card .card-header{background:linear-gradient(180deg,#1a1f27,#151a20) !important; border-bottom:1px solid var(--border)}
+.card .strip .logo{background:linear-gradient(135deg,var(--accent),var(--accent-2)); box-shadow:0 2px 12px rgba(255,122,26,.35)}
+/* Focus rings */
+input:focus, select:focus, textarea:focus{outline:none; box-shadow:0 0 0 2px rgba(255,122,26,.35); border-color:var(--accent)}
+/* Align to wrapper width */
+main, .grid, .container, .page{max-width:1220px; margin:0 auto}
+main{padding-top:6px}
+/* Scrollbar */
+*::-webkit-scrollbar-thumb{background:#2b3139; border-radius:8px; border:2px solid #171b21}
+*::-webkit-scrollbar-thumb:hover{background:#363d47}
+</style>
+
+<style>
+/* === MTCO Typography Normalization (site-wide) === */
+body { font-size: var(--fs-body); line-height: var(--lh-body); }
+label, .label, .hint, .help, .muted, small, .tiny, .badge { font-size: var(--fs-small); }
+.inpage-title { font-size: var(--fs-title); font-weight: 600; }
+.card h1, .card h2, .card h3, .section-title, .panel h2, .panel h3 { font-size: var(--fs-card); font-weight: 600; }
+pre, code, .code, textarea, .output, .editor, textarea.code { font-size: var(--fs-body); line-height: var(--lh-body); }
+
+</style>
+<style>
+/* === MTCO Typography Normalization (hardened) === */
+body { font-size: var(--fs-body) !important; line-height: var(--lh-body) !important; }
+label, .label, .hint, .help, .muted, small, .tiny, .badge { font-size: var(--fs-small) !important; }
+.inpage-title { font-size: var(--fs-title) !important; font-weight: 600 !important; }
+.card h1, .card h2, .card h3, .section-title, .panel h2, .panel h3 { font-size: var(--fs-card) !important; font-weight: 600 !important; }
+pre, code, .code, textarea, .output, .editor, textarea.code { font-size: var(--fs-body) !important; line-height: var(--lh-body) !important; }
+
+</style>
+
+<style>
+/* Normalize gap under header: match Home/Threads */
+header.mtco-header + * { margin-top: 0 !important; padding-top: 0 !important; }
+</style>
+
+<style>
+/* === MTCO Unified Header === */
+:root {
+  --mtco-bg: #0f1215;
+  --mtco-panel: #161a1f;
+  --mtco-border: #2a3037;
+  --mtco-text: #e6e8eb;
+  --mtco-muted: #a7aeb6;
+  --mtco-accent: #ff7a1a;
+}
+.mtco-header {
+  position: sticky; top: 0; z-index: 1200;
+  background: linear-gradient(0deg, rgba(15,18,21,.65), rgba(15,18,21,.95));
+  backdrop-filter: saturate(1.2) blur(8px);
+  border-bottom: 1px solid var(--mtco-border, #2a3037);
+}
+.mtco-hwrap { max-width: 1220px; margin: 0 auto; padding: 12px 24px; display: flex; align-items: center; gap: 12px; }
+.mtco-logo { width: 26px; height: 26px; border-radius: 8px; background: radial-gradient(circle at 30% 30%, #ff9d57 0 35%, #ff7a1a 36% 70%, #c35200 71% 100%); box-shadow: inset 0 0 0 1px rgba(255,255,255,.08); }
+.mtco-brand { display: flex; flex-direction: column; line-height: 1; }
+.mtco-title { font-weight: 900; letter-spacing: .3px; color: var(--mtco-text, #e6e8eb); font-size: 18px; font-family: Inter, system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
+.mtco-title em { font-style: normal; opacity: .95; }
+.mtco-sub { font-size: 12px; color: var(--mtco-muted, #a7aeb6); margin-top: 3px; font-family: Inter, system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
+.mtco-spacer { flex: 1; }
+.mtco-chip { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 999px; border: 1px solid var(--mtco-border, #2a3037); background: var(--mtco-panel, #161a1f); color: var(--mtco-text, #e6e8eb); text-decoration: none; font-weight: 700; font-family: Inter, system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
+.mtco-chip:hover { border-color: #3a424b; }
+.mtco-chip.disabled { opacity: .55; cursor: not-allowed; pointer-events: none; }
+/* Normalize gap to match other pages */
+header.mtco-header + main { margin-top: 0 !important; padding-top: 0 !important; }
+</style>
+<style>
+/* === MTCO Header WidthLock (exact match across pages) === */
+.mtco-header { padding: 0 !important; } /* kill any generic header padding */
+.mtco-hwrap {
+  width: 100% !important;
+  max-width: 1200px !important; /* lock to site standard */
+  margin: 0 auto !important;
+  padding: 12px 24px !important;
+  box-sizing: border-box !important; /* consistent regardless of page defaults */
+}
+</style>
+</head>
+<body>
+
+<header class="mtco-header" role="banner">
+  <div class="mtco-hwrap">
+    <a class="mtco-logo" href="index.html" aria-label="MTCO Home"></a>
+    <div class="mtco-brand">
+      <span class="mtco-title">MTCO | <em>Code Builder</em></span>
+      <span class="mtco-sub">Fanuc block composer (G18, Z0 on right face)</span>
+    </div>
+    <div class="mtco-spacer"></div>
+    <a class="mtco-chip disabled" href="#">Guide</a>
+    <a class="mtco-chip" href="index.html">Home</a>
+  </div>
+</header>
+
+
+<main>
+<div id="pane-builder" class="pagepane active active">
+<div class="grid">
+      <!-- Left: Composer -->
+      <section class="card">
+        <h2>Line Composer (Fanuc-style block)</h2>
+
+        <div class="row">
+          <div class="pill"><b>Units</b>:
+            <label><input type="radio" name="units" value="mm" checked> mm</label>
+            <label><input type="radio" name="units" value="inch"> inch</label>
+          </div>
+          <div class="pill"><b>Feed</b>:
+            <label><input type="radio" name="feedmode" value="G99" checked> G99 (per rev)</label>
+            <label><input type="radio" name="feedmode" value="G98"> G98 (per min)</label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="pill">
+            <label><input type="checkbox" id="seqEnable" checked> Sequence numbers</label>
+          </div>
+          <div class="addr">
+            <label for="seqStart">Start</label>
+            <input id="seqStart" type="number" step="10" value="10" min="0" style="width:85px">
+          </div>
+          <div class="addr">
+            <label for="seqStep">Step</label>
+            <input id="seqStep" type="number" step="1" value="10" min="1" style="width:85px">
+          </div>
+          <div class="addr">
+            <label for="seqWidth">Width</label>
+            <input id="seqWidth" type="number" step="1" value="4" min="1" max="6" style="width:70px">
+          </div>
+          <div class="pill">
+            <label><input type="checkbox" id="suppressLeadingZero"> Suppress leading zero on decimals</label>
+          </div>
+          <div class="pill">
+            <label for="dpMode">Decimals</label>
+            <select id="dpMode">
+              <option value="trim">Trim trailing zeros</option>
+              <option value="mm3" selected>Fixed 3 dp (mm)</option>
+              <option value="in4">Fixed 4 dp (inch)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="hr"></div>
+
+        <div class="row">
+          <label><input type="checkbox" id="blkDelete"> Block delete (/) for this line</label>
+          <span class="inline-note help">Adds <span class="kbd">/</span> at line start</span>
+        </div>
+
+        <div class="addr-grid">
+          <div class="addr"><b>G</b><input id="G" type="text" placeholder="e.g. 0 97 50" /></div>
+          <div class="addr"><b>X</b><input id="X" type="text" placeholder="e.g. 25" /></div>
+          <div class="addr"><b>Z</b><input id="Z" type="text" placeholder="e.g. -50" /></div>
+          <div class="addr"><b>U</b><input id="U" type="text" placeholder="inc X" /></div>
+          <div class="addr"><b>W</b><input id="W" type="text" placeholder="inc Z" /></div>
+          <div class="addr"><b>R</b><input id="R" type="text" placeholder="chamfer/radius" /></div>
+          <div class="addr"><b>I</b><input id="I" type="text" placeholder="arc ctr X or thread" /></div>
+          <div class="addr"><b>K</b><input id="K" type="text" placeholder="arc ctr Z or thread" /></div>
+          <div class="addr"><b>P</b><input id="P" type="text" placeholder="param / dwell / thread" /></div>
+          <div class="addr"><b>Q</b><input id="Q" type="text" placeholder="param / thread" /></div>
+          <div class="addr"><b>F</b><input id="F" type="text" placeholder="feed" /></div>
+          <div class="addr"><b>S</b><input id="S" type="text" placeholder="speed" /></div>
+          <div class="addr"><b>T</b><input id="T" type="text" placeholder="tool/offset" /></div>
+          <div class="addr" style="grid-column:1/-1"><b>( )</b><input id="C" type="text" placeholder="optional comment (no parentheses needed)" /></div>
+        </div>
+
+        <div class="spacer"></div>
+        <div class="toolbar">
+          <button class="btn" onclick="quick('G','50')">G50</button>
+          <button class="btn" onclick="quick('G','97')">G97</button>
+          <button class="btn" onclick="quick('G','96')">G96</button>
+          <button class="btn" onclick="quick('G','70')">G70</button>
+          <button class="btn" onclick="quick('G','71')">G71</button>
+          <button class="btn" onclick="quick('G','72')">G72</button>
+          <button class="btn" onclick="quick('G','73')">G73</button>
+          <button class="btn" onclick="quick('G','76')">G76</button>
+          <button class="btn" onclick="quick('M','3')">M3</button>
+          <button class="btn" onclick="quick('M','5')">M5</button>
+          <button class="btn" onclick="quick('M','8')">M8</button>
+          <button class="btn" onclick="quick('M','9')">M9</button>
+          <button class="btn ghost" onclick="clearComposer()">Clear fields</button>
+          <span class="inline-note help">Tip: Use space in G to add multiple (e.g., "0 97").</span>
+        </div>
+
+        <div class="spacer"></div>
+        <div class="right">
+          <button class="btn" onclick="previewLine()">Preview line</button>
+          <button class="btn primary" onclick="addLine()">Add line</button>
+        </div>
+
+        <div id="preview" class="monoline" style="margin-top:10px;">Preview…</div>
+
+        <div class="hr"></div>
+
+        <!-- Canned Cycles area -->
+        <div class="section">
+          <h2>Canned Cycles</h2>
+          <div class="row">
+            <select id="cycleSelect" onchange="renderCycleInfo()">
+              <option value="g70">G70 — Finishing cycle call (range)</option>
+              <option value="g71">G71 — Roughing (Type II)</option>
+              <option value="g72">G72 — Facing roughing (Type II style)</option>
+              <option value="g73">G73 — Pattern repeat</option>
+              <option value="g74">G74 — Peck drilling</option>
+              <option value="g75">G75 — Peck grooving</option>
+              <option value="g76">G76 — Threading (two-block)</option>
+              <option value="g92">G92 — Threading (single-block)</option>
+              <option value="g32">G32 — Single-point threading</option>
+            </select>
+            <span class="pill"><label><input type="checkbox" id="liveToggle" onchange="toggleLive()"> Live tooling (G83/G84)</label></span>
+            <button class="btn" onclick="insertCycle(false)">Insert skeleton</button>
+            <button class="btn" onclick="insertCycle(true)">Insert skeleton + comments</button>
+            <button class="btn primary" onclick="openGuided()">Guided form</button>
+          </div>
+
+          <div class="tabs">
+            <div class="tab active" data-tab="meanings" onclick="switchTab(this)">Meanings</div>
+            <div class="tab" data-tab="example" onclick="switchTab(this)">Example</div>
+            <div class="tab" data-tab="notes" onclick="switchTab(this)">Notes</div>
+          </div>
+          <div class="tabpanes">
+            <div id="pane-meanings" class="active"></div>
+            <div id="pane-example"></div>
+            <div id="pane-notes"></div>
+          </div>
+        </div>
+
+        <div class="hr"></div>
+
+        <!-- Helpers panel -->
+        <div class="section">
+          <h2>Helpers</h2>
+
+          <!-- CSS / RPM Helper -->
+          <div class="card" style="padding:10px; margin:8px 0;">
+            <h2>CSS / RPM Helper</h2>
+            <div class="row">
+              <div class="pill">
+                <label>Mode
+                  <select id="cssMode">
+                    <option value="css2rpm" selected>CSS → RPM</option>
+                    <option value="rpm2css">RPM → CSS</option>
+                  </select>
+                </label>
+              </div>
+              <div class="pill">
+                <label>Spindle
+                  <select id="spinDir">
+                    <option value="M3" selected>M3 (CW)</option>
+                    <option value="M4">M4 (CCW)</option>
+                  </select>
+                </label>
+              </div>
+            </div>
+            <div class="split">
+              <div class="row"><div class="addr"><b>D</b><input id="css_d" type="number" step="0.0001" placeholder="Diameter (X)" /></div></div>
+              <div class="row"><div class="addr"><b>V</b><input id="css_v" type="number" step="0.001" placeholder="Surface speed (m/min or SFM)" /></div></div>
+            </div>
+            <div class="row">
+              <div class="addr"><b>RPM</b><input id="css_rpm" type="number" step="1" placeholder="Computed RPM" /></div>
+              <div class="addr"><b>Clamp</b><input id="css_clamp" type="number" step="1" placeholder="Optional G50 S clamp" /></div>
+            </div>
+            <div class="right">
+              <button class="btn" onclick="calcCSS()">Calculate</button>
+              <button class="btn" onclick="insertG97()">Insert G97</button>
+              <button class="btn primary" onclick="insertG96()">Insert G96</button>
+            </div>
+            <div class="help">If Units=mm, V is m/min; if Units=inch, V is SFM. D uses the current units (mm or inch).</div>
+          </div>
+
+          <!-- G71 Pass Planner -->
+          <div class="card" style="padding:10px; margin:8px 0;">
+            <h2>G71 Pass Planner</h2>
+            <div class="split">
+              <div class="row"><div class="addr"><b>Xₛ</b><input id="g71p_stock" type="number" step="0.001" placeholder="Stock diameter" /></div></div>
+              <div class="row"><div class="addr"><b>Xf</b><input id="g71p_finish" type="number" step="0.001" placeholder="Finish diameter" /></div></div>
+            </div>
+            <div class="split">
+              <div class="row"><div class="addr"><b>U</b><input id="g71p_doc" type="number" step="0.001" placeholder="Depth per pass (radial)" /></div></div>
+              <div class="row"><div class="addr"><b>R</b><input id="g71p_retract" type="number" step="0.001" placeholder="Retract amount" /></div></div>
+            </div>
+            <div class="split">
+              <div class="row"><div class="addr"><b>Uf</b><input id="g71p_u2" type="number" step="0.001" placeholder="Finish allow X" /></div></div>
+              <div class="row"><div class="addr"><b>Wf</b><input id="g71p_w2" type="number" step="0.001" placeholder="Finish allow Z" /></div></div>
+            </div>
+            <div class="split">
+              <div class="row"><div class="addr"><b>F</b><input id="g71p_f" type="number" step="0.0001" placeholder="Feed" /></div></div>
+              <div class="row"><div class="addr"><b>P/Q</b><input id="g71p_pq" type="text" placeholder="Start/End seq e.g. 100-200" /></div></div>
+            </div>
+            <div class="right">
+              <button class="btn" onclick="planG71()">Plan</button>
+              <button class="btn primary" onclick="insertG71Planned()">Insert G71</button>
+            </div>
+            <div id="g71p_summary" class="monoline">Planner: enter values then Plan.</div>
+          </div>
+
+          <!-- Program Tools -->
+          <div class="card" style="padding:10px; margin:8px 0;">
+            <h2>Program Tools</h2>
+            <div class="row">
+              <div class="addr"><label>Start<input id="ren_start" type="number" step="1" value="10" style="width:100px"></label></div>
+              <div class="addr"><label>Step<input id="ren_step" type="number" step="1" value="10" style="width:100px"></label></div>
+              <div class="addr"><label>Width<input id="ren_width" type="number" step="1" value="4" style="width:80px"></label></div>
+              <button class="btn" onclick="renumberProgram()">Renumber</button>
+            </div>
+            <div class="help">Renumbers existing <b>N</b> labels in the Program panel to Start, Start+Step, … using chosen width.</div>
+          </div>
+        </div>
+
+        <!-- Helpers (cont.) -->
+        <div class="section">
+          <h2>Helpers (cont.)</h2>
+
+          <!-- Profile Range Wizard -->
+          <div class="card" style="padding:10px; margin:8px 0;">
+            <h2>Profile Range Wizard (P…Q stubs)</h2>
+            <div class="split">
+              <div class="row"><div class="addr"><b>P</b><input id="rw_p" type="number" step="1" value="100" placeholder="Start seq (e.g. 100)"></div></div>
+              <div class="row"><div class="addr"><b>Q</b><input id="rw_q" type="number" step="1" value="200" placeholder="End seq (e.g. 200)"></div></div>
+            </div>
+            <div class="split">
+              <div class="row"><div class="addr"><b>Step</b><input id="rw_step" type="number" step="1" value="10" placeholder="Step (e.g. 10)"></div></div>
+              <div class="row"><div class="addr"><b>Width</b><input id="rw_width" type="number" step="1" value="4" min="1" max="6" placeholder="Zero pad width"></div></div>
+            </div>
+            <div class="row">
+              <div class="pill">
+                <label>Template
+                  <select id="rw_template">
+                    <option value="blank">Blank (start/end only)</option>
+                    <option value="linear" selected>Linear skeleton</option>
+                    <option value="linear_arc">Linear + arc hint</option>
+                  </select>
+                </label>
+              </div>
+              <div class="pill"><label>Extras <select id="rw_extras"><option value="none" selected>None</option><option value="centre">Close to centre stub</option><option value="break">Break corner stub</option><option value="both">Both</option></select></label></div>
+              <div class="addr"><b>Type</b><select id="rw_corner_type"><option value="R" selected>R (radius)</option><option value="C">C (chamfer)</option></select></div>
+              <div class="addr"><b>Val</b><input id="rw_corner_val" type="text" placeholder="e.g. 0.5"></div>
+              <span id="rw_summary" class="inline-note help">Ready.</span>
+            </div>
+            <div class="row">
+              <label><input type="checkbox" id="rw_g70"> Also insert G70 call after stubs</label>
+              <div class="addr"><b>F</b><input id="rw_g70f" type="text" placeholder="optional finishing feed"></div>
+            </div>
+            <div class="right">
+              <button class="btn" onclick="rwPreview()">Preview</button>
+              <button class="btn primary" onclick="rwInsert()">Insert stubs</button>
+            </div>
+          </div>
+
+          <!-- TNR Comp Wizard -->
+          <div class="card" style="padding:10px; margin:8px 0;">
+            <h2>TNR Comp Wizard (G41/G42)</h2>
+            <div class="row">
+              <div class="pill">
+                <label>Mode
+                  <select id="tnr_mode">
+                    <option value="od" selected>OD (external)</option>
+                    <option value="id">ID (internal)</option>
+                  </select>
+                </label>
+              </div>
+              <div class="pill">
+                <label>Direction
+                  <select id="tnr_dir">
+                    <option value="Z-">Right → Left (Z−)</option>
+                    <option value="Z+">Left → Right (Z+)</option>
+                  </select>
+                </label>
+              </div>
+              <div class="pill">
+                <label>Override
+                  <select id="tnr_comp">
+                    <option value="auto" selected>Auto (recommended)</option>
+                    <option value="G41">Force G41</option>
+                    <option value="G42">Force G42</option>
+                  </select>
+                </label>
+              </div>
+            </div>
+            <div class="split">
+              <div class="row"><div class="addr"><b>r</b><input id="tnr_r" type="number" step="0.001" placeholder="nose radius" /></div></div>
+              <div class="row"><div class="addr"><b>Lead×r</b><input id="tnr_leadmul" type="number" step="0.1" value="1.5" /></div></div>
+            </div>
+            <div class="row">
+              <label><input type="checkbox" id="tnr_comments" checked> Insert comments</label>
+            </div>
+            <div class="right">
+              <button class="btn" onclick="tnrPreview()">Preview</button>
+              <button class="btn primary" onclick="tnrInsert()">Insert snippet</button>
+            </div>
+            <div id="tnr_summary" class="monoline">Ready.</div>
+            <div class="help">Tip: Ensure your tool offset has the correct nose radius and orientation set. Compensation is applied on the first cutting move and cancelled with <b>G40</b> on lead-out.</div>
+          </div>
+
+          <!-- Arc Helper -->
+          <div class="card" style="padding:10px; margin:8px 0;">
+            <h2>Arc Helper (G02/G03)</h2>
+            <div class="row">
+              <div class="pill">
+                <label>Direction
+                  <select id="arc_dir">
+                    <option value="G02" selected>G02 (CW)</option>
+                    <option value="G03">G03 (CCW)</option>
+                  </select>
+                </label>
+              </div>
+              <div class="pill">
+                <label>Programming
+                  <select id="arc_prog">
+                    <option value="diam" selected>Diameter (X in diam)</option>
+                    <option value="rad">Radius (X in rad)</option>
+                  </select>
+                </label>
+              </div>
+              <div class="pill">
+                <label>Representation
+                  <select id="arc_rep">
+                    <option value="ik" selected>I/K centre</option>
+                    <option value="r">R radius</option>
+                  </select>
+                </label>
+              </div>
+              <div class="pill" id="arc_smalllarge_wrap" style="display:none">
+                <label>Arc size
+                  <select id="arc_size">
+                    <option value="small" selected>Small (&lt;180°)</option>
+                    <option value="large">Large (&gt;180°)</option>
+                  </select>
+                </label>
+              </div>
+            </div>
+            <div class="split">
+              <div class="row"><div class="addr"><b>Xs</b><input id="arc_xs" type="text" placeholder="Start X (diam/rad)" /></div></div>
+              <div class="row"><div class="addr"><b>Zs</b><input id="arc_zs" type="text" placeholder="Start Z" /></div></div>
+            </div>
+            <div class="split">
+              <div class="row"><div class="addr"><b>Xe</b><input id="arc_xe" type="text" placeholder="End X (diam/rad)" /></div></div>
+              <div class="row"><div class="addr"><b>Ze</b><input id="arc_ze" type="text" placeholder="End Z" /></div></div>
+            </div>
+            <div class="row" id="arc_r_wrap" style="display:none">
+              <div class="addr"><b>R</b><input id="arc_r" type="text" placeholder="Radius (always in rad)" /></div>
+              <span class="help">R uses radius units even when X is in diameter. Sign selects small/large automatically; you can override with Arc size.</span>
+            </div>
+            <div class="row">
+              <label><input type="checkbox" id="arc_comments" checked> Insert comments</label>
+            </div>
+            <div class="right">
+              <button class="btn" onclick="arcPreview()">Preview</button>
+              <button class="btn primary" onclick="arcInsert()">Insert arc</button>
+            </div>
+            <div id="arc_summary" class="monoline">Ready.</div>
+            <div class="help">Plane is G18 (X–Z). For I/K, values are <b>incremental from the start point</b>. In diameter programming, I is still a radius value.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right: Program + Drawing -->
+      <section class="card">
+        <h2>Program</h2>
+        <div id="status" class="status" aria-live="polite">
+          <span class="badge muted">Waiting for program…</span>
+        </div>
+        <div class="toolbar" style="margin-top:8px">
+          <button class="btn" onclick="insertHeader()">Insert typical header</button>
+          <button class="btn" onclick="appendText('M30')">Append M30</button>
+          <button class="btn" onclick="removeLast()">Undo last line</button>
+          <button class="btn" onclick="clearProgram()">Clear program</button>
+          <span class="inline-note help">Output is plain text, uppercase, spaces only.</span>
+        </div>
+        <div class="spacer"></div>
+        <textarea id="out" class="output" spellcheck="false" aria-label="Program output" oninput="updateStatus()"></textarea>
+
+        <!-- Drawing viewer -->
+        <div class="viewer">
+          <div class="hr"></div>
+          <h2>Drawing (upload to practice coding)</h2>
+          <div class="row">
+            <input id="fileInput" type="file" accept="image/*">
+            <div id="dropZone" class="dz" style="flex:1" title="Drop image here">Drop image here or use the file picker</div>
+          </div>
+
+          <div class="viewer-toolbar">
+            <div class="viewer-ctl">
+              <button class="btn" onclick="fitWidth()">Fit width</button>
+              <button class="btn" onclick="zoomOut()">−</button>
+              <input id="zoomRange" type="range" min="25" max="300" step="5" value="100" oninput="setZoom(this.value)" />
+              <span id="zoomLabel" class="help">100%</span>
+              <button class="btn" onclick="zoomIn()">+</button>
+            </div>
+            <div class="viewer-ctl">
+              <button class="btn" onclick="rotate()">Rotate 90°</button>
+              <button class="btn ghost" onclick="clearImage()">Clear image</button>
+            </div>
+            <div class="viewer-ctl">
+              <button id="measureToggle" class="btn" onclick="toggleMeasure()">Measure</button>
+              <span class="inline-note help">Click two points to measure</span>
+            </div>
+            <div class="viewer-ctl">
+              <span class="help">Scale:</span>
+              <input id="scaleValue" type="number" step="0.0001" placeholder="known length" style="width:140px">
+              <select id="scaleUnits">
+                <option value="mm" selected>mm</option>
+                <option value="inch">inch</option>
+              </select>
+              <button class="btn" onclick="setScaleFromLast()">Set from last</button>
+              <button class="btn ghost" onclick="clearScale()">Clear scale</button>
+            </div>
+            <span id="measureInfo" class="badge note">No scale set</span>
+          </div>
+
+          <div id="viewport" class="viewport">
+            <img id="drawImg" alt="Drawing preview" />
+            <svg id="overlay" class="overlay"></svg>
+          </div>
+          <div class="row"><button class="btn ghost" onclick="clearMeasures()">Clear measurements</button></div>
+        </div>
+      </section>
+    </div>
+
+    <div class="spacer"></div>
+    <p class="help">Rules: canonical address order <b>N / G X Z U W R I K P Q F S T M (comment)</b>, no commas, one space separators, uppercase. Modal conflicts are lightly inferred in the status strip.</p>
+  
+</div></main>
+
+  <!-- Guided form modal -->
+  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="sheet">
+      <h3 id="modalTitle">Guided form</h3>
+      <div id="modalBody"></div>
+      <div class="right" style="margin-top:10px">
+        <button class="btn" onclick="closeGuided()">Cancel</button>
+        <button class="btn primary" id="guidedInsertBtn">Insert</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const ORDER = ["N","/","G","X","Z","U","W","R","I","K","P","Q","F","S","T","M","COMMENT"];
+    let nextN = 10;
+    let history = [];
+
+    const CYCLES = {
+      g70:{title:"G70 — Finishing cycle call (range)",
+        meanings:[["P","Start sequence number of profile (e.g., 100)"],["Q","End sequence number of profile (e.g., 200)"]],
+        example:["G70 P0100 Q0200"],
+        notes:["Calls a previously defined profile between P and Q, usually after G71 roughing.","Ensure tool, offsets, spindle, feed mode are set appropriately before calling."]},
+      g71:{title:"G71 — Roughing (Type II)",
+        meanings:[["U (1st blk)","Depth of cut (radial)"],["R (1st blk)","Retract amount"],["P (2nd blk)","Start sequence of finish profile"],["Q (2nd blk)","End sequence of finish profile"],["U (2nd blk)","Finish allowance in X"],["W (2nd blk)","Finish allowance in Z"],["F (2nd blk)","Feedrate during roughing"]],
+        example:["G71 U2.0 R0.5","G71 P0100 Q0200 U0.2 W0.1 F0.25"],
+        notes:["Type II uses two blocks: first to set cutting depth/retract, second to point at the profile with finish allowances.","Program the actual profile between N0100 and N0200 using linear moves (and arcs if supported)."]},
+      g72:{title:"G72 — Facing roughing (Type II style)",
+        meanings:[["W (1st blk)","Depth per pass (axial)"],["R (1st blk)","Retract amount"],["P (2nd blk)","Start sequence of face profile"],["Q (2nd blk)","End sequence of face profile"],["U (2nd blk)","Finish allowance in X"],["W (2nd blk)","Finish allowance in Z"],["F (2nd blk)","Feedrate during roughing"]],
+        example:["G72 W2.0 R0.5","G72 P0300 Q0400 U0.2 W0.1 F0.25"],
+        notes:["Rough faces using a defined profile range.","Exact parameters vary by control option; treat as a template and verify on your machine."]},
+      g73:{title:"G73 — Pattern repeat",
+        meanings:[["P","Start sequence"],["Q","End sequence"],["U","X shift per repeat"],["W","Z shift per repeat"],["R","Retract amount"],["F","Feed (if modal not set)"]],
+        example:["G73 P0500 Q0600 U-2.0 W-5.0 R0.5 F0.25"],
+        notes:["Repeats a pattern between P and Q with incremental shifts. Variant details depend on control."]},
+      g74:{title:"G74 — Peck drilling (Z)",
+        meanings:[["X","X position"],["Z","Z final depth"],["R","Retract level"],["Q","Peck depth"],["F","Feed (per rev or per min by mode)"]],
+        example:["G74 X20.0 Z-30.0 R2.0 Q2.0 F0.15"],
+        notes:["Peck along Z; confirm your machine's exact address set and safety retract behavior.","Some controls use different address sets (e.g., include K/L). Treat this as a generic template and verify."]},
+      g75:{title:"G75 — Peck grooving (X)",
+        meanings:[["X","Final X"],["Z","Z position"],["R","Retract amount"],["Q","Peck step"],["F","Feed"]],
+        example:["G75 X40.0 Z-10.0 R0.5 Q0.5 F0.12"],
+        notes:["Used for grooving with pecks; specifics vary by control."]},
+      g76:{title:"G76 — Threading (two-block)",
+        meanings:[["P1","Bit-encoded: finishing passes, chamfer/pullout, angle (control-dependent)"],["Q1","Minimum cutting depth (μm = 0.001 mm)"],["R1","Finishing allowance (radial)"],["X","Target diameter (major/minor depending external/internal)"],["Z","End Z of thread"],["R2","Taper (per thread length, usually 0)"],["P2","Thread height (μm)"],["Q2","First-cut depth"],["F","Pitch (feed equals pitch)"]],
+        example:["G76 P020060 Q0050 R0.02","G76 X90.0 Z-40.0 R0.0 P1500 Q300 F4.0"],
+        notes:["Common 0i/21i format shown. Some parameters differ by series/options—treat as template and verify."]},
+      g92:{title:"G92 — Threading (single-block)",
+        meanings:[["X","Target diameter"],["Z","End Z"],["F","Pitch (feed equals pitch)"],["R","Taper (optional, control-dependent)"]],
+        example:["G92 X90.0 Z-40.0 F4.0"],
+        notes:["Legacy single-block threading; often replaced by G76 two-block."]},
+      g32:{title:"G32 — Single-point thread move",
+        meanings:[["X","Target X (or omit for straight pass)"],["Z","Target Z"],["F","Pitch (feed equals pitch)"]],
+        example:["G32 Z-40.0 F4.0"],
+        notes:["Used for explicit thread passes; you will issue multiple passes yourself."]}
+    };
+    // Live tooling cycles
+    CYCLES['g83'] = {
+      title:"G83 — Peck drilling (live tool)",
+      meanings:[["X","X position"],["Z","Final Z depth"],["R","Retract plane"],["Q","Peck depth"],["F","Feed (per rev/min per mode)"]],
+      example:["G83 X20.0 Z-25.0 R2.0 Q3.0 F0.12"],
+      notes:["Generic peck drill for live tooling on a lathe. Your machine may require enabling C-axis/live-tool (e.g., M154, M133/M134).","Address set varies by control; treat as template and verify on your controller."]
+    };
+    CYCLES['g84'] = {
+      title:"G84 — Tapping (live tool)",
+      meanings:[["X","X position"],["Z","Final Z depth"],["R","Retract plane"],["F","Pitch as feed (use per-rev mode)"]],
+      example:["G84 X20.0 Z-12.0 R2.0 F1.25"],
+      notes:["Rigid tapping assumes spindle/feed synchronization and G95 per-rev feed mode; some controls need M29.","Lathe implementations vary; verify required M-codes and axes on your machine."]
+    };
+
+    function qs(sel){return document.querySelector(sel)}
+    function qsa(sel){return [...document.querySelectorAll(sel)]}
+
+    function dpMode(){ return qs('#dpMode').value }
+    function seqEnabled(){ return qs('#seqEnable').checked }
+    function padN(n,width){ const s = String(n); return s.padStart(width,'0') }
+
+    function formatNum(raw){
+      if(raw==null) return null;
+      let s = String(raw).trim();
+      if(s==="") return null;
+      let num = Number(s);
+      const numeric = !Number.isNaN(num) && Number.isFinite(num);
+      if(!numeric) return s.toUpperCase();
+      const supZero = qs('#suppressLeadingZero').checked;
+      let mode = dpMode();
+      if(mode==="mm3") s = num.toFixed(3);
+      else if(mode==="in4") s = num.toFixed(4);
+      else {
+        s = String(num);
+        if(/\./.test(s)){
+          s = (Math.round(num*100000)/100000).toString();
+          s = Number(s).toString();
+        }
+      }
+      if(supZero && s.startsWith("0.")) s = s.replace(/^0\./,".");
+      if(supZero && s.startsWith("-0.")) s = s.replace(/^-0\./,"-.");
+      return s.toUpperCase();
+    }
+
+    function collectComposer(){
+      const map = {};
+      const fields = ["G","X","Z","U","W","R","I","K","P","Q","F","S","T"];
+      fields.forEach(k=>{
+        const v = (qs('#'+k).value||"").trim();
+        if(!v) return;
+        if(k==="G"){
+          map["G"] = v.split(/\s+/).map(tok=> tok.toUpperCase().startsWith("G")? tok.toUpperCase() : "G"+tok.toUpperCase());
+        }else{
+          map[k] = formatNum(v);
+        }
+      });
+      const comment = (qs('#C').value||"").trim();
+      if(comment) map["COMMENT"] = '(' + comment.replace(/[()]/g,'') + ')';
+      if(seqEnabled()){
+        const width = Math.max(1, Math.min(6, Number(qs('#seqWidth').value||4)));
+        map["N"] = padN(nextN, width);
+      }
+      if(qs('#blkDelete').checked) map["/"] = true;
+      return map;
+    }
+
+    function canonicalize(map){
+      const parts = [];
+      const ORDER = ["N","/","G","X","Z","U","W","R","I","K","P","Q","F","S","T","M","COMMENT"];
+      for(const key of ORDER){
+        if(key==="COMMENT"){ if(map.COMMENT) parts.push(map.COMMENT); continue; }
+        if(key==="/"){ if(map["/"]) parts.push("/"); continue; }
+        if(key==="G" && Array.isArray(map.G)){ map.G.forEach(g=> parts.push(g)); continue; }
+        if(map[key]!=null && map[key] !== ""){
+          let val = String(map[key]).toUpperCase();
+          if(key==="N"){ parts.push("N"+val); } else { parts.push(key + val); }
+        }
+      }
+      return parts.join(" ").replace(/\s+/g," ").trim().toUpperCase();
+    }
+
+    function previewLine(){
+      const map = collectComposer();
+      const line = canonicalize(map);
+      qs('#preview').textContent = line || "Preview…";
+    }
+
+    function setNextNFromUI(){
+      const start = parseInt(qs('#seqStart').value||'10',10);
+      const step  = parseInt(qs('#seqStep').value||'10',10);
+      if(history.length===0){ nextN = start } else { nextN += step }
+    }
+
+    function addLine(){
+      const map = collectComposer();
+      const line = canonicalize(map);
+      if(!line){ return }
+      const out = qs('#out');
+      out.value = (out.value ? out.value + "\n" : "") + line;
+      history.push(line);
+      previewLine();
+      setNextNFromUI();
+      clearComposer();
+      updateStatus();
+    }
+
+    function clearComposer(){
+      ["G","X","Z","U","W","R","I","K","P","Q","F","S","T","C"].forEach(id=>{ const el = qs('#'+id); if(el) el.value=""; });
+      qs('#blkDelete').checked = false;
+      qs('#preview').textContent = "Preview…";
+    }
+
+    function quick(addr,val){
+      const el = qs('#'+addr);
+      if(!el) return;
+      if(addr==="G"){
+        el.value = (el.value.trim() ? (el.value.trim()+" ") : "") + val;
+      }else{
+        el.value = val;
+      }
+      previewLine();
+    }
+
+    function insertHeader(){
+      const lines = [
+        "(HEADER)",
+        "O1234",
+        "G21 G18 G40 G99",
+        "G50 S2500",
+        "G97 S800 M3",
+      ];
+      const out = qs('#out');
+      out.value = (out.value ? out.value + "\n" : "") + lines.join("\n");
+      updateStatus();
+    }
+
+    function appendText(text){
+      const out = qs('#out');
+      out.value = (out.value ? out.value + "\n" : "") + String(text).toUpperCase();
+      updateStatus();
+    }
+
+    function removeLast(){
+      const out = qs('#out');
+      const arr = out.value.split(/\n/);
+      arr.pop();
+      out.value = arr.join("\n");
+      history.pop();
+      updateStatus();
+    }
+
+    function clearProgram(){
+      if(confirm("Clear entire program?")){ qs('#out').value=""; history=[]; nextN = Number(qs('#seqStart').value||10); updateStatus(); }
+    }
+
+    // ---------- Cycles skeletons ----------
+    function seqPrefix(){ return seqEnabled()? ("N"+padN(nextN, Number(qs('#seqWidth').value||4))+" ") : ""; }
+    function bumpSeq(){ if(seqEnabled()){ nextN += Number(qs('#seqStep').value||10) } }
+
+    function insertCycle(withComments){
+      const sel = qs('#cycleSelect').value;
+      const lines = [];
+      const cmt = (t)=> withComments? (" "+t) : "";
+
+      if(sel==="g70"){
+        lines.push( seqPrefix() + "G70 P____ Q____" + cmt("(FINISH PROFILE RANGE)") ); bumpSeq();
+      }
+      if(sel==="g71"){
+        lines.push( seqPrefix() + "G71 U____ R____" + cmt("(ROUGH DEPTH & RETRACT)") ); bumpSeq();
+        lines.push( seqPrefix() + "G71 P____ Q____ U____ W____ F____" + cmt("(PROFILE RANGE & FIN ALLOW)") ); bumpSeq();
+      }
+      if(sel==="g72"){
+        lines.push( seqPrefix() + "G72 W____ R____" + cmt("(DEPTH & RETRACT)") ); bumpSeq();
+        lines.push( seqPrefix() + "G72 P____ Q____ U____ W____ F____" + cmt("(PROFILE RANGE & FIN ALLOW)") ); bumpSeq();
+      }
+      if(sel==="g73"){
+        lines.push( seqPrefix() + "G73 P____ Q____ U____ W____ R____ F____" + cmt("(PATTERN REPEAT)") ); bumpSeq();
+      }
+      if(sel==="g74"){
+        lines.push( seqPrefix() + "G74 X____ Z____ R____ Q____ F____" + cmt("(PECK DRILL)") ); bumpSeq();
+      }
+      if(sel==="g75"){
+        lines.push( seqPrefix() + "G75 X____ Z____ R____ Q____ F____" + cmt("(PECK GROOVE)") ); bumpSeq();
+      }
+      if(sel==="g76"){
+        lines.push( seqPrefix() + "G76 P____ Q____ R____" + cmt("(THREAD SETTINGS)") ); bumpSeq();
+        lines.push( seqPrefix() + "G76 X____ Z____ R____ P____ Q____ F____" + cmt("(THREAD EXECUTE)") ); bumpSeq();
+      }
+      if(sel==="g92"){
+        lines.push( seqPrefix() + "G92 X____ Z____ F____" + cmt("(LEGACY THREAD)") ); bumpSeq();
+      }
+      if(sel==="g32"){
+        lines.push( seqPrefix() + "G32 X____ Z____ F____" + cmt("(SINGLE-POINT THREAD)") ); bumpSeq();
+      }
+      if(sel==="g83"){
+        lines.push( seqPrefix() + "G83 X____ Z____ R____ Q____ F____" + cmt("(LIVE PECK DRILL)") ); bumpSeq();
+      }
+      if(sel==="g84"){
+        lines.push( seqPrefix() + "G84 X____ Z____ R____ F____" + cmt("(LIVE TAP)") ); bumpSeq();
+      }
+
+      const out = qs('#out');
+      out.value = (out.value ? out.value + "\n" : "") + lines.join("\n");
+      updateStatus();
+    }
+
+    function renderCycleInfo(){
+      const sel = qs('#cycleSelect').value;
+      const cfg = CYCLES[sel];
+      document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+      qs('.tab[data-tab="meanings"]').classList.add('active');
+      document.querySelectorAll('.tabpanes > div').forEach(p=>p.classList.remove('active'));
+      qs('#pane-meanings').classList.add('active');
+      qs('#pane-meanings').innerHTML = `<div class="row"><b>${cfg.title}</b></div><div class="hr"></div>` +
+        cfg.meanings.map(([k,v])=>`<div class="row"><div class="pill"><b>${k}</b></div><div class="help">${v}</div></div>`).join("");
+      qs('#pane-example').innerHTML = `<div class="row"><b>Example</b></div><div class="hr"></div><pre class="monoline">${cfg.example.join("\n")}</pre>`;
+      qs('#pane-notes').innerHTML   = `<div class="row"><b>Notes</b></div><div class="hr"></div><ul>${cfg.notes.map(n=>`<li class="help">${n}</li>`).join("")}</ul>`;
+    }
+
+    function switchTab(el){
+      document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+      el.classList.add('active');
+      const tab = el.dataset.tab;
+      document.querySelectorAll('.tabpanes > div').forEach(p=>p.classList.remove('active'));
+      qs('#pane-'+tab).classList.add('active');
+    }
+
+    function toggleLive(){
+      const sel = qs('#cycleSelect');
+      const live = qs('#liveToggle').checked;
+      const has83 = !!sel.querySelector('option[value="g83"]');
+      const has84 = !!sel.querySelector('option[value="g84"]');
+      if(live){
+        if(!has83){
+          const o83 = document.createElement('option'); o83.value='g83'; o83.textContent='G83 — Peck drilling (live)'; sel.appendChild(o83);
+        }
+        if(!has84){
+          const o84 = document.createElement('option'); o84.value='g84'; o84.textContent='G84 — Tapping (live)'; sel.appendChild(o84);
+        }
+      }else{
+        if(has83) sel.querySelector('option[value="g83"]').remove();
+        if(has84) sel.querySelector('option[value="g84"]').remove();
+        if(sel.value==='g83' || sel.value==='g84'){ sel.value='g70'; renderCycleInfo(); }
+      }
+      renderCycleInfo();
+    }
+
+    // ---------- Guided forms (modal) ----------
+    function openGuided(){
+      const sel = qs('#cycleSelect').value;
+      const C = CYCLES[sel];
+      qs('#modalTitle').textContent = C.title + " — Guided form";
+      const body = qs('#modalBody');
+      const btn = qs('#guidedInsertBtn');
+
+      function finalize(lines){
+        const out = qs('#out'); out.value = (out.value ? out.value + "\n" : "") + lines.join("\n");
+        closeGuided();
+        updateStatus();
+      }
+
+      if(sel==="g76"){
+        body.innerHTML = `
+          <div class="help">Two-block format: <code>G76 P.. Q.. R..</code> then <code>G76 X.. Z.. R.. P.. Q.. F..</code></div>
+          <div class="hr"></div>
+          <div class="two">
+            <div>
+              <h3>First block</h3>
+              <div class="row"><div class="addr"><b>P1</b><input id="g76_p1" type="text" placeholder="e.g. 020060" /></div></div>
+              <div class="row"><div class="addr"><b>Q1</b><input id="g76_q1" type="text" placeholder="min depth (μm)" /></div></div>
+              <div class="row"><div class="addr"><b>R1</b><input id="g76_r1" type="text" placeholder="finishing allowance" /></div></div>
+              <div class="hr"></div>
+              <div class="row"><b class="help">P-code helper</b></div>
+              <div class="row"><div class="addr"><b>AA</b><input id="g76_p_aa" type="number" min="0" max="99" value="02" /></div></div>
+              <div class="row"><div class="addr"><b>BB</b><input id="g76_p_bb" type="number" min="0" max="99" value="00" /></div></div>
+              <div class="row"><div class="addr"><b>CC</b><input id="g76_p_cc" type="number" min="0" max="99" value="60" /></div></div>
+              <div class="help">P1 = <code>AA BB CC</code> → e.g., <code>02 00 60</code> → <code>020060</code>. AA: finishing passes (0–99). BB: chamfer/pullout (0–99). CC: thread angle (60°, 55°, etc.).</div>
+            </div>
+            <div>
+              <h3>Second block</h3>
+              <div class="row"><div class="addr"><b>X</b><input id="g76_x" type="text" placeholder="target X" /></div></div>
+              <div class="row"><div class="addr"><b>Z</b><input id="g76_z" type="text" placeholder="end Z" /></div></div>
+              <div class="row"><div class="addr"><b>R</b><input id="g76_r2" type="text" placeholder="taper (usually 0)" /></div></div>
+              <div class="row"><div class="addr"><b>P2</b><input id="g76_p2" type="text" placeholder="height (μm)" /></div></div>
+              <div class="row"><div class="addr"><b>Q2</b><input id="g76_q2" type="text" placeholder="first cut depth" /></div></div>
+              <div class="row"><div class="addr"><b>F</b><input id="g76_f" type="text" placeholder="pitch as feed" /></div></div>
+              <div class="row">
+                <div class="pill">
+                  <label>Thread type
+                    <select id="g76_kind">
+                      <option value="external" selected>External</option>
+                      <option value="internal">Internal</option>
+                    </select>
+                  </label>
+                </div>
+                <button class="btn" id="g76_suggest">Suggest from pitch</button>
+                <span class="inline-note help">Uses ISO approximations: H≈0.6134P (ext), H≈0.5413P (int)</span>
+              </div>
+            </div>
+          </div>
+        `;
+        const syncP1 = ()=>{
+          const aa = String(Math.max(0, Math.min(99, Number(qs('#g76_p_aa').value||0)))).padStart(2,'0');
+          const bb = String(Math.max(0, Math.min(99, Number(qs('#g76_p_bb').value||0)))).padStart(2,'0');
+          const cc = String(Math.max(0, Math.min(99, Number(qs('#g76_p_cc').value||0)))).padStart(2,'0');
+          qs('#g76_p1').value = aa + bb + cc;
+        };
+        const suggestFromPitch = ()=>{
+          const f = Number((qs('#g76_f').value||"").trim());
+          if(!isFinite(f) || f<=0) { alert("Enter a numeric pitch in F first."); return; }
+          const kind = qs('#g76_kind').value;
+          const H = (kind==="external" ? 0.6134 : 0.5413) * f; // mm
+          const P2 = Math.round(H * 1000); // μm
+          const Q1 = 50; // μm, gentle default min depth
+          const Q2 = Math.round(P2 * 0.20); // ~20% of height
+          qs('#g76_p2').value = String(P2);
+          qs('#g76_q1').value = String(Q1);
+          qs('#g76_q2').value = String(Q2);
+        };
+        setTimeout(()=>{
+          qs('#g76_p_aa').addEventListener('input', syncP1);
+          qs('#g76_p_bb').addEventListener('input', syncP1);
+          qs('#g76_p_cc').addEventListener('input', syncP1);
+          qs('#g76_suggest').addEventListener('click', suggestFromPitch);
+        },0);
+
+        btn.onclick = ()=>{
+          const p1 = qs('#g76_p1').value.trim();
+          const q1 = qs('#g76_q1').value.trim();
+          const r1 = qs('#g76_r1').value.trim();
+          const x  = qs('#g76_x').value.trim();
+          const z  = qs('#g76_z').value.trim();
+          const r2 = qs('#g76_r2').value.trim();
+          const p2 = qs('#g76_p2').value.trim();
+          const q2 = qs('#g76_q2').value.trim();
+          const f  = qs('#g76_f').value.trim();
+
+          let lines = [];
+          let map1 = {};
+          if(seqEnabled()) map1.N = padN(nextN, Number(qs('#seqWidth').value||4));
+          map1["/"] = false;
+          map1.G = ["G76"];
+          if(p1) map1.P = p1.toUpperCase();
+          if(q1) map1.Q = formatNum(q1);
+          if(r1) map1.R = formatNum(r1);
+          lines.push(canonicalize(map1));
+          bumpSeq();
+
+          let map2 = {};
+          if(seqEnabled()) map2.N = padN(nextN, Number(qs('#seqWidth').value||4));
+          map2["/"] = false;
+          map2.G = ["G76"];
+          if(x) map2.X = formatNum(x);
+          if(z) map2.Z = formatNum(z);
+          if(r2) map2.R = formatNum(r2);
+          if(p2) map2.P = p2.toUpperCase();
+          if(q2) map2.Q = formatNum(q2);
+          if(f) map2.F = formatNum(f);
+          lines.push(canonicalize(map2));
+          bumpSeq();
+
+          finalize(lines);
+        };
+
+      } else if(sel==="g71"){
+        body.innerHTML = `
+          <div class="help">Two blocks: first sets depth &amp; retract; second sets profile range and finishing allowances.</div>
+          <div class="hr"></div>
+          <div class="two">
+            <div>
+              <h3>First block</h3>
+              <div class="row"><div class="addr"><b>U</b><input id="g71_u1" type="text" placeholder="depth of cut" /></div></div>
+              <div class="row"><div class="addr"><b>R</b><input id="g71_r1" type="text" placeholder="retract" /></div></div>
+            </div>
+            <div>
+              <h3>Second block</h3>
+              <div class="row"><div class="addr"><b>P</b><input id="g71_p" type="text" placeholder="start seq (e.g. 100)" /></div></div>
+              <div class="row"><div class="addr"><b>Q</b><input id="g71_q" type="text" placeholder="end seq (e.g. 200)" /></div></div>
+              <div class="row"><div class="addr"><b>U</b><input id="g71_u2" type="text" placeholder="finish allow X" /></div></div>
+              <div class="row"><div class="addr"><b>W</b><input id="g71_w2" type="text" placeholder="finish allow Z" /></div></div>
+              <div class="row"><div class="addr"><b>F</b><input id="g71_f2" type="text" placeholder="feed" /></div></div>
+            </div>
+          </div>
+        `;
+        btn.onclick = ()=>{
+          const u1 = qs('#g71_u1').value.trim();
+          const r1 = qs('#g71_r1').value.trim();
+          const p = qs('#g71_p').value.trim();
+          const q = qs('#g71_q').value.trim();
+          const u2 = qs('#g71_u2').value.trim();
+          const w2 = qs('#g71_w2').value.trim();
+          const f2 = qs('#g71_f2').value.trim();
+
+          let lines = [];
+
+          let m1 = {};
+          if(seqEnabled()) m1.N = padN(nextN, Number(qs('#seqWidth').value||4));
+          m1["/"] = false;
+          m1.G = ["G71"];
+          if(u1) m1.U = formatNum(u1);
+          if(r1) m1.R = formatNum(r1);
+          lines.push(canonicalize(m1));
+          bumpSeq();
+
+          let m2 = {};
+          if(seqEnabled()) m2.N = padN(nextN, Number(qs('#seqWidth').value||4));
+          m2["/"] = false;
+          m2.G = ["G71"];
+          if(p) m2.P = p.toUpperCase();
+          if(q) m2.Q = q.toUpperCase();
+          if(u2) m2.U = formatNum(u2);
+          if(w2) m2.W = formatNum(w2);
+          if(f2) m2.F = formatNum(f2);
+          lines.push(canonicalize(m2));
+          bumpSeq();
+
+          finalize(lines);
+        };
+
+      } else if(sel==="g70"){
+        body.innerHTML = `
+          <div class="help">Calls the finishing pass over a previously defined profile range.</div>
+          <div class="hr"></div>
+          <div class="row"><div class="addr"><b>P</b><input id="g70_p" type="text" placeholder="start seq (e.g. 100)" /></div></div>
+          <div class="row"><div class="addr"><b>Q</b><input id="g70_q" type="text" placeholder="end seq (e.g. 200)" /></div></div>
+          <div class="row"><div class="addr"><b>F</b><input id="g70_f" type="text" placeholder="optional finishing feed" /></div></div>
+        `;
+        btn.onclick = ()=>{
+          const p = qs('#g70_p').value.trim();
+          const q = qs('#g70_q').value.trim();
+          const f = qs('#g70_f').value.trim();
+          let m = {};
+          if(seqEnabled()) m.N = padN(nextN, Number(qs('#seqWidth').value||4));
+          m["/"] = false;
+          m.G = ["G70"];
+          if(p) m.P = p.toUpperCase();
+          if(q) m.Q = q.toUpperCase();
+          if(f) m.F = formatNum(f);
+          const line = canonicalize(m);
+          bumpSeq();
+          finalize([line]);
+        };
+
+      } else if(sel==="g72"){
+        body.innerHTML = `
+          <div class="help">Two blocks, Type II style: first sets depth &amp; retract; second sets profile and finish allowances.</div>
+          <div class="hr"></div>
+          <div class="two">
+            <div>
+              <h3>First block</h3>
+              <div class="row"><div class="addr"><b>W</b><input id="g72_w1" type="text" placeholder="depth per pass (axial)" /></div></div>
+              <div class="row"><div class="addr"><b>R</b><input id="g72_r1" type="text" placeholder="retract amount" /></div></div>
+            </div>
+            <div>
+              <h3>Second block</h3>
+              <div class="row"><div class="addr"><b>P</b><input id="g72_p" type="text" placeholder="start seq (e.g. 300)" /></div></div>
+              <div class="row"><div class="addr"><b>Q</b><input id="g72_q" type="text" placeholder="end seq (e.g. 400)" /></div></div>
+              <div class="row"><div class="addr"><b>U</b><input id="g72_u2" type="text" placeholder="finish allow X" /></div></div>
+              <div class="row"><div class="addr"><b>W</b><input id="g72_w2" type="text" placeholder="finish allow Z" /></div></div>
+              <div class="row"><div class="addr"><b>F</b><input id="g72_f2" type="text" placeholder="feed" /></div></div>
+            </div>
+          </div>
+        `;
+        btn.onclick = ()=>{
+          const w1 = qs('#g72_w1').value.trim();
+          const r1 = qs('#g72_r1').value.trim();
+          const p  = qs('#g72_p').value.trim();
+          const q  = qs('#g72_q').value.trim();
+          const u2 = qs('#g72_u2').value.trim();
+          const w2 = qs('#g72_w2').value.trim();
+          const f2 = qs('#g72_f2').value.trim();
+
+          let m1 = {};
+          if(seqEnabled()) m1.N = padN(nextN, Number(qs('#seqWidth').value||4));
+          m1["/"] = false;
+          m1.G = ["G72"];
+          if(w1) m1.W = formatNum(w1);
+          if(r1) m1.R = formatNum(r1);
+          const line1 = canonicalize(m1);
+          bumpSeq();
+
+          let m2 = {};
+          if(seqEnabled()) m2.N = padN(nextN, Number(qs('#seqWidth').value||4));
+          m2["/"] = false;
+          m2.G = ["G72"];
+          if(p) m2.P = p.toUpperCase();
+          if(q) m2.Q = q.toUpperCase();
+          if(u2) m2.U = formatNum(u2);
+          if(w2) m2.W = formatNum(w2);
+          if(f2) m2.F = formatNum(f2);
+          const line2 = canonicalize(m2);
+          bumpSeq();
+
+          finalize([line1, line2]);
+        };
+
+      } else if(sel==="g75"){
+        body.innerHTML = `
+          <div class="help">Peck grooving in X with retract; generic skeleton.</div>
+          <div class="hr"></div>
+          <div class="row"><div class="addr"><b>X</b><input id="g75_x" type="text" placeholder="final X" /></div></div>
+          <div class="row"><div class="addr"><b>Z</b><input id="g75_z" type="text" placeholder="Z position" /></div></div>
+          <div class="row"><div class="addr"><b>R</b><input id="g75_r" type="text" placeholder="retract amount" /></div></div>
+          <div class="row"><div class="addr"><b>Q</b><input id="g75_q" type="text" placeholder="peck step" /></div></div>
+          <div class="row"><div class="addr"><b>F</b><input id="g75_f" type="text" placeholder="feed" /></div></div>
+        `;
+        btn.onclick = ()=>{
+          const x = qs('#g75_x').value.trim();
+          const z = qs('#g75_z').value.trim();
+          const r = qs('#g75_r').value.trim();
+          const q = qs('#g75_q').value.trim();
+          const f = qs('#g75_f').value.trim();
+
+          let m = {};
+          if(seqEnabled()) m.N = padN(nextN, Number(qs('#seqWidth').value||4));
+          m["/"] = false;
+          m.G = ["G75"];
+          if(x) m.X = formatNum(x);
+          if(z) m.Z = formatNum(z);
+          if(r) m.R = formatNum(r);
+          if(q) m.Q = formatNum(q);
+          if(f) m.F = formatNum(f);
+          const line = canonicalize(m);
+          bumpSeq();
+          finalize([line]);
+        };
+
+      } else if(sel==="g74"){
+        body.innerHTML = `
+          <div class="help">Peck drilling along Z; generic parameters shown. Confirm exact variant on your control.</div>
+          <div class="hr"></div>
+          <div class="row"><div class="addr"><b>X</b><input id="g74_x" type="text" placeholder="X position" /></div></div>
+          <div class="row"><div class="addr"><b>Z</b><input id="g74_z" type="text" placeholder="final Z depth" /></div></div>
+          <div class="row"><div class="addr"><b>R</b><input id="g74_r" type="text" placeholder="retract level" /></div></div>
+          <div class="row"><div class="addr"><b>Q</b><input id="g74_q" type="text" placeholder="peck depth" /></div></div>
+          <div class="row"><div class="addr"><b>F</b><input id="g74_f" type="text" placeholder="feed" /></div></div>
+        `;
+        btn.onclick = ()=>{
+          const x = qs('#g74_x').value.trim();
+          const z = qs('#g74_z').value.trim();
+          const r = qs('#g74_r').value.trim();
+          const q = qs('#g74_q').value.trim();
+          const f = qs('#g74_f').value.trim();
+
+          let m = {};
+          if(seqEnabled()) m.N = padN(nextN, Number(qs('#seqWidth').value||4));
+          m["/"] = false;
+          m.G = ["G74"];
+          if(x) m.X = formatNum(x);
+          if(z) m.Z = formatNum(z);
+          if(r) m.R = formatNum(r);
+          if(q) m.Q = formatNum(q);
+          if(f) m.F = formatNum(f);
+          const line = canonicalize(m);
+          bumpSeq();
+          finalize([line]);
+        };
+
+      } else if(sel==="g73"){
+        body.innerHTML = `
+          <div class="help">Pattern repeat between P and Q with incremental shifts per repeat.</div>
+          <div class="hr"></div>
+          <div class="row"><div class="addr"><b>P</b><input id="g73_p" type="text" placeholder="start seq (e.g. 500)" /></div></div>
+          <div class="row"><div class="addr"><b>Q</b><input id="g73_q" type="text" placeholder="end seq (e.g. 600)" /></div></div>
+          <div class="row"><div class="addr"><b>U</b><input id="g73_u" type="text" placeholder="X shift per repeat" /></div></div>
+          <div class="row"><div class="addr"><b>W</b><input id="g73_w" type="text" placeholder="Z shift per repeat" /></div></div>
+          <div class="row"><div class="addr"><b>R</b><input id="g73_r" type="text" placeholder="retract amount" /></div></div>
+          <div class="row"><div class="addr"><b>F</b><input id="g73_f" type="text" placeholder="feed (optional if modal)" /></div></div>
+        `;
+        btn.onclick = ()=>{
+          const p = qs('#g73_p').value.trim();
+          const q = qs('#g73_q').value.trim();
+          const u = qs('#g73_u').value.trim();
+          const w = qs('#g73_w').value.trim();
+          const r = qs('#g73_r').value.trim();
+          const f = qs('#g73_f').value.trim();
+
+          let m = {};
+          if(seqEnabled()) m.N = padN(nextN, Number(qs('#seqWidth').value||4));
+          m["/"] = false;
+          m.G = ["G73"];
+          if(p) m.P = p.toUpperCase();
+          if(q) m.Q = q.toUpperCase();
+          if(u) m.U = formatNum(u);
+          if(w) m.W = formatNum(w);
+          if(r) m.R = formatNum(r);
+          if(f) m.F = formatNum(f);
+          const line = canonicalize(m);
+          bumpSeq();
+          finalize([line]);
+        };
+
+      } else if(sel==="g92"){
+        body.innerHTML = `
+          <div class="help">Single-block threading (legacy). Pitch is feed. Taper optional depending on control.</div>
+          <div class="hr"></div>
+          <div class="row"><div class="addr"><b>X</b><input id="g92_x" type="text" placeholder="target X" /></div></div>
+          <div class="row"><div class="addr"><b>Z</b><input id="g92_z" type="text" placeholder="end Z" /></div></div>
+          <div class="row"><div class="addr"><b>F</b><input id="g92_f" type="text" placeholder="pitch (feed)" /></div></div>
+          <div class="row"><div class="addr"><b>R</b><input id="g92_r" type="text" placeholder="taper (optional)" /></div></div>
+        `;
+        btn.onclick = ()=>{
+          const x = qs('#g92_x').value.trim();
+          const z = qs('#g92_z').value.trim();
+          const f = qs('#g92_f').value.trim();
+          const r = qs('#g92_r').value.trim();
+
+          let m = {};
+          if(seqEnabled()) m.N = padN(nextN, Number(qs('#seqWidth').value||4));
+          m["/"] = false;
+          m.G = ["G92"];
+          if(x) m.X = formatNum(x);
+          if(z) m.Z = formatNum(z);
+          if(f) m.F = formatNum(f);
+          if(r) m.R = formatNum(r);
+          const line = canonicalize(m);
+          bumpSeq();
+          finalize([line]);
+        };
+
+      } else if(sel==="g32"){
+        body.innerHTML = `
+          <div class="help">Single-point threading move. Provide Z and pitch (F). X optional if you want to move radially too.</div>
+          <div class="hr"></div>
+          <div class="row"><div class="addr"><b>Z</b><input id="g32_z" type="text" placeholder="target Z" /></div></div>
+          <div class="row"><div class="addr"><b>X</b><input id="g32_x" type="text" placeholder="optional target X" /></div></div>
+          <div class="row"><div class="addr"><b>F</b><input id="g32_f" type="text" placeholder="pitch (feed)" /></div></div>
+        `;
+        btn.onclick = ()=>{
+          const z = qs('#g32_z').value.trim();
+          const x = qs('#g32_x').value.trim();
+          const f = qs('#g32_f').value.trim();
+
+          let m = {};
+          if(seqEnabled()) m.N = padN(nextN, Number(qs('#seqWidth').value||4));
+          m["/"] = false;
+          m.G = ["G32"];
+          if(x) m.X = formatNum(x);
+          if(z) m.Z = formatNum(z);
+          if(f) m.F = formatNum(f);
+          const line = canonicalize(m);
+          bumpSeq();
+          finalize([line]);
+        };
+
+      } else if(sel==="g83"){
+        body.innerHTML = `
+          <div class="help">Live-tool peck drilling (generic). Provide X, Z final, R plane, Q peck, F feed.</div>
+          <div class="hr"></div>
+          <div class="row"><div class="addr"><b>X</b><input id="g83_x" type="text" placeholder="X position" /></div></div>
+          <div class="row"><div class="addr"><b>Z</b><input id="g83_z" type="text" placeholder="final Z depth" /></div></div>
+          <div class="row"><div class="addr"><b>R</b><input id="g83_r" type="text" placeholder="retract plane" /></div></div>
+          <div class="row"><div class="addr"><b>Q</b><input id="g83_q" type="text" placeholder="peck depth" /></div></div>
+          <div class="row"><div class="addr"><b>F</b><input id="g83_f" type="text" placeholder="feed (per mode)" /></div></div>
+          <div class="hr"></div>
+          <div class="row"><b class="help">Optional M-codes (enter one line each; e.g., <code>M154 M133 M8</code>)</b></div>
+          <div class="row"><div class="addr" style="grid-column:1/-1"><b>PRE</b><input id="g83_pre" type="text" placeholder="pre-M codes before cycle (e.g., M154 M133 M8)" /></div></div>
+          <div class="row"><div class="addr" style="grid-column:1/-1"><b>POST</b><input id="g83_post" type="text" placeholder="post-M codes after cycle (e.g., M9 M134 M155)" /></div></div>
+          <div class="help">Note: Codes vary by lathe (e.g., C-axis clamp/unclamp, live-tool spindle CW/CCW, coolant). Adjust to your control.</div>
+        `;
+        btn.onclick = ()=>{
+          const x = qs('#g83_x').value.trim();
+          const z = qs('#g83_z').value.trim();
+          const r = qs('#g83_r').value.trim();
+          const q = qs('#g83_q').value.trim();
+          const f = qs('#g83_f').value.trim();
+          const pre = (qs('#g83_pre').value||"").trim();
+          const post = (qs('#g83_post').value||"").trim();
+          const lines = [];
+          if(pre){
+            lines.push( (seqEnabled()? ( "N"+padN(nextN, Number(qs('#seqWidth').value||4))+" " ) : "") + pre.toUpperCase() );
+            if(seqEnabled()) nextN += Number(qs('#seqStep').value||10);
+          }
+          let m = {};
+          if(seqEnabled()) m.N = padN(nextN, Number(qs('#seqWidth').value||4));
+          m["/"] = false;
+          m.G = ["G83"];
+          if(x) m.X = formatNum(x);
+          if(z) m.Z = formatNum(z);
+          if(r) m.R = formatNum(r);
+          if(q) m.Q = formatNum(q);
+          if(f) m.F = formatNum(f);
+          lines.push(canonicalize(m));
+          if(seqEnabled()) nextN += Number(qs('#seqStep').value||10);
+          if(post){
+            lines.push( (seqEnabled()? ( "N"+padN(nextN, Number(qs('#seqWidth').value||4))+" " ) : "") + post.toUpperCase() );
+            if(seqEnabled()) nextN += Number(qs('#seqStep').value||10);
+          }
+          finalize(lines);
+        };
+
+      } else if(sel==="g84"){
+        body.innerHTML = `
+          <div class="help">Live-tool rigid tapping (generic). Provide X, Z final, R plane, F pitch (per rev). Ensure synchronization on your control.</div>
+          <div class="hr"></div>
+          <div class="row"><div class="addr"><b>X</b><input id="g84_x" type="text" placeholder="X position" /></div></div>
+          <div class="row"><div class="addr"><b>Z</b><input id="g84_z" type="text" placeholder="final Z depth" /></div></div>
+          <div class="row"><div class="addr"><b>R</b><input id="g84_r" type="text" placeholder="retract plane" /></div></div>
+          <div class="row"><div class="addr"><b>F</b><input id="g84_f" type="text" placeholder="pitch (feed per rev)" /></div></div>
+          <div class="hr"></div>
+          <div class="row"><b class="help">Optional M-codes (enter one line each; e.g., <code>M154 M133 M8</code>)</b></div>
+          <div class="row"><div class="addr" style="grid-column:1/-1"><b>PRE</b><input id="g84_pre" type="text" placeholder="pre-M codes before cycle (e.g., M154 M133 M8)" /></div></div>
+          <div class="row"><div class="addr" style="grid-column:1/-1"><b>POST</b><input id="g84_post" type="text" placeholder="post-M codes after cycle (e.g., M9 M134 M155)" /></div></div>
+          <div class="help">Note: Codes vary by lathe (e.g., C-axis clamp/unclamp, live-tool spindle CW/CCW, coolant). Adjust to your control.</div>
+        `;
+        btn.onclick = ()=>{
+          const x = qs('#g84_x').value.trim();
+          const z = qs('#g84_z').value.trim();
+          const r = qs('#g84_r').value.trim();
+          const f = qs('#g84_f').value.trim();
+          const pre = (qs('#g84_pre').value||"").trim();
+          const post = (qs('#g84_post').value||"").trim();
+          const lines = [];
+          if(pre){
+            lines.push( (seqEnabled()? ( "N"+padN(nextN, Number(qs('#seqWidth').value||4))+" " ) : "") + pre.toUpperCase() );
+            if(seqEnabled()) nextN += Number(qs('#seqStep').value||10);
+          }
+          let m = {};
+          if(seqEnabled()) m.N = padN(nextN, Number(qs('#seqWidth').value||4));
+          m["/"] = false;
+          m.G = ["G84"];
+          if(x) m.X = formatNum(x);
+          if(z) m.Z = formatNum(z);
+          if(r) m.R = formatNum(r);
+          if(f) m.F = formatNum(f);
+          lines.push(canonicalize(m));
+          if(seqEnabled()) nextN += Number(qs('#seqStep').value||10);
+          if(post){
+            lines.push( (seqEnabled()? ( "N"+padN(nextN, Number(qs('#seqWidth').value||4))+" " ) : "") + post.toUpperCase() );
+            if(seqEnabled()) nextN += Number(qs('#seqStep').value||10);
+          }
+          finalize(lines);
+        };
+
+      } else {
+        body.innerHTML = `<div class="help">Guided form for this cycle is not available yet. Use <b>Insert skeleton</b> for now and fill values.</div>`;
+        btn.onclick = closeGuided;
+      }
+
+      qs('#modal').classList.add('show');
+    }
+
+    function closeGuided(){ qs('#modal').classList.remove('show'); qs('#modalBody').innerHTML = ""; }
+
+    // ---------- CSS / RPM Helper ----------
+    function unitsAreInch(){ return document.querySelector('input[name="units"][value="inch"]').checked; }
+    function calcCSS(){
+      const mode = qs('#cssMode').value;
+      const D = Number((qs('#css_d').value||"").trim());
+      const V = Number((qs('#css_v').value||"").trim());
+      let rpm = Number((qs('#css_rpm').value||"").trim());
+      if(mode==='css2rpm'){
+        if(!isFinite(D) || D<=0 || !isFinite(V) || V<=0){ alert("Enter diameter and surface speed."); return; }
+        if(unitsAreInch()){
+          rpm = (12 * V) / (Math.PI * D);
+        }else{
+          rpm = (1000 * V) / (Math.PI * D);
+        }
+        qs('#css_rpm').value = Math.max(1, Math.round(rpm));
+      }else{
+        if(!isFinite(D) || D<=0 || !isFinite(rpm) || rpm<=0){ alert("Enter diameter and RPM."); return; }
+        let v;
+        if(unitsAreInch()){
+          v = (Math.PI * D * rpm) / 12;
+        }else{
+          v = (Math.PI * D * rpm) / 1000;
+        }
+        qs('#css_v').value = +(Math.round(v*1000)/1000).toFixed(3);
+      }
+    }
+    function insertG97(){
+      const rpm = Number((qs('#css_rpm').value||"").trim());
+      const spin = qs('#spinDir').value;
+      if(!isFinite(rpm) || rpm<=0){ alert("Compute or enter RPM first."); return; }
+      const line = `G97 S${Math.round(rpm)} ${spin}`.toUpperCase();
+      appendText(line);
+    }
+    function insertG96(){
+      const V = Number((qs('#css_v').value||"").trim());
+      const clamp = Number((qs('#css_clamp').value||"").trim());
+      const spin = qs('#spinDir').value;
+      if(!isFinite(V) || V<=0){ alert("Enter surface speed V first."); return; }
+      const line1 = `G96 S${+(Math.round(V*1000)/1000).toFixed(3)} ${spin}`.toUpperCase();
+      const lines = [line1];
+      if(isFinite(clamp) && clamp>0){ lines.unshift(`G50 S${Math.round(clamp)}`.toUpperCase()); }
+      appendText(lines.join("\n"));
+    }
+
+    // ---------- G71 Pass Planner ----------
+    let g71Plan = null;
+    function planG71(){
+      const xs = Number((qs('#g71p_stock').value||"").trim());
+      const xf = Number((qs('#g71p_finish').value||"").trim());
+      const doc = Number((qs('#g71p_doc').value||"").trim());
+      const retr = Number((qs('#g71p_retract').value||"").trim());
+      const u2 = Number((qs('#g71p_u2').value||"").trim());
+      const w2 = Number((qs('#g71p_w2').value||"").trim());
+      const f  = Number((qs('#g71p_f').value||"").trim());
+      const pq = (qs('#g71p_pq').value||"").trim();
+      if(!isFinite(xs) || !isFinite(xf) || !isFinite(doc) || doc<=0){
+        alert("Enter stock dia, finish dia, and depth per pass.");
+        return;
+      }
+      const radStock = xs/2, radFinish = xf/2;
+      const radialRemove = Math.max(0, radStock - radFinish - (isFinite(u2)?u2:0));
+      const passes = Math.ceil(radialRemove / doc);
+      const p = pq.split(/[-–—]/).map(s=>s.trim());
+      const P = p[0] ? p[0].padStart(4,'0') : "0100";
+      const Q = p[1] ? p[1].padStart(4,'0') : "0200";
+      g71Plan = {doc, retr, u2, w2, f, P, Q, passes, radialRemove};
+      const txt = `DOC=${fmt(doc)}; Retract=${fmt(retr)}; Fin.allow X=${fmt(u2)} Z=${fmt(w2)}; Feed=${fmt(f)}; Range P${P}/Q${Q} → Rough passes ≈ ${passes}`;
+      qs('#g71p_summary').textContent = txt.toUpperCase();
+    }
+    function fmt(v){ return isFinite(v)? (Number(v).toString()) : "—" }
+    function insertG71Planned(){
+      if(!g71Plan){ planG71(); if(!g71Plan) return; }
+      const a = []; const b = [];
+      let m1 = "G71";
+      if(isFinite(g71Plan.doc)) m1 += " U" + formatNum(g71Plan.doc);
+      if(isFinite(g71Plan.retr)) m1 += " R" + formatNum(g71Plan.retr);
+      a.push(m1);
+      let m2 = "G71";
+      if(g71Plan.P) m2 += " P" + g71Plan.P;
+      if(g71Plan.Q) m2 += " Q" + g71Plan.Q;
+      if(isFinite(g71Plan.u2)) m2 += " U" + formatNum(g71Plan.u2);
+      if(isFinite(g71Plan.w2)) m2 += " W" + formatNum(g71Plan.w2);
+      if(isFinite(g71Plan.f))  m2 += " F" + formatNum(g71Plan.f);
+      b.push(m2);
+      const out = [];
+      out.push(seqPrefix() + a[0]); bumpSeq();
+      out.push(seqPrefix() + b[0]); bumpSeq();
+      appendText(out.join("\n"));
+      qs('#g71p_summary').textContent += ` | INSERTED (${g71Plan.passes} rough passes est.)`.toUpperCase();
+    }
+
+    // ---------- Program Tools: Renumber ----------
+    function renumberProgram(){
+      const start = parseInt(qs('#ren_start').value||'10',10);
+      const step  = parseInt(qs('#ren_step').value||'10',10);
+      const width = Math.max(1, Math.min(6, parseInt(qs('#ren_width').value||'4',10)));
+      let n = start;
+      const lines = (qs('#out').value||"").split(/\n/);
+      let arr = [];
+      for(let i=0;i<lines.length;i++){
+        let ln = lines[i];
+        if(!ln.trim()){ arr.push(ln); continue; }
+        if(/^N\d+\b/i.test(ln)){
+          ln = ln.replace(/^N\d+/i, "N"+String(n).padStart(width,'0'));
+        }else{
+          ln = "N"+String(n).padStart(width,'0') + " " + ln;
+        }
+        arr.push(ln);
+        n += step;
+      }
+      qs('#out').value = arr.join("\n");
+      updateStatus();
+    }
+
+    // ---------- TNR Comp Wizard ----------
+    function unitsLabel(){ return document.querySelector('input[name="units"][value="inch"]').checked ? "inch" : "mm"; }
+    function recommendComp(mode, dir){
+      if(dir==="Z-"){ return mode==="od" ? "G42" : "G41"; }
+      else { return mode==="od" ? "G41" : "G42"; }
+    }
+    function tnrPreview(){
+      const mode = qs('#tnr_mode').value;
+      const dir = qs('#tnr_dir').value;
+      const r = parseFloat((qs('#tnr_r').value||'').trim());
+      const mul = parseFloat((qs('#tnr_leadmul').value||'1.5').trim());
+      const auto = recommendComp(mode, dir);
+      const chosen = (qs('#tnr_comp').value==="auto") ? auto : qs('#tnr_comp').value;
+      const lead = (isFinite(r) && r>0 && isFinite(mul) && mul>0) ? r*mul : null;
+      let msg = `${mode.toUpperCase()} ${dir} → ${auto} RECOMMENDED. WILL INSERT ${chosen}.`;
+      if(lead){ msg += ` LEAD-IN ≥ ${lead.toFixed(3)} ${unitsLabel()}`; }
+      qs('#tnr_summary').textContent = msg.toUpperCase();
+    }
+    function tnrInsert(){
+      const mode = qs('#tnr_mode').value;
+      const dir = qs('#tnr_dir').value;
+      const auto = recommendComp(mode, dir);
+      const chosen = (qs('#tnr_comp').value==="auto") ? auto : qs('#tnr_comp').value;
+      const r = parseFloat((qs('#tnr_r').value||'').trim());
+      const mul = parseFloat((qs('#tnr_leadmul').value||'1.5').trim());
+      const comments = qs('#tnr_comments').checked;
+      const lead = (isFinite(r) && r>0 && isFinite(mul) && mul>0) ? r*mul : null;
+      const lines = [];
+      const add = (txt)=>{ lines.push( (seqEnabled()? ( "N"+padN(nextN, Number(qs('#seqWidth').value||4))+" " ) : "") + txt.toUpperCase() ); bumpSeq(); };
+      if(comments){ add(`(TNR COMP START — ${mode.toUpperCase()} ${dir} → ${auto} RECOMMENDED)`); }
+      add(`G00 X____ Z____${comments? " (APPROACH)": ""}`);
+      add(`G01 ${chosen} X____ Z____ F____${comments? (lead? " (LEAD-IN ≥ " + formatNum(lead) + " " + unitsLabel() + ")" : " (APPLY TNR COMP)") : ""}`);
+      add(`... (PROFILE BLOCKS)`);
+      add(`G01 G40 X____ Z____${comments? " (LEAD-OUT, CANCEL COMP)" : ""}`);
+      const out = qs('#out');
+      out.value = (out.value ? out.value + "\n" : "") + lines.join("\n");
+      updateStatus();
+      tnrPreview();
+    }
+
+    // ---------- Arc Helper ----------
+    function arcRepChanged(){
+      const rep = qs('#arc_rep').value;
+      qs('#arc_r_wrap').style.display = (rep==='r') ? 'flex' : 'none';
+      qs('#arc_smalllarge_wrap').style.display = (rep==='r') ? 'flex' : 'none';
+    }
+    (function(){ setTimeout(()=>{ const el = qs('#arc_rep'); if(el){ el.addEventListener('change', arcRepChanged); arcRepChanged(); } }, 0); })();
+    function toRadX(x, prog){
+      const num = Number(String(x).trim());
+      if(!isFinite(num)) return NaN;
+      return prog==='diam' ? num/2 : num;
+    }
+    function fromRadX(xrad, prog){
+      if(!isFinite(xrad)) return NaN;
+      return prog==='diam' ? xrad*2 : xrad;
+    }
+    function arcCompute(){
+      const dir = qs('#arc_dir').value;
+      const prog = qs('#arc_prog').value;
+      const rep  = qs('#arc_rep').value;
+      const xs_in = Number((qs('#arc_xs').value||'').trim());
+      const zs = Number((qs('#arc_zs').value||'').trim());
+      const xe_in = Number((qs('#arc_xe').value||'').trim());
+      const ze = Number((qs('#arc_ze').value||'').trim());
+      const xs = toRadX(xs_in, prog);
+      const xe = toRadX(xe_in, prog);
+      if(![xs,zs,xe,ze].every(v=>isFinite(v))){ return {ok:false, msg:"Enter numeric start/end."}; }
+      const dx = xe - xs, dz = ze - zs;
+      const chord = Math.hypot(dx, dz);
+      if(chord===0){ return {ok:false, msg:"Start and end must differ."}; }
+      let out = {ok:true, dir, prog, rep, xs, zs, xe, ze, chord, warnings:[]};
+      if(rep==='r'){
+        let R = Number((qs('#arc_r').value||'').trim());
+        const size = qs('#arc_size').value;
+        if(!isFinite(R) || R<=0){ return {ok:false, msg:"Enter positive radius R."}; }
+        if(chord > 2*R + 1e-9){ return {ok:false, msg:"Chord greater than 2R — arc impossible."}; }
+        R = (size==='small') ? Math.abs(R) : -Math.abs(R);
+        out.R = R;
+        const half = chord/2;
+        const h = Math.sqrt(Math.max(0, Math.abs(R)*Math.abs(R) - half*half));
+        const ux = dx / chord, uz = dz / chord;
+        const nx = -uz, nz = ux;
+        const mx = (xs + xe)/2, mz = (zs + ze)/2;
+        const cands = [{cx: mx + nx*h, cz: mz + nz*h}, {cx: mx - nx*h, cz: mz - nz*h}];
+        let pick = null;
+        for(const cand of cands){
+          const v1x = xs - cand.cx, v1z = zs - cand.cz;
+          const v2x = xe - cand.cx, v2z = ze - cand.cz;
+          const cross = v1x*v2z - v1z*v2x; // +CCW, -CW
+          const sense = (cross>0)? 'G03':'G02';
+          if(sense===dir){ pick = cand; break; }
+        }
+        if(!pick) pick = cands[0];
+        out.cx = pick.cx; out.cz = pick.cz;
+        out.I = pick.cx - xs;
+        out.K = pick.cz - zs;
+        const ang = (function(){
+          const v1x = xs - pick.cx, v1z = zs - pick.cz;
+          const v2x = xe - pick.cx, v2z = ze - pick.cz;
+          const a1 = Math.atan2(v1z, v1x), a2 = Math.atan2(v2z, v2x);
+          let da = a2 - a1;
+          if(size==='small'){
+            while(da> Math.PI) da -= 2*Math.PI;
+            while(da<-Math.PI) da += 2*Math.PI;
+          }else{
+            if(da>0 && da<Math.PI) da -= 2*Math.PI;
+            if(da<0 && -da<Math.PI) da += 2*Math.PI;
+          }
+          return da;
+        })();
+        out.deg = ang * 180/Math.PI;
+        return out;
+      } else {
+        return {ok:false, msg:"I/K needs a known centre or radius. Use R mode, or supply I & K directly in Composer."};
+      }
+    }
+    function arcPreview(){
+      const rep = qs('#arc_rep').value;
+      const res = arcCompute();
+      if(!res.ok){ qs('#arc_summary').textContent = res.msg.toUpperCase(); return; }
+      let msg = `${res.dir} X→${formatNum(fromRadX(res.xe, res.prog))} Z→${formatNum(res.ze)}`;
+      if(rep==='r'){
+        msg += `  USING R${formatNum(Math.abs(res.R))} (${res.R>0?'SMALL':'LARGE'})`;
+      }
+      if('I' in res && 'K' in res){
+        msg += `  I=${formatNum(res.I)} K=${formatNum(res.K)}`;
+      }
+      if('deg' in res){ msg += `  SWEEP≈${formatNum(Math.abs(res.deg))}°`; }
+      qs('#arc_summary').textContent = msg.toUpperCase();
+    }
+    function arcInsert(){
+      const rep = qs('#arc_rep').value;
+      const comments = qs('#arc_comments').checked;
+      const res = arcCompute();
+      if(!res.ok){ alert(res.msg); return; }
+      const dir = res.dir;
+      const xOut = formatNum(fromRadX(res.xe, res.prog));
+      const zOut = formatNum(res.ze);
+      let line = `${dir} X${xOut} Z${zOut}`;
+      if(rep==='r'){
+        line += ` R${formatNum(Math.abs(res.R))}`;
+      } else {
+        line += (isFinite(res.I)? ` I${formatNum(res.I)}`:"") + (isFinite(res.K)? ` K${formatNum(res.K)}`:"");
+      }
+      if(comments){ line += ` (ARC ${dir==='G02'?'CW':'CCW'} IN G18)`; }
+      const out = qs('#out');
+      const seq = seqPrefix();
+      out.value = (out.value ? out.value + "\n" : "") + seq + line.toUpperCase();
+      bumpSeq();
+      updateStatus();
+      arcPreview();
+    }
+
+    // ---------- Status strip logic ----------
+    function updateStatus(){
+      const s = qs('#status');
+      const txt = (qs('#out').value||"").toUpperCase();
+      const badges = [];
+      function lastIndex(re){ let m, last=-1; while ((m = re.exec(txt)) !== null){ last = m.index; } return last; }
+      const i20 = lastIndex(/G20/g), i21 = lastIndex(/G21/g);
+      let units = i20>i21? "G20 INCH" : (i21>i20? "G21 MM" : "—");
+      badges.push(`<span class="badge ${units==='—'?'muted':'ok'}"><b>Units</b>${units}</span>`);
+      const i98 = lastIndex(/G98/g), i99 = lastIndex(/G99/g);
+      if(i98===-1 && i99===-1){ badges.push(`<span class="badge muted"><b>Feed</b>—</span>`); }
+      else { badges.push(`<span class="badge ok"><b>Feed</b>${i99>i98? "G99 F/REV" : "G98 F/MIN"}</span>`); }
+      const i96 = lastIndex(/G96/g), i97 = lastIndex(/G97/g);
+      if(i96===-1 && i97===-1){ badges.push(`<span class="badge muted"><b>Spindle</b>—</span>`); }
+      else { badges.push(`<span class="badge ok"><b>Spindle</b>${i96>i97? "G96 CSS" : "G97 RPM"}</span>`); }
+      const hasG50 = /G50\s*S\d+/g.test(txt);
+      if(i96>i97 && !hasG50){ badges.push(`<span class="badge warn"><b>Tip</b>CSS without G50 clamp</span>`); }
+      badges.push(`<span class="badge ok"><b>Plane</b>G18</span>`);
+      const i54 = lastIndex(/G5[4-9]/g);
+      if(i54===-1) badges.push(`<span class="badge muted"><b>Work</b>—</span>`);
+      else { const m = txt.match(/G5[4-9]/g); const last = m? m[m.length-1] : "G54"; badges.push(`<span class="badge ok"><b>Work</b>${last}</span>`); }
+      const tmatch = txt.match(/T\d{2,4}/g);
+      if(tmatch && tmatch.length){ badges.push(`<span class="badge ok"><b>Tool</b>${tmatch[tmatch.length-1]}</span>`); }
+      else badges.push(`<span class="badge muted"><b>Tool</b>—</span>`);
+      qs('#status').innerHTML = badges.join("");
+    }
+
+    // ---------- Drawing viewer logic + Measure tool ----------
+    const viewport = ()=> qs('#viewport');
+    const img = ()=> qs('#drawImg');
+    const svg = ()=> qs('#overlay');
+    const zoomRange = ()=> qs('#zoomRange');
+    const zoomLabel = ()=> qs('#zoomLabel');
+    const dropZone = ()=> qs('#dropZone');
+    const fileInput = ()=> qs('#fileInput');
+    const measureToggleBtn = ()=> qs('#measureToggle');
+    const measureInfo = ()=> qs('#measureInfo');
+    let state = { scale:1, rot:0, tx:0, ty:0, natW:0, natH:0, loaded:false, dragging:false, dragStart:{x:0,y:0}, dragOrig:{tx:0,ty:0}, measureMode:false, segments:[], pending:null, unitsPerPixel:null, unitsLabel:"mm" };
+
+    function applyTransform(){ img().style.transform = `translate(${state.tx}px, ${state.ty}px) rotate(${state.rot}deg) scale(${state.scale})`; drawOverlay(); }
+    function setZoom(val){ const s = Math.max(0.01, Number(val)/100); state.scale = s; zoomLabel().textContent = Math.round(s*100) + "%"; applyTransform(); }
+    function zoomIn(){ const v = Math.min(300, Number(zoomRange().value)+10); zoomRange().value = String(v); setZoom(v); }
+    function zoomOut(){ const v = Math.max(25, Number(zoomRange().value)-10); zoomRange().value = String(v); setZoom(v); }
+    function fitWidth(){
+      if(!state.loaded) return;
+      const vpW = viewport().clientWidth;
+      const baseW = (state.rot % 180 === 0) ? state.natW : state.natH;
+      const s = vpW / baseW;
+      state.scale = s;
+      zoomRange().value = String(Math.round(s*100));
+      zoomLabel().textContent = Math.round(s*100) + "%";
+      const vpH = viewport().clientHeight;
+      const imgH = ((state.rot % 180 === 0) ? state.natH : state.natW) * s;
+      state.tx = 0;
+      state.ty = Math.max(0, (vpH - imgH)/2);
+      applyTransform();
+    }
+    function rotate(){ if(!state.loaded) return; state.rot = (state.rot + 90) % 360; fitWidth(); }
+    function clearImage(){
+      img().src = "";
+      state = {scale:1, rot:0, tx:0, ty:0, natW:0, natH:0, loaded:false, dragging:false, dragStart:{x:0,y:0}, dragOrig:{tx:0,ty:0}, measureMode:false, segments:[], pending:null, unitsPerPixel:null, unitsLabel:"mm"};
+      zoomRange().value = "100"; zoomLabel().textContent = "100%";
+      drawOverlay(); measureInfo().textContent = "No scale set";
+    }
+    function loadFromFile(file){ if(!file) return; const reader = new FileReader(); reader.onload = (e)=>{ img().src = e.target.result; }; reader.readAsDataURL(file); }
+    fileInput().addEventListener('change', (e)=>{ const f = e.target.files && e.target.files[0]; loadFromFile(f); });
+    ['dragenter','dragover'].forEach(ev=>{
+      dropZone().addEventListener(ev, (e)=>{ e.preventDefault(); dropZone().classList.add('hover'); });
+      viewport().addEventListener(ev, (e)=>{ e.preventDefault(); dropZone().classList.add('hover'); });
+    });
+    ['dragleave','drop'].forEach(ev=>{
+      dropZone().addEventListener(ev, (e)=>{ e.preventDefault(); if(ev==='drop'){ const f = e.dataTransfer.files && e.dataTransfer.files[0]; loadFromFile(f);} dropZone().classList.remove('hover'); });
+      viewport().addEventListener(ev, (e)=>{ e.preventDefault(); if(ev==='drop'){ const f = e.dataTransfer.files && e.dataTransfer.files[0]; loadFromFile(f);} dropZone().classList.remove('hover'); });
+    });
+    img().addEventListener('load', ()=>{ state.natW = img().naturalWidth; state.natH = img().naturalHeight; state.loaded = true; state.tx = 0; state.ty = 0; state.rot = 0; state.segments = []; state.pending = null; fitWidth(); });
+    viewport().addEventListener('mousedown', (e)=>{
+      if(!state.loaded) return;
+      if(state.measureMode && e.button === 0){
+        const uv = toImageCoords(e.clientX, e.clientY);
+        if(!uv) return;
+        if(state.pending==null){ state.pending = uv; } else { state.segments.push({p1: state.pending, p2: uv}); state.pending = null; drawOverlay(); }
+        e.preventDefault(); return;
+      }
+      state.dragging = true; viewport().classList.add('dragging');
+      state.dragStart = {x: e.clientX, y: e.clientY}; state.dragOrig = {tx: state.tx, ty: state.ty};
+    });
+    window.addEventListener('mousemove', (e)=>{
+      if(!state.dragging) return; const dx = e.clientX - state.dragStart.x; const dy = e.clientY - state.dragStart.y;
+      state.tx = state.dragOrig.tx + dx; state.ty = state.dragOrig.ty + dy; applyTransform();
+    });
+    window.addEventListener('mouseup', ()=>{ state.dragging = false; viewport().classList.remove('dragging'); });
+    function toggleMeasure(){ state.measureMode = !state.measureMode; if(state.measureMode){ viewport().classList.add('measure-on'); measureToggleBtn().classList.add('primary'); } else { viewport().classList.remove('measure-on'); measureToggleBtn().classList.remove('primary'); state.pending = null; } drawOverlay(); }
+    function clearMeasures(){ state.segments = []; state.pending = null; drawOverlay(); }
+    function setScaleFromLast(){
+      if(state.segments.length===0){ alert("Add a measurement line first (click two points)."); return; }
+      const last = state.segments[state.segments.length-1];
+      const px = distPx(last.p1, last.p2);
+      const val = Number((qs('#scaleValue').value||"").trim());
+      if(!isFinite(val) || val<=0){ alert("Enter a numeric known length first."); return; }
+      const units = qs('#scaleUnits').value;
+      state.unitsPerPixel = val / px;
+      state.unitsLabel = units;
+      measureInfo().textContent = `Scale set: ${val} ${units} = ${px.toFixed(1)} px ⇒ ${state.unitsPerPixel.toFixed(6)} ${units}/px`;
+      drawOverlay();
+    }
+    function clearScale(){ state.unitsPerPixel = null; measureInfo().textContent = "No scale set"; drawOverlay(); }
+    function toImageCoords(clientX, clientY){
+      const rect = viewport().getBoundingClientRect();
+      const x = clientX - rect.left; const y = clientY - rect.top;
+      const dx = x - state.tx; const dy = y - state.ty; const s = state.scale || 1; const dxs = dx / s; const dys = dy / s;
+      const rad = state.rot * Math.PI/180; const cos = Math.cos(rad), sin = Math.sin(rad);
+      const u =  dxs * cos + dys * sin; const v = -dxs * sin + dys * cos; return {u, v};
+    }
+    function fromImageToViewport(p){
+      const s = state.scale || 1; const rad = state.rot * Math.PI/180; const cos = Math.cos(rad), sin = Math.sin(rad);
+      const x = state.tx + (p.u * s * cos - p.v * s * sin); const y = state.ty + (p.u * s * sin + p.v * s * cos); return {x,y};
+    }
+    function distPx(p1, p2){ const dx = p2.u - p1.u, dy = p2.v - p1.v; return Math.hypot(dx, dy); }
+    function drawOverlay(){
+      const el = svg(); const w = viewport().clientWidth, h = viewport().clientHeight;
+      el.setAttribute('width', w); el.setAttribute('height', h); el.innerHTML = ""; const g = document.createElementNS("http://www.w3.org/2000/svg","g"); el.appendChild(g);
+      if(state.pending){ const P = fromImageToViewport(state.pending); g.appendChild(svgCircle(P.x, P.y, 4, "#8ab4f8")); }
+      state.segments.forEach(seg=>{
+        const a = fromImageToViewport(seg.p1); const b = fromImageToViewport(seg.p2);
+        g.appendChild(svgLine(a.x, a.y, b.x, b.y, 2, "#8ab4f8")); g.appendChild(svgCircle(a.x, a.y, 3, "#8ab4f8")); g.appendChild(svgCircle(b.x, b.y, 3, "#8ab4f8"));
+        const mid = {x:(a.x+b.x)/2, y:(a.y+b.y)/2}; const px = distPx(seg.p1, seg.p2);
+        let text = px.toFixed(1) + " px";
+        if(state.unitsPerPixel){ const val = px * state.unitsPerPixel; const u = state.unitsLabel==="inch" ? "in" : "mm"; text = val.toFixed(3) + " " + u; }
+        g.appendChild(svgLabel(mid.x+6, mid.y-6, text));
+      });
+    }
+    function svgLine(x1,y1,x2,y2,sw,color){ const el = document.createElementNS("http://www.w3.org/2000/svg","line"); el.setAttribute('x1',x1); el.setAttribute('y1',y1); el.setAttribute('x2',x2); el.setAttribute('y2',y2); el.setAttribute('stroke', color); el.setAttribute('stroke-width', sw); el.setAttribute('stroke-linecap','round'); return el; }
+    function svgCircle(cx,cy,r,color){ const el = document.createElementNS("http://www.w3.org/2000/svg","circle"); el.setAttribute('cx',cx); el.setAttribute('cy',cy); el.setAttribute('r',r); el.setAttribute('fill', color); return el; }
+    function svgLabel(x,y,text){ const el = document.createElementNS("http://www.w3.org/2000/svg","text"); el.setAttribute('x',x); el.setAttribute('y',y); el.setAttribute('fill','#e6e8eb'); el.setAttribute('font-size','12'); el.setAttribute('font-family','ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\",\"Courier New\", monospace'); el.textContent = text; const bg = document.createElementNS("http://www.w3.org/2000/svg","rect"); const pad = 2; const w = 8 * text.length * 0.6; const h = 14; bg.setAttribute('x', x - pad); bg.setAttribute('y', y - h + pad); bg.setAttribute('width', w + pad*2); bg.setAttribute('height', h); bg.setAttribute('fill', 'rgba(0,0,0,0.5)'); bg.setAttribute('rx','4'); const group = document.createElementNS("http://www.w3.org/2000/svg","g"); group.appendChild(bg); group.appendChild(el); return group; }
+
+    
+    // ---------- Top-level header tabs (Home / Builder) ----------
+    function switchTopPane(pane){
+      document.querySelectorAll('.brand-tabs .tab[data-pane]').forEach(t=> t.classList.toggle('active', t.getAttribute('data-pane')===pane));
+      document.querySelectorAll('.pagepane').forEach(p=> p.classList.remove('active'));
+      const target = document.getElementById('pane-'+pane);
+      if(target) target.classList.add('active');
+    }
+    (function(){
+      document.querySelectorAll('.brand-tabs .tab[data-pane]').forEach(tab=>{
+        tab.addEventListener('click', ()=> switchTopPane(tab.getAttribute('data-pane')));
+        tab.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') { e.preventDefault(); switchTopPane(tab.getAttribute('data-pane')); } });
+      });
+    })();
+
+
+// ---------- Init ----------
+    (function init(){ nextN = Number(qs('#seqStart').value||10); renderCycleInfo(); updateStatus(); drawOverlay(); })();
+  </script>
+</body>
+</html>
