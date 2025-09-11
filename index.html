@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MTCO — Home</title>
+  <meta name="description" content="Practical CNC turning calculators & learning tools — offline-friendly, free, and fast." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath fill='%23ff7a1a' d='M8 48h48v6H8zM12 10h40v6H12zM18 22h28v18H18z'/%3E%3C/svg%3E">
+
+  <style>
+    /* === Design tokens (shared) === */
+    :root{
+      --bg:#0f1215; --panel:#161a1f; --card:#171b21; --border:#2a3037;
+      --text:#e6e8eb; --muted:#a7aeb6; --accent:#ff7a1a;
+      --radius:18px;
+    }
+    html,body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;}
+
+    /* === Unified grid (same as tools) === */
+    .container{max-width:1220px;margin:0 auto;padding:0 24px}
+
+    /* === Header v2 (matches tools) === */
+    .mtco-header{position:sticky;top:0;z-index:1200;background:linear-gradient(0deg,rgba(15,18,21,.65),rgba(15,18,21,.95));backdrop-filter:saturate(1.2) blur(8px);border-bottom:1px solid var(--border)}
+    .mtco-hwrap{display:flex;align-items:center;gap:12px;padding:12px 0}
+    .mtco-logo{width:26px;height:26px;border-radius:8px;background:radial-gradient(circle at 30% 30%, #ff9d57 0 35%, #ff7a1a 36% 70%, #c35200 71% 100%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+    .mtco-brand{display:flex;flex-direction:column;line-height:1}
+    .mtco-title{font-weight:900;letter-spacing:.3px;font-size:18px}
+    .mtco-title em{font-style:normal;opacity:.95}
+    .mtco-sub{font-size:12px;color:var(--muted);margin-top:3px}
+    .mtco-spacer{flex:1}
+    .mtco-nav{display:flex;gap:10px;flex-wrap:wrap}
+    .mtco-chip{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;border:1px solid var(--mtco-border, var(--border, #2a3037));background:var(--mtco-panel, #161a1f);color:var(--mtco-text, #e6e8eb);text-decoration:none;font-weight:700}
+    .mtco-chip:hover{border-color:#3a424b}
+    .mtco-chip.primary{background:var(--accent);color:#1b0f07;border-color:#c85f00}
+    .mtco-chip.disabled{opacity:.55;pointer-events:none;cursor:not-allowed}
+    @media (max-width: 960px){ .mtco-sub{display:none} }
+
+    /* === Hero & cards (unchanged look) === */
+    .hero{padding:48px 0 20px}
+    .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:28px}
+    .panel{background:linear-gradient(180deg,rgba(255,122,26,.08),transparent 55%);border:1px solid var(--border);border-radius:var(--radius);padding:22px;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+    .h1{font-size:40px;line-height:1.1;margin:0 0 12px}
+    .sub{color:var(--muted);font-size:18px;margin:0 0 6px}
+    .badges{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+    .badge{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;border:1px solid var(--border);background:var(--panel);font-size:14px}
+    .hero-actions{margin-top:18px;display:flex;gap:10px;flex-wrap:wrap}
+
+    .kv{height:220px;border-radius:var(--radius);border:1px dashed #3a424b;display:grid;place-items:center;background:linear-gradient(145deg,#12161b,#0c0f12)}
+    .kv small{color:var(--muted)}
+
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:26px}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;display:flex;flex-direction:column;gap:10px;box-shadow:0 2px 0 rgba(255,122,26,.1) inset}
+    .card h3{margin:0;font-size:18px}
+    .card p{margin:0;color:var(--muted);font-size:14px}
+    .actions{margin-top:auto;display:flex;gap:10px;flex-wrap:wrap}
+
+    .learn{margin:34px 0}
+    .note{font-size:13px;color:var(--muted)}
+
+    @media (max-width: 960px){ .hero-grid{grid-template-columns:1fr} .h1{font-size:32px} .grid{grid-template-columns:1fr} }
+  </style>
+</head>
+<body>
+  <!-- Header v2 -->
+  <header class="mtco-header">
+    <div class="container mtco-hwrap">
+      <a class="mtco-logo" href="index.html" aria-label="MTCO Home"></a>
+      <div class="mtco-brand">
+        <span class="mtco-title">MTCO | <em>Home</em></span>
+        <span class="mtco-sub">Measure Twice, Cut Once</span>
+      </div>
+      <div class="mtco-spacer"></div>
+      <nav class="mtco-nav" aria-label="Primary">
+        <a class="mtco-chip" href="fc_code_builder_trial_v1_6_orange.html">Code Builder</a>
+        <a class="mtco-chip" href="mtco_thread_data_wizard_v1.html">Threads</a>
+        <a class="mtco-chip" href="mtco_toolpath_preview_trial_v3i_lathe.html">Toolpath Preview</a>
+        <a class="mtco-chip" href="mtco_job_planner_v1.html">Job Planner</a>
+        <a class="mtco-chip" href="Turning_Trig_Utility_MTCO_v1.html">Turning Trig</a>
+        <a class="mtco-chip" href="Feeds_Speeds_MTCO_v1.html">Feeds &amp; Speeds</a>
+        <a class="mtco-chip" href="quiz.html">Quizzes</a>
+        <a class="mtco-chip primary" href="mtco_gallery_trial_v1_fixed_SEEDED_fixB.html">Gallery</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="container hero">
+    <div class="hero-grid">
+      <div class="panel">
+        <h1 class="h1">CNC turning tools that feel <em>made for the shop floor</em>.</h1>
+        <p class="sub">Fast, offline-friendly calculators and visual helpers for Fanuc-style lathes — from code templates and thread data to toolpath preview and quick shop math.</p>
+        <div class="badges" role="list">
+          <div class="badge" role="listitem">⚡ Offline-friendly (PWA-ready)</div>
+          <div class="badge" role="listitem">🎯 Fanuc G18 • Z0 on right face</div>
+          <div class="badge" role="listitem">🟧 Unified dark + orange theme</div>
+          <div class="badge" role="listitem">🆓 Free & open</div>
+        </div>
+        <div class="hero-actions">
+          <a class="mtco-chip primary" href="#features">Open the tools</a>
+          <a class="mtco-chip" href="#learn">New? Start with basics</a>
+        </div>
+      </div>
+      <div class="kv"><small>Hero visual placeholder — drop a toolpath screenshot here</small></div>
+    </div>
+  </section>
+
+  <!-- Feature grid -->
+  <section class="container" id="features">
+    <div class="grid">
+      <article class="card">
+        <h3>Code Builder</h3>
+        <p>Start a clean program fast — stock, safety lines, work offsets, cycles, and canned patterns.</p>
+        <div class="actions"><a class="mtco-chip" href="fc_code_builder_trial_v1_6_orange.html">Open</a></div>
+      </article>
+      <article class="card">
+        <h3>Threads</h3>
+        <p>Metric &amp; imperial ranges with pitch, tolerances, and quick turning data. Wizard view included.</p>
+        <div class="actions"><a class="mtco-chip" href="mtco_thread_data_wizard_v1.html">Open</a></div>
+      </article>
+      <article class="card">
+        <h3>Toolpath Preview</h3>
+        <p>Visualize your path with small→big diameters, rapids dashed, and cycle time overlays.</p>
+        <div class="actions"><a class="mtco-chip" href="mtco_toolpath_preview_trial_v3i_lathe.html">Open</a></div>
+      </article>
+      <article class="card">
+        <h3>Turning Trig</h3>
+        <p>Right-triangle, taper, arc/BCD helpers — child-simple inputs, shop-ready outputs.</p>
+        <div class="actions"><a class="mtco-chip" href="Turning_Trig_Utility_MTCO_v1.html">Open</a></div>
+      </article>
+      <article class="card">
+        <h3>Feeds &amp; Speeds</h3>
+        <p>Material presets, fz helpers, derates, and quick checks to avoid chatter and tool wear.</p>
+        <div class="actions"><a class="mtco-chip" href="Feeds_Speeds_MTCO_v1.html">Open</a></div>
+      </article>
+      <article class="card">
+        <h3>Quizzes</h3>
+        <p>Learn by testing — core concepts, threads, symbols. Local leaderboards keep it fun.</p>
+        <div class="actions"><a class="mtco-chip" href="quiz.html">Open</a></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Learn block -->
+  <section class="container learn" id="learn">
+    <div class="panel">
+      <h2 style="margin:0 0 10px">New to CNC turning? Start here.</h2>
+      <p class="note" style="margin:0 0 14px">A 10-minute primer that covers coordinate systems, safe starts, common cycles, and how to read the visuals in MTCO.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a class="mtco-chip primary" href="#features">Open quick primer</a>
+        <a class="mtco-chip" href="mtco_toolpath_preview_trial_v3i_lathe.html">See sample programs</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="container" style="padding:28px 0;border-top:1px solid var(--border);color:#a9b0b8;margin-top:32px">
+    <div style="display:flex;gap:12px;align-items:center">
+      <div class="mtco-logo" aria-hidden="true"></div>
+      <div style="line-height:1">
+        <div class="note">© <span id="y"></span> MTCO — Measure Twice, Cut Once</div>
+        <div class="note">Made for Fanuc-style lathes • G18 plane • Z0 on right face</div>
+      </div>
+      <div style="margin-left:auto" class="note">Offline-friendly. Add to Home Screen on mobile.</div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
