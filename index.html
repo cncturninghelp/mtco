@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MTCO — Measure Twice, Cut Once</title>
+  <meta name="description" content="Practical CNC turning calculators & learning tools — offline‑friendly, free, and fast." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath fill='%23ff7a1a' d='M8 48h48v6H8zM12 10h40v6H12zM18 22h28v18H18z'/%3E%3C/svg%3E">
+  <style>
+    :root{
+      --bg:#0f1215; --panel:#161a1f; --card:#171b21; --border:#2a3037; --text:#e6e8eb; --muted:#9aa1a9; --accent:#ff7a1a;
+      --ok:#48c78e; --warn:#ffb02e; --danger:#ff6464; --radius:18px; --shadow:0 10px 30px rgba(0,0,0,.35);
+    }
+    html,body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;}
+    a{color:inherit;text-decoration:none}
+    .container{max-width:1200px;margin:0 auto;padding:24px}
+    /* Header */
+    header{position:sticky;top:0;background:linear-gradient(0deg,rgba(15,18,21,.6),rgba(15,18,21,.95));backdrop-filter:saturate(1.2) blur(8px);border-bottom:1px solid var(--border);z-index:50}
+    .row{display:flex;align-items:center;gap:16px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:34px;height:34px;border-radius:10px;background:radial-gradient(circle at 30% 30%, #ff9d57 0 35%, #ff7a1a 36% 70%, #c35200 71% 100%);box-shadow:inset 0 0 0 2px rgba(255,255,255,.08)}
+    .title{font-weight:800;letter-spacing:.3px}
+    nav{margin-left:auto;display:flex;gap:10px;flex-wrap:wrap}
+    .chip{padding:10px 14px;border:1px solid var(--border);border-radius:999px;background:var(--card);cursor:pointer}
+    .chip:hover{border-color:#3a424b}
+    .cta{background:var(--accent);color:#1b0f07;border:none}
+    /* Hero */
+    .hero{padding:72px 0 36px;display:grid;grid-template-columns:1.15fr .85fr;gap:28px}
+    .h1{font-size:40px;line-height:1.1;margin:0 0 12px}
+    .sub{color:var(--muted);font-size:18px}
+    .badges{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+    .badge{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;border:1px solid var(--border);background:var(--panel);font-size:14px}
+    .panel{background:linear-gradient(180deg,rgba(255,122,26,.08),transparent 55%);border:1px solid var(--border);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
+    .hero-visual{display:grid;gap:14px}
+    .kv{height:220px;border-radius:var(--radius);border:1px dashed #3a424b;display:grid;place-items:center;background:linear-gradient(145deg,#12161b,#0c0f12)}
+    .kv small{color:var(--muted)}
+    /* Grid */
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:26px}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;display:flex;flex-direction:column;gap:10px;box-shadow:0 2px 0 rgba(255,122,26,.1) inset}
+    .card h3{margin:0;font-size:18px}
+    .card p{margin:0;color:var(--muted);font-size:14px}
+    .card .actions{margin-top:auto;display:flex;gap:10px;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;border:1px solid var(--border);background:var(--panel);font-weight:600}
+    .btn:hover{border-color:#3a424b}
+    .btn.primary{background:var(--accent);color:#1b0f07;border-color:#c85f00}
+    /* Footer */
+    footer{margin-top:48px;padding:28px 0;border-top:1px solid var(--border);color:#a9b0b8}
+    .footer-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .muted{color:var(--muted)}
+    .note{font-size:13px;color:var(--muted)}
+    /* Responsive */
+    @media (max-width: 960px){
+      .hero{grid-template-columns:1fr}
+      nav{display:none}
+    }
+    @media (max-width: 760px){
+      .h1{font-size:32px}
+      .grid{grid-template-columns:1fr}
+    }
+  </style>
+<style>
+/* === MTCO Unified Header === */
+:root {
+  --mtco-bg: #0f1215;
+  --mtco-panel: #161a1f;
+  --mtco-border: #2a3037;
+  --mtco-text: #e6e8eb;
+  --mtco-muted: #a7aeb6;
+  --mtco-accent: #ff7a1a;
+}
+.mtco-header { position: sticky; top: 0; z-index: 1200; background: linear-gradient(0deg, rgba(15,18,21,.65), rgba(15,18,21,.95)); backdrop-filter: saturate(1.2) blur(8px); border-bottom: 1px solid var(--mtco-border, #2a3037); }
+.mtco-hwrap { max-width: 1220px; margin: 0 auto; padding: 12px 24px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.mtco-logo { width: 26px; height: 26px; border-radius: 8px; background: radial-gradient(circle at 30% 30%, #ff9d57 0 35%, #ff7a1a 36% 70%, #c35200 71% 100%); box-shadow: inset 0 0 0 1px rgba(255,255,255,.08); }
+.mtco-brand { display: flex; flex-direction: column; line-height: 1; }
+.mtco-title { font-weight: 900; letter-spacing: .3px; color: var(--mtco-text, #e6e8eb); font-size: 18px; font-family: Inter, system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
+.mtco-title em { font-style: normal; opacity: .95; }
+.mtco-sub { font-size: 12px; color: var(--mtco-muted, #a7aeb6); margin-top: 3px; font-family: Inter, system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
+.mtco-spacer { flex: 1; }
+.mtco-chip { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 999px; border: 1px solid var(--mtco-border, #2a3037); background: var(--mtco-panel, #161a1f); color: var(--mtco-text, #e6e8eb); text-decoration: none; font-weight: 700; font-family: Inter, system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
+.mtco-chip:hover { border-color: #3a424b; }
+.mtco-chip.disabled { opacity: .55; cursor: not-allowed; pointer-events: none; }
+@media (max-width: 960px) { .mtco-sub { display: none; } }
+</style>
+</head>
+<body>
+
+<header class="mtco-header" role="banner">
+  <div class="mtco-hwrap">
+    <a class="mtco-logo" href="index.html" aria-label="MTCO Home"></a>
+    <div class="mtco-brand">
+      <span class="mtco-title">MTCO | <em>Home</em></span>
+      <span class="mtco-sub">Measure Twice, Cut Once</span>
+    </div>
+    <div class="mtco-spacer"></div>
+    <a class="mtco-chip" href="fc_code_builder_trial_v1_6_orange.html">Code Builder</a>
+    <a class="mtco-chip" href="mtco_thread_data_wizard_v1.html">Threads</a>
+    <a class="mtco-chip" href="mtco_toolpath_preview_trial_v3i_lathe.html">Toolpath Preview</a>
+    <a class="mtco-chip" href="mtco_job_planner_v1.html">Job Planner</a>
+    <a class="mtco-chip" href="Turning_Trig_Utility_MTCO_v1.html">Turning Trig</a>
+    <a class="mtco-chip" href="Feeds_Speeds_MTCO_v1.html">Feeds &amp; Speeds</a>
+    <a class="mtco-chip" href="quiz.html">Quizzes</a>
+    <a class="mtco-chip" href="mtco_gallery_trial_v1_fixed_SEEDED_fixB.html">Gallery</a>
+  </div>
+</header>
+
+
+  <!-- Header -->
+  
+
+  <!-- Hero -->
+  <section class="container hero">
+    <div>
+      <div class="panel">
+        <h1 class="h1">CNC turning tools that feel <em>made for the shop floor</em>.</h1>
+        <p class="sub">Fast, offline‑friendly calculators and visual helpers for Fanuc‑style lathes — from code templates and thread data to toolpath preview and quick shop math.</p>
+        <div class="badges" role="list">
+          <div class="badge" role="listitem">⚡ Offline‑friendly (PWA‑ready)</div>
+          <div class="badge" role="listitem">🎯 Fanuc G18 • Z0 on right face</div>
+          <div class="badge" role="listitem">🟧 Unified dark + orange theme</div>
+          <div class="badge" role="listitem">🆓 Free & open</div>
+        </div>
+        <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap">
+          <a class="btn primary" href="index_unified.html#code-builder">Open the tools</a>
+          <a class="btn" href="#learn">New? Start with basics</a>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="kv"><small>Hero visual placeholder — drop a toolpath screenshot here</small></div>
+      <div class="grid" style="grid-template-columns:repeat(2,1fr);gap:14px;margin:0">
+        <div class="card"><h3>Fanuc conventions</h3><p>G18 plane, Z0 at right face, program left (Z−). Arcs, cycles, and samples match your shop habits.</p></div>
+        <div class="card"><h3>Consistent UI</h3><p>One header, shared tokens, same hotkeys. Tools feel coherent — not stitched together.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature grid -->
+  <section class="container" id="features">
+    <div class="grid">
+      <article class="card">
+        <h3>Code Builder</h3>
+        <p>Start a clean program fast — stock, safety lines, work offsets, cycles, and canned patterns.</p>
+        <div class="actions"><a class="btn" href="index_unified.html#code-builder">Open</a><a class="btn" href="#learn">Guide</a></div>
+      </article>
+      <article class="card">
+        <h3>Threads</h3>
+        <p>Metric & imperial ranges with pitch, tolerances, and quick turning data. Wizard view included.</p>
+        <div class="actions"><a class="btn" href="index_unified.html#threads">Open</a></div>
+      </article>
+      <article class="card">
+        <h3>Toolpath Preview</h3>
+        <p>Visualize your path with small→big diameters, rapids dashed, and cycle time overlays.</p>
+        <div class="actions"><a class="btn" href="index_unified.html#toolpath">Open</a></div>
+      </article>
+      <article class="card">
+        <h3>Turning Trig</h3>
+        <p>Right‑triangle, taper, arc/BCD helpers — child‑simple inputs, shop‑ready outputs.</p>
+        <div class="actions"><a class="btn" href="index_unified.html#trig">Open</a></div>
+      </article>
+      <article class="card">
+        <h3>Feeds & Speeds</h3>
+        <p>Material presets, fz helpers, derates, and quick checks to avoid chatter and tool wear.</p>
+        <div class="actions"><a class="btn" href="index_unified.html#feeds-speeds">Open</a></div>
+      </article>
+      <article class="card">
+        <h3>Quizzes</h3>
+        <p>Learn by testing — core concepts, threads, symbols. Local leaderboards keep it fun.</p>
+        <div class="actions"><a class="btn" href="index_unified.html#quizzes">Open</a></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Learn block -->
+  <section class="container" id="learn" style="margin-top:34px">
+    <div class="panel">
+      <h2 style="margin:0 0 10px">New to CNC turning? Start here.</h2>
+      <p class="muted" style="margin:0 0 14px">A 10‑minute primer that covers coordinate systems, safe starts, common cycles, and how to read the visuals in MTCO.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a class="btn primary" href="index_unified.html#guide">Open quick primer</a>
+        <a class="btn" href="index_unified.html#samples">See sample programs</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <div class="note">© <span id="y"></span> MTCO — Measure Twice, Cut Once</div>
+        <div class="note">Made for Fanuc‑style lathes • G18 plane • Z0 on right face</div>
+      </div>
+      <div style="text-align:right">
+        <div class="note">Offline‑friendly. Add to Home Screen on mobile.</div>
+        <div class="note"><a href="index_unified.html#about" class="muted">About & changelog</a></div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Year stamp
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    // If this file sits alongside your unified shell, the #hash links will work as‑is.
+    // If your tab IDs differ, adjust the fragments in the header/nav and feature cards.
+
+    // Optional: if running under /mtco/ on GitHub Pages, try to find the unified shell automatically.
+    (function(){
+      const guessShell = ['index_unified.html','index.html','/mtco/index_unified.html'];
+      function ensureShell(href){
+        if (href.startsWith('http') || href.startsWith('#')) return href;
+        const local = guessShell.find(p=>true); // simple noop; left for future routing
+        return href.replace('index_unified.html', local || 'index_unified.html');
+      }
+      document.querySelectorAll('a[href*="index_unified.html"]').forEach(a=>{
+        a.setAttribute('href', ensureShell(a.getAttribute('href')));
+      });
+    })();
+  </script>
+
+<!-- MTCO: safe patches (hero + links) -->
+<script>
+(function(){
+  // ---------- 1) Wire "New? Start with basics" ----------
+  try{
+    var reBasics = /new\?\s*start with basics/i;
+    var nodes = document.querySelectorAll('a,button,[role="button"],.chip,.btn,div,span');
+    for (var i=0;i<nodes.length;i++){
+      var el = nodes[i];
+      var text = (el.textContent || '').replace(/\s+/g,' ').trim();
+      if(reBasics.test(text)){
+        if(el.tagName === 'A'){
+          el.setAttribute('href', 'basics_checklist_stage1_vendorPDFs_doosanQ9.html');
+          el.setAttribute('target', '_self');
+        } else {
+          el.style.cursor = 'pointer';
+          el.addEventListener('click', function(e){ e.preventDefault(); window.location.href = 'basics_checklist_stage1_vendorPDFs_doosanQ9.html'; }, { once:true });
+        }
+        break;
+      }
+    }
+  }catch(e){}
+
+  // ---------- 2) Rename ONLY the small label "Fanuc conventions" and link that label ----------
+  try{
+    var labels = document.querySelectorAll('h3, h4, .card h3, .card h4, .tile h3, .tile h4, span, div');
+    for (var j=0;j<labels.length;j++){
+      var el = labels[j];
+      var txt = (el.textContent || '').replace(/\s+/g,' ').trim();
+      if(/^fanuc conventions$/i.test(txt)){
+        el.textContent = 'G/M code trainer';
+        el.style.cursor = 'pointer';
+        el.addEventListener('click', function(e){ e.preventDefault(); window.location.href = 'gm_code_trainer.html'; }, { once:true });
+        break;
+      }
+    }
+  }catch(e){}
+
+  // ---------- 3) Restore animated hero by swapping the placeholder card ----------
+  try{
+    var placeholderNode = Array.from(document.querySelectorAll('div,section,article,p'))
+      .find(n => /hero visual placeholder/i.test((n.textContent||'')));
+    if(placeholderNode){
+      // Build hero card
+      var wrap = placeholderNode.closest('div');
+      if(!wrap) wrap = placeholderNode;
+      wrap.innerHTML = `
+        <div class="mtco-hero-card" id="mtco-hero-card">
+          <div class="mtco-hero-tag" id="mtco-hero-scenario">G71 Rough Turning</div>
+          <div class="mtco-hero-chip" id="mtco-hero-chip">Program</div>
+          <div class="mtco-hero-vp" id="mtco-hero-vp">
+            <pre class="mtco-hero-code" id="mtco-hero-code"></pre>
+          </div>
+        </div>
+      `;
+      // Inject CSS once
+      if(!document.getElementById('mtco-hero-style')){
+        var css = document.createElement('style'); css.id = 'mtco-hero-style';
+        css.textContent = `
+        .mtco-hero-card{width:100%;height:260px;background:var(--panel,#171b21);border:1px solid var(--border,#2a3037);border-radius:16px;position:relative;box-shadow:0 2px 0 rgba(255,122,26,.08) inset;overflow:hidden;}
+        .mtco-hero-chip{position:absolute;top:12px;right:12px;display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;border:1px solid var(--border,#2a3037);background:var(--panel,#161a1f);color:var(--text,#e6e8eb);font-weight:700;font-size:12px;}
+        .mtco-hero-tag{position:absolute;top:12px;left:12px;padding:6px 10px;border-radius:999px;border:1px solid var(--border,#2a3037);background:#11161b;color:var(--muted,#a7aeb6);font-weight:700;font-size:11px;}
+        .mtco-hero-vp{position:absolute;inset:46px 12px 12px 12px;border-radius:12px;background:#101418;border:1px solid #222831;overflow:hidden;}
+        .mtco-hero-code{margin:0;padding:12px 12px 18px 12px;font:14px/1.45 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;color:var(--text,#e6e8eb);white-space:pre-wrap;word-break:break-word;transform:translateY(0);transition:transform 320ms ease-out, opacity 280ms ease;will-change:transform, opacity;}
+        .mtco-hero-comment{color:var(--muted,#a7aeb6);}
+        .mtco-hero-hl{position:relative;}
+        .mtco-hero-hl::after{content:"";position:absolute;left:0;right:0;bottom:0.08em;height:2px;background:var(--accent,#ff7a1a);opacity:.95;}
+        .mtco-hero-caret{display:inline-block;width:10px;height:1.2em;transform:translateY(.25em);background:currentColor;opacity:0;margin-left:2px;animation:mtco-blink 1s steps(1,end) infinite;}
+        @keyframes mtco-blink{50%{opacity:0}0%,100%{opacity:.65}}
+        @media (max-width:760px){.mtco-hero-card{height:240px}}
+        @media (prefers-reduced-motion: reduce){.mtco-hero-caret{display:none!important}.mtco-hero-code{transition:none!important}}
+        `;
+        document.head.appendChild(css);
+      }
+      // Run the type/scroll loop
+      (function(){
+        const chip = document.getElementById('mtco-hero-chip');
+        const codeEl = document.getElementById('mtco-hero-code');
+        const tag = document.getElementById('mtco-hero-scenario');
+        const vp = document.getElementById('mtco-hero-vp');
+        if(!chip || !codeEl || !tag || !vp) return;
+        const RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const scenarios = [
+          { title:'G71 Rough Turning', sections:[
+            { label:'Program', lines:[
+              {t:'M98 P1'},{t:'M41',c:'(Gear Selection)'},{t:'M24',c:'(Swarf Track on)'},{t:'T1011'},
+              {t:'G50 S300',c:'(Caps spindle speed. Important on bigger jobs)'},{t:'G96 S110 M04'},
+              {t:'G00 Z13.0',c:'(Safe move close to the job)'},{t:'X405.0',c:'(Billet size)'},{t:'G01 Z3.0 F1.0',c:'(Return Z for cycle)'}
+            ]},
+            { label:'Roughing (G71)', lines:[
+              {t:'G71 U3.0 R1.0',hl:'G71',c:'(U=cut, R=retract)'},
+              {t:'G71 P100 Q200 U1.0 W0.5 F0.35',c:'(P/Q shape range, U/W finish stock)'}
+            ]},
+            { label:'Profile (P/Q)', lines:[
+              {t:'N100 G00 X200.0',c:'(Start smallest Ø, grow to largest)'},
+              {t:'G01 Z-100.0'},{t:'G01 X300.0'},{t:'G01 Z-200.0'},{t:'N200 G01 X405.0',c:'(Link back to billet size)'}
+            ]},
+            { label:'End', lines:[{t:'M98 P1',c:'(Return tool to a safe position)'},{t:'M01',c:'(Optional stop)'},{t:'M30'}]}
+          ]},
+          { title:'G72 Rough Facing', sections:[
+            { label:'Program', lines:[
+              {t:'M98 P1'},{t:'M41',c:'(Gear Selection)'},{t:'M24',c:'(Swarf Track on)'},{t:'T0909'},
+              {t:'G50 S300',c:'(Caps spindle speed. Important on bigger jobs)'},{t:'G96 S110 M04'},
+              {t:'G00 Z15.0',c:'(Safe move close to the job)'},{t:'G00 X205.0',c:'(Safe move above the billet)'},{t:'G01 Z5.0 F1.0',c:'(Represents stock on the face Z)'}
+            ]},
+            { label:'Facing (G72)', lines:[
+              {t:'G72 W2.0 R1.0',hl:'G72',c:'(W=cut in Z, R=retract)'},
+              {t:'G72 P100 Q200 U0.0 W0.3 F0.35',c:'(P/Q shape, U/W finish stock)'}
+            ]},
+            { label:'Profile (P/Q)', lines:[{t:'N100 G00 Z0.0',c:'(Target face)'},{t:'G01 X1.0'},{t:'N200 Z5.0'}]},
+            { label:'End', lines:[{t:'M98 P1'},{t:'M01'}]}
+          ]}
+        ];
+        const CHAR_PER_SEC=18, LINE_GAP_MS=80, SECTION_PAUSE_MS=200, HL_MS=600;
+        function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+        function autoscroll(){ const overflow = Math.max(0, codeEl.scrollHeight - vp.clientHeight); codeEl.style.transform = 'translateY(' + (-overflow) + 'px)'; }
+        async function typeText(el, text, cps){ let out=''; for(let i=0;i<text.length;i++){ out += text[i]; el.innerHTML = esc(out); await new Promise(r=>setTimeout(r, 1000/Math.max(1,cps))); } }
+        function renderLine(o){ const t=esc(o.t||''); const c=o.c? ' <span class="mtco-hero-comment">'+esc(o.c)+'</span>':''; if(o.hl && t.includes(o.hl)){ return t.replace(o.hl,'<span class="mtco-hero-hl">'+o.hl+'</span>')+c; } return t+c; }
+        async function typeLine(o){
+          const line = document.createElement('div'); line.style.willChange='contents'; codeEl.appendChild(line);
+          const hasHL = !!o.hl && (o.t||'').includes(o.hl); const beforeHL = hasHL ? (o.t||'').split(o.hl)[0] : (o.t||'');
+          if(RM){ line.innerHTML = renderLine(o); autoscroll(); return; }
+          await typeText(line, beforeHL, CHAR_PER_SEC);
+          if(hasHL){ line.innerHTML = esc(beforeHL) + '<span class="mtco-hero-hl">'+o.hl+'</span>'; await new Promise(r=>setTimeout(r, HL_MS)); line.innerHTML = renderLine(o); }
+          autoscroll();
+        }
+        async function playScenario(sc){
+          tag.textContent = sc.title; codeEl.innerHTML=''; codeEl.style.transform='translateY(0px)'; chip.textContent=sc.sections[0].label;
+          for(const sec of sc.sections){ chip.textContent=sec.label; for(const L of sec.lines){ await typeLine(L); await new Promise(r=>setTimeout(r, LINE_GAP_MS)); } await new Promise(r=>setTimeout(r, SECTION_PAUSE_MS)); }
+          if(!RM){ const caret=document.createElement('span'); caret.className='mtco-hero-caret'; codeEl.appendChild(caret); autoscroll(); await new Promise(r=>setTimeout(r, 500)); caret.remove(); }
+        }
+        async function loop(){ let i=0; while(true){ await playScenario(scenarios[i]); if(!RM){ await codeEl.animate([{opacity:1},{opacity:0}],{duration:280,easing:'ease'}).finished; codeEl.style.opacity='0'; } i=(i+1)%scenarios.length; await new Promise(r=>setTimeout(r,60)); codeEl.style.opacity='1'; } }
+        loop();
+      })();
+    }
+  }catch(e){}
+})();
+</script>
+
+</body>
+</html>
