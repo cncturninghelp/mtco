@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>New? Start with basics — MTCO</title>
+  <style>
+    :root{--bg:#0f1215;--panel:#171b21;--border:#2a3037;--text:#e6e8eb;--muted:#a7aeb6;--accent:#ff7a1a;}
+    html,body{margin:0;background:var(--bg);color:var(--text);}
+    /* Page wrapper beneath the site's header */
+    .basics-wrap{max-width:980px;margin:48px auto;padding:0 16px;}
+    .title{font:700 28px/1.2 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; margin-bottom:8px;}
+    .sub{color:var(--muted); margin-bottom:20px;}
+    .list{list-style:none;margin:0;padding:0;display:grid;gap:10px;}
+    .q{display:grid;grid-template-columns:44px 1fr auto;align-items:center;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:10px 12px;gap:12px;}
+    .qnum{width:44px;height:36px;display:grid;place-items:center;background:#101418;border:1px solid #222831;border-radius:8px;color:var(--muted);font-weight:700;}
+    .qtext{font:600 15px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;}
+    .qactions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;}
+    .chip{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;border:1px solid var(--border);background:#161a1f;color:var(--text);font-weight:700;font-size:12px;cursor:pointer}
+    .chip[disabled]{opacity:.45;cursor:not-allowed}
+    .learn::before{content:"📘";}
+    .note::before{content:"📝";}
+    /* Overlay for "coming soon" */
+    .overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:9999}
+    .sheet{width:min(640px,90vw);background:#171b21;border:1px solid var(--border);border-radius:16px;padding:18px;box-shadow:0 12px 40px rgba(0,0,0,.6);}
+    .sheet h3{margin:0 0 6px 0}
+    .sheet p{margin:0 0 12px 0;color:var(--muted)}
+    .close{float:right}
+    .btn{padding:8px 12px;border-radius:10px;border:1px solid var(--border);background:#101418;color:var(--text);cursor:pointer}
+    .footer-note{margin-top:14px;color:var(--muted);font-size:12px}
+    @media (max-width:720px){
+      .q{grid-template-columns:36px 1fr;gap:8px}
+      .qactions{justify-content:flex-start}
+      .qnum{width:36px;height:32px}
+    }
+  </style>
+</head>
+<body>
+  <!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MTCO — Measure Twice, Cut Once</title>
+  <meta name="description" content="Practical CNC turning calculators & learning tools — offline‑friendly, free, and fast." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath fill='%23ff7a1a' d='M8 48h48v6H8zM12 10h40v6H12zM18 22h28v18H18z'/%3E%3C/svg%3E">
+  <style>
+    :root{
+      --bg:#0f1215; --panel:#161a1f; --card:#171b21; --border:#2a3037; --text:#e6e8eb; --muted:#9aa1a9; --accent:#ff7a1a;
+      --ok:#48c78e; --warn:#ffb02e; --danger:#ff6464; --radius:18px; --shadow:0 10px 30px rgba(0,0,0,.35);
+    }
+    html,body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;}
+    a{color:inherit;text-decoration:none}
+    .container{max-width:1200px;margin:0 auto;padding:24px}
+    /* Header */
+    header{position:sticky;top:0;background:linear-gradient(0deg,rgba(15,18,21,.6),rgba(15,18,21,.95));backdrop-filter:saturate(1.2) blur(8px);border-bottom:1px solid var(--border);z-index:50}
+    .row{display:flex;align-items:center;gap:16px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:34px;height:34px;border-radius:10px;background:radial-gradient(circle at 30% 30%, #ff9d57 0 35%, #ff7a1a 36% 70%, #c35200 71% 100%);box-shadow:inset 0 0 0 2px rgba(255,255,255,.08)}
+    .title{font-weight:800;letter-spacing:.3px}
+    nav{margin-left:auto;display:flex;gap:10px;flex-wrap:wrap}
+    .chip{padding:10px 14px;border:1px solid var(--border);border-radius:999px;background:var(--card);cursor:pointer}
+    .chip:hover{border-color:#3a424b}
+    .cta{background:var(--accent);color:#1b0f07;border:none}
+    /* Hero */
+    .hero{padding:72px 0 36px;display:grid;grid-template-columns:1.15fr .85fr;gap:28px}
+    .h1{font-size:40px;line-height:1.1;margin:0 0 12px}
+    .sub{color:var(--muted);font-size:18px}
+    .badges{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+    .badge{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;border:1px solid var(--border);background:var(--panel);font-size:14px}
+    .panel{background:linear-gradient(180deg,rgba(255,122,26,.08),transparent 55%);border:1px solid var(--border);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
+    .hero-visual{display:grid;gap:14px}
+    .kv{height:220px;border-radius:var(--radius);border:1px dashed #3a424b;display:grid;place-items:center;background:linear-gradient(145deg,#12161b,#0c0f12)}
+    .kv small{color:var(--muted)}
+    /* Grid */
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:26px}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;display:flex;flex-direction:column;gap:10px;box-shadow:0 2px 0 rgba(255,122,26,.1) inset}
+    .card h3{margin:0;font-size:18px}
+    .card p{margin:0;color:var(--muted);font-size:14px}
+    .card .actions{margin-top:auto;display:flex;gap:10px;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;border:1px solid var(--border);background:var(--panel);font-weight:600}
+    .btn:hover{border-color:#3a424b}
+    .btn.primary{background:var(--accent);color:#1b0f07;border-color:#c85f00}
+    /* Footer */
+    footer{margin-top:48px;padding:28px 0;border-top:1px solid var(--border);color:#a9b0b8}
+    .footer-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .muted{color:var(--muted)}
+    .note{font-size:13px;color:var(--muted)}
+    /* Responsive */
+    @media (max-width: 960px){
+      .hero{grid-template-columns:1fr}
+      nav{display:none}
+    }
+    @media (max-width: 760px){
+      .h1{font-size:32px}
+      .grid{grid-template-columns:1fr}
+    }
+  </style>
+<style>
+/* === MTCO Unified Header === */
+:root {
+  --mtco-bg: #0f1215;
+  --mtco-panel: #161a1f;
+  --mtco-border: #2a3037;
+  --mtco-text: #e6e8eb;
+  --mtco-muted: #a7aeb6;
+  --mtco-accent: #ff7a1a;
+}
+.mtco-header { position: sticky; top: 0; z-index: 1200; background: linear-gradient(0deg, rgba(15,18,21,.65), rgba(15,18,21,.95)); backdrop-filter: saturate(1.2) blur(8px); border-bottom: 1px solid var(--mtco-border, #2a3037); }
+.mtco-hwrap { max-width: 1220px; margin: 0 auto; padding: 12px 24px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.mtco-logo { width: 26px; height: 26px; border-radius: 8px; background: radial-gradient(circle at 30% 30%, #ff9d57 0 35%, #ff7a1a 36% 70%, #c35200 71% 100%); box-shadow: inset 0 0 0 1px rgba(255,255,255,.08); }
+.mtco-brand { display: flex; flex-direction: column; line-height: 1; }
+.mtco-title { font-weight: 900; letter-spacing: .3px; color: var(--mtco-text, #e6e8eb); font-size: 18px; font-family: Inter, system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
+.mtco-title em { font-style: normal; opacity: .95; }
+.mtco-sub { font-size: 12px; color: var(--mtco-muted, #a7aeb6); margin-top: 3px; font-family: Inter, system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
+.mtco-spacer { flex: 1; }
+.mtco-chip { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 999px; border: 1px solid var(--mtco-border, #2a3037); background: var(--mtco-panel, #161a1f); color: var(--mtco-text, #e6e8eb); text-decoration: none; font-weight: 700; font-family: Inter, system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
+.mtco-chip:hover { border-color: #3a424b; }
+.mtco-chip.disabled { opacity: .55; cursor: not-allowed; pointer-events: none; }
+@media (max-width: 960px) { .mtco-sub { display: none; } }
+</style>
+</head>
+<body>
+
+<header class="mtco-header" role="banner">
+  <div class="mtco-hwrap">
+    <a class="mtco-logo" href="index.html" aria-label="MTCO Home"></a>
+    <div class="mtco-brand">
+      <span class="mtco-title">MTCO | <em>Home</em></span>
+      <span class="mtco-sub">Measure Twice, Cut Once</span>
+    </div>
+    <div class="mtco-spacer"></div>
+    <a class="mtco-chip" href="fc_code_builder_trial_v1_6_orange.html">Code Builder</a>
+    <a class="mtco-chip" href="mtco_thread_data_wizard_v1.html">Threads</a>
+    <a class="mtco-chip" href="mtco_toolpath_preview_trial_v3i_lathe.html">Toolpath Preview</a>
+    <a class="mtco-chip" href="mtco_job_planner_v1.html">Job Planner</a>
+    <a class="mtco-chip" href="Turning_Trig_Utility_MTCO_v1.html">Turning Trig</a>
+    <a class="mtco-chip" href="Feeds_Speeds_MTCO_v1.html">Feeds &amp; Speeds</a>
+    <a class="mtco-chip" href="quiz.html">Quizzes</a>
+    <a class="mtco-chip" href="mtco_gallery_trial_v1_fixed_SEEDED_fixB.html">Gallery</a>
+  </div>
+</header>
+  <main class="basics-wrap" aria-labelledby="page-title">
+    <h1 id="page-title" class="title">New? Start with basics</h1>
+    <p class="sub">A short checklist to help you look prepared on day one.</p>
+    <ol class="list">
+      
+      <li class="q">
+        <div class="qnum">01</div>
+        <div class="qtext">What material is this?</div>
+        <div class="qactions"><button class="chip learn" data-learn="q1">Learn</button><button class="chip note" disabled title="Coming soon">Add note</button></div>
+      </li>
+    
+      <li class="q">
+        <div class="qnum">02</div>
+        <div class="qtext">Are the dimensions in millimetres?</div>
+        <div class="qactions"><button class="chip learn" data-learn="q2">Learn</button><button class="chip note" disabled title="Coming soon">Add note</button></div>
+      </li>
+    
+      <li class="q">
+        <div class="qnum">03</div>
+        <div class="qtext">Which lathe am I on today?</div>
+        <div class="qactions"><button class="chip learn" data-learn="q3">Learn</button><button class="chip note" disabled title="Coming soon">Add note</button></div>
+      </li>
+    
+      <li class="q">
+        <div class="qnum">04</div>
+        <div class="qtext">What chuck is fitted (3-jaw/4-jaw/collet)? Is it hydraulic or hand-tight?</div>
+        <div class="qactions"><button class="chip learn" data-learn="q4">Learn</button><button class="chip note" disabled title="Coming soon">Add note</button></div>
+      </li>
+    
+      <li class="q">
+        <div class="qnum">05</div>
+        <div class="qtext">If hydraulic, what chuck pressure should I use, how much stick-out is OK, and do I need the tailstock?</div>
+        <div class="qactions"><button class="chip learn" data-learn="q5">Learn</button><button class="chip note" disabled title="Coming soon">Add note</button></div>
+      </li>
+    
+      <li class="q">
+        <div class="qnum">06</div>
+        <div class="qtext">Which external turning tool should I use to rough the OD?</div>
+        <div class="qactions"><button class="chip learn" data-learn="q6">Learn</button><button class="chip note" disabled title="Coming soon">Add note</button></div>
+      </li>
+    
+      <li class="q">
+        <div class="qnum">07</div>
+        <div class="qtext">Which external turning tool should I use to finish the OD?</div>
+        <div class="qactions"><button class="chip learn" data-learn="q7">Learn</button><button class="chip note" disabled title="Coming soon">Add note</button></div>
+      </li>
+    
+      <li class="q">
+        <div class="qnum">08</div>
+        <div class="qtext">Which insert codes are we using today (size & nose radius) and which grade for this material?</div>
+        <div class="qactions"><a class="chip learn" href="https://cdn2.walter-tools.com/files/a5ea48ae-5fa6-0161-3cb3-0ac22248a0fb/7f0801eb-595f-4dda-8f3c-cd3acbacc456/turning-designation-key-walter-turn-cutting-inserts-en-gb.pdf" target="_blank" rel="noopener">Open Walter ISO 1832 (PDF)</a><button class="chip note" disabled title="Coming soon">Add note</button></div>
+      </li>
+    
+      <li class="q">
+        <div class="qnum">09</div>
+        <div class="qtext">Which gauges should I measure with (calipers vs micrometers), and when do you want me to check?</div>
+        <div class="qactions"><button class="chip learn" data-learn="q9">Learn</button><button class="chip note" disabled title="Coming soon">Add note</button></div>
+      </li>
+    
+      <li class="q">
+        <div class="qnum">10</div>
+        <div class="qtext">How do I program this?</div>
+        <div class="qactions"><button class="chip learn" data-learn="q10">Learn</button><button class="chip note" disabled title="Coming soon">Add note</button></div>
+      </li>
+    
+    </ol>
+    <p class="footer-note">Only Q8’s “Learn” opens the official Walter ISO 1832 PDF for inserts. Other “Learn” sheets coming soon.</p>
+  </main>
+
+  <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+    <div class="sheet">
+      <button class="btn close" id="close">Close</button>
+      <h3 id="sheet-title">Learn sheet (coming soon)</h3>
+      <p>This resource will be added in the next stage. For now, use your mentor’s guidance and your notes.</p>
+    </div>
+  </div>
+
+<script>
+  // Lightweight JS to show a placeholder sheet for Learn buttons (except Q8, which links to PDF)
+  const overlay = document.getElementById('overlay');
+  const closeBtn = document.getElementById('close');
+  document.addEventListener('click', (e)=>{
+    const btn = e.target.closest('[data-learn]');
+    if(btn){
+      e.preventDefault();
+      overlay.style.display = 'flex';
+    }
+  });
+  closeBtn.addEventListener('click', ()=> overlay.style.display='none');
+  overlay.addEventListener('click', (e)=>{
+    if(e.target === overlay) overlay.style.display='none';
+  });
+</script>
+</body>
+</html>
