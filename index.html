@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MTCO — First Cut (Modular Hero)</title>
+  <meta name="description" content="MTCO unified shell with modular Fanuc hero + GM trainer wiring." />
+  <style>
+    :root {
+      --bg: #0f1215;
+      --panel: #161a1f;
+      --muted: #8a9097;
+      --text: #e6e8eb;
+      --accent: #ff7a1a;
+      --card: #171b21;
+      --card-border: #2a3037;
+      --radius: 16px;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background: var(--bg); color: var(--text); }
+    header { padding: 16px 20px; border-bottom: 1px solid var(--card-border); background: #0e1014; position: sticky; top: 0; z-index: 5; }
+    header h1 { margin: 0; font-size: 18px; font-weight: 700; letter-spacing: 0.4px; }
+    main { padding: 20px; max-width: 1000px; margin: 0 auto; }
+
+    .hero-visual { margin-top: 12px; }
+    .kv { height: 220px; border-radius: var(--radius); border: 1px solid var(--card-border); background: var(--panel); display:flex; align-items:center; justify-content:center; color: var(--muted); }
+    .kv small { opacity: 0.8; }
+
+    .grid { display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px; margin-top: 16px; }
+    .card { background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius); padding: 14px 14px; }
+    .card h3 { margin: 0 0 6px; font-size: 16px; }
+    .card p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.4; }
+    .card:hover { border-color: rgba(255,122,26,0.6); }
+
+    @media (max-width: 720px){ .grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header><h1>MTCO — First Cut</h1></header>
+
+  <main>
+    <section class="hero-visual">
+      <div class="kv">
+        <small>Hero visual placeholder — drop a toolpath screenshot here</small>
+      </div>
+      <div class="grid">
+        <div class="card">
+          <h3>G/M code trainer</h3>
+          <p>Open the interactive G/M code trainer, with examples and quick lookups.</p>
+        </div>
+        <div class="card">
+          <h3>Consistent UI</h3>
+          <p>One unified header, tabs, and theme across tools. (Demo layout.)</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modules -->
+  <script type="module">
+    import initHero from "./assets/js/mtco_hero_gcode_v2.js";
+    import wireGM from "./assets/js/mtco_gm_wiring_min.js";
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initHero(); // includes G70 + G76 plus G71 + G72
+      wireGM({ href: "gm_code_trainer.html" });
+    });
+  </script>
+</body>
+</html>
